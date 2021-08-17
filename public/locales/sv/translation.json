@@ -1,0 +1,6 @@
+{
+    "navbar": { "label_one": "Viner", "label_two": "Användare", "login":"Logga in", "logout":"Logga ut"
+     },
+
+    "home_welcome": "Välkommen"
+}

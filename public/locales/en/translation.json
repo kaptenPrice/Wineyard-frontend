@@ -1,0 +1,5 @@
+{
+    "navbar": { "label_one": "Wines", "label_two": "Users", "login": "Login", "logout": "Logout" },
+
+    "home_welcome": "Welcome"
+}

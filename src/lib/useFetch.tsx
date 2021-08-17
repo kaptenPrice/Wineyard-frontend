@@ -44,4 +44,5 @@ type EndPointType =
     | '/user/deletewine'
     | '/user/forgotpassword'
     | '/user/getall'
-    | '/user/getbyid';
+    | '/user/getbyid'
+    | `/user/resetPassword/${string}`;
