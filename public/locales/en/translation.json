@@ -1,5 +1,12 @@
 {
-    "navbar": { "label_one": "Wines", "label_two": "Users", "login": "Login", "logout": "Logout" },
+    "navbar": {
+        "label_one": "Wines",
+        "label_two": "Users",
+        "login": "Login",
+        "logout": "Logout",
+        "settings": "Settings"
+    },
 
-    "home_welcome": "Welcome"
+    "home_welcome": "Welcome",
+    "settings": { "language": "Language", "theme":"Theme" }
 }

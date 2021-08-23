@@ -10,7 +10,7 @@ i18next
     .init({
         
         fallbackLng: 'en',
-        debug: true,
+        debug: false,
         detection: {
             order: ['queryString','cookie' ],
             caches: ['cookie']

@@ -1,16 +1,19 @@
-import { createTheme } from '@material-ui/core';
-import React, { useContext, PropsWithChildren } from 'react';
+import React, { useContext, PropsWithChildren, useEffect } from 'react';
 import { createContext } from 'react';
 import theme from '../../constants/theme';
 import { darkPalette, lightPalette } from '../../constants/palette';
-
-import { ThemeProvider as OrgProvider } from '@material-ui/core';
+import { ThemeProvider as OrgProvider, createTheme } from '@material-ui/core';
 import { useState } from 'react';
 
 export const ThemeContext = createContext(undefined);
 
 const ThemeProvider = ({ children }: PropsWithChildren<any>) => {
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(localStorage.isDarkMode === 'true' || false);
+
+    useEffect(() => {
+        localStorage.setItem('isDarkMode', isDarkMode.toString());
+    }, [isDarkMode]);
+
     return (
         <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
             <OrgProvider

@@ -93,11 +93,11 @@ const LogoutView = () => {
 };
 
 export default LogoutView;
-const useStyles = makeStyles(({ palette: { primary }, breakpoints: { down } }) => ({
+const useStyles = makeStyles(({ palette: { primary, background }, breakpoints: { down } }) => ({
     LoginView: {
         height: 'calc(100vh - 64px)',
         width: '100%',
-        background: '#0004',
+        background: background.default,
         overflow: 'hidden'
     },
     cardContainer: {

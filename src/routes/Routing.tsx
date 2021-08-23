@@ -8,9 +8,10 @@ import LoginView from '../views/LoginView';
 import LogoutView from '../views/LogoutView';
 import NoMatchView from '../views/NoMatchView';
 import ResetPassView from '../views/ResetPassView';
+import { SettingsView } from '../views/SettingsView';
 import UserView from '../views/UserView';
 import WineView from '../views/WinesView';
-// isLoading 
+// isLoading
 const Routing = () => {
     const { profile } = useProfile();
 
@@ -29,14 +30,16 @@ const Routing = () => {
                 <Route exact path='/home' component={Home} />
                 <Route exact path='/users' component={blockRouteIfNotLoggedIn(UserView)} />
                 <Route exact path='/wines' component={blockRouteIfNotLoggedIn(WineView)} />
+                <Route exact path='/settings' component={blockRouteIfNotLoggedIn(SettingsView)} />
                 <Route exact path='/login' component={blockRouteIfAuthenticated(LoginView)} />
+
                 <Route exact path='/logout' component={blockRouteIfNotLoggedIn(LogoutView)} />
                 <Route
                     exact
                     path='/resetpassword/:token'
                     component={blockRouteIfAuthenticated(ResetPassView)}
                 />
-                <Route  component={NoMatchView} />
+                <Route component={NoMatchView} />
             </Switch>
         </Router>
     );

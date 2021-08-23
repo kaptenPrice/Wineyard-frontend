@@ -34,7 +34,8 @@ const LoginView = () => {
                 setServerMessage(response?.data.message);
             }
         } catch (error) {
-            console.log('error', error);
+            setServerMessage("Server seems to be tired, visit later please")
+            console.log({error:error, message: "error rån logon"});
         }
     };
 

@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState, forwardRef } from 'react';
+import React, { useState, forwardRef, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import {
     Button,
@@ -10,22 +10,25 @@ import {
     Slide,
     Tab,
     Tabs,
-    useTheme, Paper
+    useTheme,
+    Paper, useMediaQuery
 } from '@material-ui/core';
 import { IconButton, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import Brightness4 from '@material-ui/icons/Brightness4';
+import Brightness5 from '@material-ui/icons/Brightness5';
 import AppBar from '@material-ui/core/AppBar';
 import ToolBar from '@material-ui/core/Toolbar';
 import { MenuItem } from '@material-ui/core';
 import { useProfile } from '../global/provider/ProfileProvider';
 import { useTranslation } from 'react-i18next';
-import { useMediaQuery } from '@material-ui/core';
 import { SlideProps } from '@material-ui/core';
-import Switch from '@material-ui/core/Switch';
 import { useThemeProvider } from '../global/provider/ThemeProvider';
-import themeButton from './svg/themeButtonSvg.json';
-import { Player as Lottie } from '@lottiefiles/react-lottie-player';
+import Lottie from 'react-lottie';
+import themeButton from './lottieFiles/themeButtonSvg.json';
+import hamMenu from './lottieFiles/hamburger-menu.json';
+import { useRef } from 'react';
+import LottieButton from './LottieButton';
 
 const CustomSlide = forwardRef((props: SlideProps, ref) => {
     const {
@@ -36,6 +39,11 @@ const CustomSlide = forwardRef((props: SlideProps, ref) => {
 });
 
 export const NavigationBar = () => {
+    const {
+        breakpoints: { down }
+    } = useTheme();
+    const isSmallScreen = useMediaQuery(down('sm'));
+    const lottieRef = useRef(null);
     const [selectedTab, setSelectedTab]: any = useState(0);
     const [anchorEl, setAnchorEl] = useState(null);
     const { fetchProfile, profile } = useProfile();
@@ -65,32 +73,28 @@ export const NavigationBar = () => {
         setIsDarkMode((isDarkMode) => !isDarkMode);
     };
 
+    useEffect(() => {
+        lottieRef.current?.anim.goToAndStop(isDarkMode ? 132 : 0, true);
+    }, []);
+
     return (
         <AppBar className={classes.NavigationBar} color='primary' elevation={anchorEl ? 0 : 3}>
             <ToolBar>
-                <Button onClick={handleRedirectHome}>
-                    <Typography className={classes.title} variant='h6'>
-                        WineYard
-                    </Typography>
-                </Button>
-                {/* <Tabs indicatorColor='primary' value={selectedTab} onChange={handleChange}>
-                    <Tab label={t('navbar.label_one')} component={Link} to='/wines' />
-                    <Tab label={t('navbar.label_two')} component={Link} to='/users' />
-                </Tabs> */}
-                {/* <Switch checked={isDarkMode} onChange={handleChangeTheme} /> */}
-                <Grid className={classes.themeIcon} onClick={handleChangeTheme}>
-                <Lottie
-                    //TODO: Fix me please :D
-                   
-                    autoplay={false}
-                    src={themeButton}
-                    style={{ height: '40px', width: '40px' }}
-                />
-                </Grid>
+                <Typography
+                    onClick={handleRedirectHome}
+                    className={classes.title}
+                    variant='h6'
+                    color='secondary'
+                >
+                    WINEYARD
+                </Typography>
                 <Typography className={classes.email}>{profile?.email}</Typography>
-                <IconButton className={classes.menuButton} onClick={handleClick}>
-                    <MenuIcon />
-                </IconButton>
+                <LottieButton
+                    onClick={handleClick}
+                    animationData={hamMenu}
+                    isClicked={anchorEl}
+                    className={classes.menuButton}
+                />
                 <Menu
                     classes={{ paper: classes.menuPaper }}
                     anchorEl={anchorEl}
@@ -108,27 +112,22 @@ export const NavigationBar = () => {
                     )}
 
                     {profile && (
-                        <Paper>
+                        <div>
                             <MenuItem component={Link} to='/wines' onClick={handleClose}>
                                 {t('navbar.label_one')}
-                            </MenuItem>{' '}
+                            </MenuItem>
                             <MenuItem component={Link} to='/users' onClick={handleClose}>
                                 {t('navbar.label_two')}
-                            </MenuItem>{' '}
+                            </MenuItem>
+                            <MenuItem component={Link} to='/settings' onClick={handleClose}>
+                                {t('navbar.settings')}
+                            </MenuItem>
                             <MenuItem component={Link} to='/logout' onClick={handleClose}>
                                 {t('navbar.logout')}
-                            </MenuItem>
-                        </Paper>
+                            </MenuItem>{' '}
+                        </div>
                     )}
                 </Menu>
-                <Grid className={classes.langChoice}>
-                    <Button variant='text' onClick={() => changeLanguage('en')}>
-                        EN
-                    </Button>
-                    <Button variant='text' onClick={() => changeLanguage('sv')}>
-                        SV
-                    </Button>
-                </Grid>
             </ToolBar>
         </AppBar>
     );
@@ -139,8 +138,7 @@ const useStyles = makeStyles(({ spacing, breakpoints: { down }, palette: { prima
         position: 'relative',
         zIndex: 1500,
         width: '100%',
-        opacity: 0.96,
-
+        opacity: 1,
         top: 0,
         [down('xs')]: {
             position: 'fixed',
@@ -150,12 +148,23 @@ const useStyles = makeStyles(({ spacing, breakpoints: { down }, palette: { prima
     },
     menuButton: {
         marginLeft: 0,
+        // backgroundColor:"red",
+        '& path': { fill: '#dbdbdb' },
         [down('xs')]: {
             marginLeft: 'auto'
         }
     },
     title: {
-        // flexGrow: 1
+        '&:hover': { cursor: 'pointer' }
+    },
+    lottie: {
+        '& svg': {
+            margin: 'auto',
+            display: 'flex',
+            '&>g': {
+                transform: 'scale(2) translate(-25%,-25%)'
+            }
+        }
     },
     menuPaper: {
         maxHeight: 200,
@@ -172,7 +181,7 @@ const useStyles = makeStyles(({ spacing, breakpoints: { down }, palette: { prima
         borderTopRightRadius: 0,
         borderBottomLeftRadius: 5,
         borderBottomRightRadius: 5,
-        [down('sm')]: {
+        [down('xs')]: {
             marginLeft: 17,
             marginTop: -40,
             borderBottomLeftRadius: 0,
@@ -184,16 +193,17 @@ const useStyles = makeStyles(({ spacing, breakpoints: { down }, palette: { prima
     menuPopover: {},
     email: {
         marginLeft: 'auto',
-        [down('sm')]: {
+        [down('xs')]: {
             display: 'none'
         },
         paddingRight: 12
     },
     langChoice: {
-        [down('sm')]: {
+        [down('xs')]: {
             display: 'none'
         }
     },
-    themeIcon:{
+    themeIcon: {
+        '&:hover': { cursor: 'pointer' }
     }
 }));

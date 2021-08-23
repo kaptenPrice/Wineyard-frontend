@@ -1,6 +1,12 @@
 {
-    "navbar": { "label_one": "Viner", "label_two": "Användare", "login":"Logga in", "logout":"Logga ut"
-     },
+    "navbar": {
+        "label_one": "Viner",
+        "label_two": "Användare",
+        "login": "Logga in",
+        "logout": "Logga ut",
+        "settings": "Inställningar"
+    },
 
-    "home_welcome": "Välkommen"
+    "home_welcome": "Välkommen",
+    "settings": { "language": "Språk" , "theme":"Tema"}
 }

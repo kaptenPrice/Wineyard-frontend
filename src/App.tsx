@@ -9,10 +9,13 @@ import i18n from './i18n';
 
 const useStyles = makeStyles(({ palette: { background } }) => ({
     '@global': {
+        '*': {
+            transition: 'background-color .3s'
+        },
         body: {
             margin: 0,
             padding: 0,
-            backgroundColor: background.default
+            background: background.default
         },
         input: {
             color: 'rgb(168, 87, 20) !important'
