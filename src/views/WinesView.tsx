@@ -6,7 +6,6 @@ import { Grid, makeStyles, useTheme, useMediaQuery } from '@material-ui/core';
 import wineImg from '../global/images/wine-image.jpg';
 import { WineCard } from '../components/WineCard';
 import { grey } from '@material-ui/core/colors';
-import usehandleInfinityScroll from '../components/hooks/usehandleInfinityScroll';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -17,7 +16,7 @@ const WinesView = () => {
     const [currentSize, setCurrentSize] = useState(10);
     const [actualSize, setActualSize] = useState(0);
 
-    const [expandedItemId, setExpandedItemId] = useState(null);
+    const [expandedItemId, setExpandedItemId] = useState<null | string>(null);
     const {
         breakpoints: { down }
     } = useTheme();
@@ -50,7 +49,7 @@ const WinesView = () => {
         }
     };
 
-    const handleExpandItem = (id) => {
+    const handleExpandItem = (id: string) => {
         setExpandedItemId((prev) => (prev !== id ? id : null));
     };
     const getWines = () => {
@@ -62,6 +61,7 @@ const WinesView = () => {
                 expanded={expandedItemId === _id}
                 handleExpandOnClick={() => handleExpandItem(_id)}
                 {...props}
+                _id={_id}
             />
         ));
     };

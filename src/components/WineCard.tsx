@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -24,28 +24,17 @@ export const WineCard = ({
     description,
     image,
     date,
-    year
+    year,
+    _id
 }: WineProps) => {
-    const coverRef = useRef(null);
-    useEffect(() => {
-        if (coverRef.current) {
-            console.log(document.documentElement.scrollHeight);
-            setTimeout(() => {
-                console.log('After:', document.documentElement.scrollHeight);
-                coverRef.current.setAttribute(
-                    'height',
-                    document.documentElement.scrollHeight + 'px'
-                );
-            }, 400);
-        }
-    }, [expanded]);
     const classes = useStyles({ expanded });
-
+    const [isLiked, setIsLiked] = useState(false);
+    const handleLike = () => {
+        setIsLiked((current) => !current);
+    };
     return (
         <>
-            {expanded && (
-                <div ref={coverRef} className={classes.cover} onClick={handleExpandOnClick} />
-            )}
+            {expanded && <div className={classes.cover} onClick={handleExpandOnClick} />}
             <Card className={classes.root}>
                 <CardHeader
                     className={classes.cardHeader}
@@ -72,8 +61,8 @@ export const WineCard = ({
                     </Typography>
                 </CardContent>
                 <CardActions className={classes.actionContainer} disableSpacing>
-                    <IconButton aria-label='add to favorites'>
-                        <FavoriteIcon />
+                    <IconButton onClick={handleLike} aria-label='add to favorites'>
+                        <FavoriteIcon color={isLiked ? 'error' : 'disabled'} />
                     </IconButton>
                     <IconButton aria-label='share'>
                         <ShareIcon />
@@ -169,11 +158,11 @@ const useStyles = makeStyles(({ transitions, palette: { background }, breakpoint
         zIndex: 200,
         width: 'inherit',
         backgroundColor: 'transparent',
-        marginTop: -3,
+        marginTop: -5,
 
         '&>div': {
             background: background.paper,
-            boxShadow: `0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)`
+            boxShadow: `0px 2px -6px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)`
         },
         [down('xs')]: {
             //@ts-ignore
@@ -196,4 +185,5 @@ interface WineProps {
     image: any;
     date: string;
     year: string;
+    _id: string;
 }
