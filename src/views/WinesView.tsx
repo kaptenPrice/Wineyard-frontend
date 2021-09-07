@@ -1,86 +1,108 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useProfile } from '../global/provider/ProfileProvider';
 import IsLoading from '../components/IsLoading';
-import useFetch from '../lib/useFetch';
-import {
-    Grid,
-    Typography,
-    Paper,
-    Box,
-    makeStyles,
-    useTheme,
-    useMediaQuery
-} from '@material-ui/core';
-import animationData from '../components/lottieFiles/73294-adaptive-website-v2.json';
-import Lottie from 'react-lottie';
+import useFetch from '../components/hooks/useFetch';
+import { Grid, makeStyles, useTheme, useMediaQuery } from '@material-ui/core';
+import wineImg from '../global/images/wine-image.jpg';
+import { WineCard } from '../components/WineCard';
+import { grey } from '@material-ui/core/colors';
+import usehandleInfinityScroll from '../components/hooks/usehandleInfinityScroll';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 //Fetch data from /wine/getall and map the list
-const Wines = () => {
-    // const [wines, setWines] = useState(null);
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         setWines({});
-    //     }, 3000);
-    // }, []);
+const WinesView = () => {
+    const [wineData, setWineData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [currentSize, setCurrentSize] = useState(10);
+    const [actualSize, setActualSize] = useState(0);
 
-    useEffect(() => {
-        // window.history.replaceState("","", "/")
-    }, []);
+    const [expandedItemId, setExpandedItemId] = useState(null);
     const {
         breakpoints: { down }
     } = useTheme();
     const isSmallScreen = useMediaQuery(down('xs'));
     const classes = useStyles();
-    const defaultOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: animationData,
-        rendererSettings: {
-            preserveAspectRatio: 'xMidYMid slice'
+
+    useEffect(() => {
+        fetchWines();
+    }, []);
+
+    const fetchWines = async () => {
+        const nextPageIndex = currentPage + 1;
+        try {
+            const {
+                data: { data, page, amountWines },
+                status
+            } = await useFetch('/wine/paginate', {
+                method: 'POST',
+                body: JSON.stringify({ size: currentSize, page: nextPageIndex })
+            });
+
+            if (status === 200) {
+                console.log(data);
+                setWineData((current) => [...current, ...data]);
+                setActualSize(amountWines);
+            }
+            setCurrentPage(page);
+        } catch (error) {
+            console.error(error);
         }
     };
-    return (
-        <Grid container className={classes.root}>
-            <Lottie
-                options={defaultOptions}
-                style={!isSmallScreen ? lottieStyle.lottieLarge : lottieStyle.lottieSmall}
+
+    const handleExpandItem = (id) => {
+        setExpandedItemId((prev) => (prev !== id ? id : null));
+    };
+    const getWines = () => {
+        return wineData.map(({ _id, updatedAt, ...props }) => (
+            <WineCard
+                key={_id}
+                image={wineImg}
+                date={updatedAt}
+                expanded={expandedItemId === _id}
+                handleExpandOnClick={() => handleExpandItem(_id)}
+                {...props}
             />
-            <Grid container direction='column'>
-                <Grid className={classes.background}>
-                    <Box className={classes.box} boxShadow={5} bgcolor='background.paper' p={2}>
-                        <Typography
-                            variant={!isSmallScreen ? 'h3' : 'h4'}
-                            gutterBottom
-                            color='secondary'
-                        >
-                            This is the Wine page
-                        </Typography>
-                    </Box>
-                </Grid>
-            </Grid>
+        ));
+    };
+
+    return (
+        <Grid container xl={10} className={classes.container} id='winesContainer'>
+            <InfiniteScroll
+                next={fetchWines}
+                hasMore={wineData.length < actualSize}
+                loader={
+                    <Grid container justifyContent='center' item xs={12}>
+                        <CircularProgress />
+                    </Grid>
+                }
+                dataLength={wineData.length}
+            >
+                {getWines()}
+            </InfiniteScroll>
         </Grid>
     );
 };
 
-export default Wines;
+export default WinesView;
 const useStyles = makeStyles(({ breakpoints: { down } }) => ({
-    root: {
+    container: {
+        maxWidth: 1720,
+        justifyContent: 'center',
+        margin: 'auto',
         position: 'relative',
-        height: '100%',
-        overflow: 'hidden'
-    },
-    background: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(1,2,3,0.3)'
-    },
-    box: {
-        position: 'absolute',
-        top: 600,
-        left: 600
+        paddingBottom: 10,
+        '& .infinite-scroll-component,.infinite-scroll-component__outerdiv': {
+            display: 'contents'
+        },
+        '&>div>div>.MuiCard-root': {
+            margin: 15
+        },
+        [down('xs')]: {
+            paddingBottom: 66,
+            flexDirection: 'column',
+            alignContent: 'space-evenly'
+        }
     }
 }));
 

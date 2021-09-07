@@ -11,7 +11,6 @@ import {
 import { useProfile } from '../global/provider/ProfileProvider';
 import { useTranslation } from 'react-i18next';
 import Lottie from 'react-lottie';
-import animationData from '../components/lottieFiles/3D-messages-illustration.json';
 
 const Home = () => {
     const { fetchProfile, profile } = useProfile();
@@ -22,52 +21,30 @@ const Home = () => {
     } = useTheme();
     const isSmallScreen = useMediaQuery(down('xs'));
 
-    const defaultOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: animationData,
-        rendererSettings: {
-            preserveAspectRatio: 'xMidYMid slice'
-        }
-    };
+    // const defaultOptions = {
+    //     loop: true,
+    //     autoplay: true,
+    //     animationData: animationData,
+    //     rendererSettings: {
+    //         preserveAspectRatio: 'xMidYMid slice'
+    //     }
+    // };
     return (
         <>
-             <Grid container direction='column'> 
-             <Box boxShadow={5} bgcolor='background.paper' m={2} p={2}>
-                    <Typography variant={!isSmallScreen? "h6":"body2"} color='secondary'>
+            <Grid container direction='column'>
+                <Box boxShadow={5} bgcolor='background.paper' m={2} p={2}>
+                    <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary'>
                         {t('home_welcome')} {profile?.email}
                     </Typography>
-                </Box> 
-            <Grid container direction='row' className={classes.container}>
-           
-                <Paper className={classes.animationBox}>
-                    <Lottie
+                </Box>
+                <Grid container direction='row' className={classes.container}>
+                    <Paper className={classes.animationBox}>
+                        {/* <Lottie
                         options={defaultOptions}
                         style={!isSmallScreen ? lottieStyle.lottieLarge : lottieStyle.lottieSmall}
-                    />
-                </Paper>
-                <Paper className={classes.animationBox}>
-                    <Lottie
-                        options={defaultOptions}
-                        style={!isSmallScreen ? lottieStyle.lottieLarge : lottieStyle.lottieSmall}
-                    />
-                </Paper>
-            </Grid>{' '}
-            <Grid container direction='row' className={classes.container}>
-             
-                <Paper className={classes.animationBox}>
-                    <Lottie
-                        options={defaultOptions}
-                        style={!isSmallScreen ? lottieStyle.lottieLarge : lottieStyle.lottieSmall}
-                    />
-                </Paper>
-                <Paper className={classes.animationBox}>
-                    <Lottie
-                        options={defaultOptions}
-                        style={!isSmallScreen ? lottieStyle.lottieLarge : lottieStyle.lottieSmall}
-                    />
-                </Paper>
-            </Grid>
+                    /> */}
+                    </Paper>
+                </Grid>
             </Grid>
         </>
     );

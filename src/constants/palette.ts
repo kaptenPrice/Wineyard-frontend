@@ -18,6 +18,6 @@ export const lightPalette: PaletteOptions = {
     secondary: {
         main: '#0B2545'
     },
-    type: 'light'
-    // background: { default: '#2b2d3d' },
+    type: 'light',
+     background: { default: '#e4e4e4' },
 };

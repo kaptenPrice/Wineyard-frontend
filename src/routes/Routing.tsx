@@ -1,3 +1,4 @@
+import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -11,10 +12,37 @@ import ResetPassView from '../views/ResetPassView';
 import { SettingsView } from '../views/SettingsView';
 import UserView from '../views/UserView';
 import WineView from '../views/WinesView';
+const useStyles = makeStyles(({ palette: { background } }) => ({
+    '@global': {
+        '*': {
+            transition: 'background-color .3s',
+            margin: 0,
+            padding: 0
+        },
+        html: {
+            height: '100%',
+            width: '100%',
+            boxSizing: 'border-box'
+        },
+        body: {
+            margin: 0,
+            padding: 0,
+            background: background.default,
+            overflowX: 'hidden',
+            height: '100%',
+            width: '100%',
+            paddingRight: '0!important',
+            boxSizing: 'border-box'
+        },
+        input: {
+            color: 'rgb(168, 87, 20) !important'
+        }
+    }
+}));
 // isLoading
 const Routing = () => {
     const { profile } = useProfile();
-
+    useStyles();
     const blockRouteIfAuthenticated = (view: React.ComponentType<any>) => {
         return profile ? Home : view;
     };
@@ -32,7 +60,6 @@ const Routing = () => {
                 <Route exact path='/wines' component={blockRouteIfNotLoggedIn(WineView)} />
                 <Route exact path='/settings' component={blockRouteIfNotLoggedIn(SettingsView)} />
                 <Route exact path='/login' component={blockRouteIfAuthenticated(LoginView)} />
-
                 <Route exact path='/logout' component={blockRouteIfNotLoggedIn(LogoutView)} />
                 <Route
                     exact

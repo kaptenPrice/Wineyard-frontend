@@ -2,7 +2,7 @@ import { Button, makeStyles, TextField, Typography } from '@material-ui/core';
 import { Grid, Paper } from '@material-ui/core';
 import React, { useState } from 'react';
 import LoginComponent from '../components/LoginComponent';
-import useFetch from '../lib/useFetch';
+import useFetch from '../components/hooks/useFetch';
 import SendIcon from '@material-ui/icons/Send';
 import { useEffect } from 'react';
 import { Link, NavLink, useParams, useHistory } from 'react-router-dom';

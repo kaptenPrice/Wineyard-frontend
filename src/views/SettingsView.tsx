@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import LottieButton from '../components/LottieButton';
 import { useThemeProvider } from '../global/provider/ThemeProvider';
 import themeButton from '../components/lottieFiles/themeButtonSvg.json';
-import animationData from '../components/lottieFiles/cogs.json';
 
 import Flags from 'country-flag-icons/react/3x2';
 import Lottie from 'react-lottie';
@@ -13,9 +12,12 @@ import { useMediaQuery } from '@material-ui/core';
 
 export const SettingsView = () => {
     const { isDarkMode, setIsDarkMode } = useThemeProvider();
-
     const classes = useStyles();
     const { t, i18n } = useTranslation();
+    const {
+        breakpoints: { down }
+    } = useTheme();
+    const isSmallScreen = useMediaQuery(down('xs'));
 
     const changeLanguage = (language: string) => {
         i18n.changeLanguage(language);
@@ -23,73 +25,56 @@ export const SettingsView = () => {
     const handleChangeTheme = () => {
         setIsDarkMode((isDarkMode: any) => !isDarkMode);
     };
-    const {
-        breakpoints: { down }
-    } = useTheme();
-    const isSmallScreen = useMediaQuery(down('xs'));
-    const defaultOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: animationData,
-        rendererSettings: {
-            preserveAspectRatio: 'xMidYMid slice'
-        }
-    };
 
     return (
         <Grid container className={classes.settingsView}>
-            <Lottie
-                options={defaultOptions}
-                style={!isSmallScreen ? lottieStyle.lottieLarge : lottieStyle.lottieSmall}
-            />
-            {/* <Grid className={classes.background}> */}
-                <Grid container className={classes.cardContainer}>
-                    <Paper className={classes.loginBox}>
-                        <Typography variant='h3' gutterBottom color='primary'>
-                            {t('settings.language')}
-                        </Typography>
-                        <Grid
-                            container
-                            justifyContent='center'
-                            alignContent='center'
-                            alignItems='center'
-                            direction='row'
-                        >
-                            <Button variant='text' onClick={() => changeLanguage('en')}>
-                                <Flags.GB title='Great Britain' />
-                            </Button>
+            <Grid container className={classes.cardContainer}>
+                <Paper className={classes.loginBox}>
+                    <Typography variant='h3' gutterBottom color='primary'>
+                        {t('settings.language')}
+                    </Typography>
+                    <Grid
+                        container
+                        justifyContent='center'
+                        alignContent='center'
+                        alignItems='center'
+                        direction='row'
+                    >
+                        <Button variant='text' onClick={() => changeLanguage('en')}>
+                            <Flags.GB title='Great Britain' />
+                        </Button>
 
-                            <Button variant='text' onClick={() => changeLanguage('sv')}>
-                                <Flags.SE title='Sweden' />
-                            </Button>
-                        </Grid>
-                        <hr />
-                        <Grid
-                            container
-                            justifyContent='center'
-                            alignContent='center'
-                            alignItems='center'
-                            direction='column'
+                        <Button variant='text' onClick={() => changeLanguage('sv')}>
+                            <Flags.SE title='Sweden' />
+                        </Button>
+                    </Grid>
+                    <hr />
+                    <Grid
+                        container
+                        justifyContent='center'
+                        alignContent='center'
+                        alignItems='center'
+                        direction='column'
+                    >
+                        <Typography
+                            style={{ paddingTop: 20 }}
+                            gutterBottom
+                            variant='h3'
+                            component='div'
+                            color='primary'
                         >
-                            <Typography
-                                style={{ paddingTop: 20 }}
-                                gutterBottom
-                                variant='h3'
-                                component='div'
-                                color='primary'
-                            >
-                                {t('settings.theme')}
-                            </Typography>
-                            <LottieButton
-                                onClick={handleChangeTheme}
-                                className={classes.lottie}
-                                animationData={themeButton}
-                                isClicked={isDarkMode}
-                                lottieProps={{ speed: 5.5 }}
-                            />
-                        </Grid>
-                    </Paper>
-                </Grid>
+                            {t('settings.theme')}
+                        </Typography>
+                        <LottieButton
+                            onClick={handleChangeTheme}
+                            className={classes.lottie}
+                            animationData={themeButton}
+                            isClicked={isDarkMode}
+                            lottieProps={{ speed: 5.5 }}
+                        />
+                    </Grid>
+                </Paper>
+            </Grid>
             {/* </Grid> */}
         </Grid>
     );
@@ -150,3 +135,18 @@ const lottieStyle = {
     },
     lottieSmall: { width: '100%' }
 };
+
+/**  const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: animationData,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    }; 
+    
+             <Lottie
+                options={defaultOptions}
+                style={!isSmallScreen ? lottieStyle.lottieLarge : lottieStyle.lottieSmall}
+            />
+    */

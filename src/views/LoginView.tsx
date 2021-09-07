@@ -3,7 +3,7 @@ import { Button, Grid, Modal, Paper, Typography } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import { useProfile } from '../global/provider/ProfileProvider';
-import useFetch from '../lib/useFetch';
+import useFetch from '../components/hooks/useFetch';
 import LoginComponent, { LoginComponentPropsType } from '../components/LoginComponent';
 import ReactCardFlip from 'react-card-flip';
 

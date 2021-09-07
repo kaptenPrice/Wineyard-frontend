@@ -2,7 +2,7 @@ import { Button, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import SendIcon from '@material-ui/icons/Send';
 import { useHistory } from 'react-router-dom';
-import useFetch from '../lib/useFetch';
+import useFetch from '../components/hooks/useFetch';
 import { useProfile } from '../global/provider/ProfileProvider';
 
 const LogoutView = () => {

@@ -1,10 +1,25 @@
 import { Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
+import usehandleInfinityScroll from '../components/hooks/usehandleInfinityScroll';
 
 const User = () => {
+    const [state, setState] = useState(0);
+
     return (
         <>
-            <Typography variant='h2'>This is the User page</Typography>
+            <p>{state}</p>
+            <div
+                style={{
+                    marginLeft: 50,
+                    width: 500 * 2,
+                    height: 500 * 2,
+                    overflow: 'auto',
+                    backgroundColor: 'cornsilk'
+                }}
+                // onScroll={}
+            >
+              
+            </div>
         </>
     );
 };

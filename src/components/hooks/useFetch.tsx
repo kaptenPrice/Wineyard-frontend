@@ -36,8 +36,9 @@ type EndPointType =
     | '/wine/add'
     | '/wine/update'
     | '/wine/getall'
+    | '/wine/paginate'
     | '/wine/getbyid'
-    | '/wine/getbyname'
+    | `/wine/getbyname/${string}`
     | '/wine/bycountry'
     | '/wine/delete'
     | '/user/addfavoritewine'
