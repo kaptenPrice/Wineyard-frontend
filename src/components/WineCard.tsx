@@ -14,7 +14,15 @@ import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import useFetch from './hooks/useFetch';
 
+//1. send item-id to endpoint -done
+//1.1 diasable button if its liked by this user -done
+//2. retrive data with users wines 
+//3. save users wines
+//4.show users wines in userpage
+//5.if id exists in users favoritswines mark the wine on winepage with a like
+//6.increase amount of likes
 export const WineCard = ({
     handleExpandOnClick,
     expanded,
@@ -28,10 +36,23 @@ export const WineCard = ({
     _id
 }: WineProps) => {
     const classes = useStyles({ expanded });
-    const [isLiked, setIsLiked] = useState(false);
+    const [isLiked, setIsLiked] = useState(0);
     const handleLike = () => {
-        setIsLiked((current) => !current);
+        setIsLiked((current) => current + 1);
     };
+    const handleAddToFavorites = async () => {
+        console.log('ID: ', _id);
+        try {
+            const response = await useFetch('/user/addfavoritewine', {
+                method: 'PATCH',
+                body: JSON.stringify({ id: _id })
+            });
+            console.log('ADDWINE: ', response);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <>
             {expanded && <div className={classes.cover} onClick={handleExpandOnClick} />}
@@ -61,12 +82,19 @@ export const WineCard = ({
                     </Typography>
                 </CardContent>
                 <CardActions className={classes.actionContainer} disableSpacing>
-                    <IconButton onClick={handleLike} aria-label='add to favorites'>
-                        <FavoriteIcon color={isLiked ? 'error' : 'disabled'} />
+                    <IconButton
+                        onClick={() => [handleLike(), handleAddToFavorites()]}
+                        disabled={Boolean(isLiked)}
+                        aria-label='add to favorites'
+                    >
+                        <FavoriteIcon fontSize="small" color={isLiked ? 'error' : 'disabled'} />
                     </IconButton>
-                    <IconButton aria-label='share'>
+                    <Typography variant='caption' aria-label='amount of likes'>
+                        {isLiked}
+                    </Typography>
+                    {/* <IconButton aria-label='share'>
                         <ShareIcon />
-                    </IconButton>
+                    </IconButton> */}
                     <IconButton
                         className={clsx(classes.expand, {
                             [classes.expandOpen]: expanded
@@ -94,7 +122,6 @@ export const WineCard = ({
 const useStyles = makeStyles(({ transitions, palette: { background }, breakpoints: { down } }) => ({
     cover: {
         width: '100vw',
-        //minHeight: '100%',
         background: '#0005',
         position: 'absolute',
         zIndex: 200,
@@ -124,8 +151,6 @@ const useStyles = makeStyles(({ transitions, palette: { background }, breakpoint
         overflow: 'hidden'
     },
     media: {
-        // height: 0,
-        // paddingTop: '105.25%',
         width: 'inherit',
         height: 'inherit',
         transition: 'transform 1s',
@@ -181,9 +206,9 @@ interface WineProps {
     name?: string;
     country?: string;
     grapes?: string;
-    description: string;
-    image: any;
-    date: string;
-    year: string;
-    _id: string;
+    description?: string;
+    image?: any;
+    date?: string;
+    year?: string;
+    _id?: string;
 }

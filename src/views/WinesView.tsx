@@ -5,11 +5,9 @@ import useFetch from '../components/hooks/useFetch';
 import { Grid, makeStyles, useTheme, useMediaQuery } from '@material-ui/core';
 import wineImg from '../global/images/wine-image.jpg';
 import { WineCard } from '../components/WineCard';
-import { grey } from '@material-ui/core/colors';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-//Fetch data from /wine/getall and map the list
 const WinesView = () => {
     const [wineData, setWineData] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
@@ -39,7 +37,6 @@ const WinesView = () => {
             });
 
             if (status === 200) {
-                console.log(data);
                 setWineData((current) => [...current, ...data]);
                 setActualSize(amountWines);
             }
@@ -52,6 +49,7 @@ const WinesView = () => {
     const handleExpandItem = (id: string) => {
         setExpandedItemId((prev) => (prev !== id ? id : null));
     };
+
     const getWines = () => {
         return wineData.map(({ _id, updatedAt, ...props }) => (
             <WineCard
@@ -60,8 +58,9 @@ const WinesView = () => {
                 date={updatedAt}
                 expanded={expandedItemId === _id}
                 handleExpandOnClick={() => handleExpandItem(_id)}
-                {...props}
                 _id={_id}
+                {...props}
+
             />
         ));
     };
@@ -95,7 +94,7 @@ const useStyles = makeStyles(({ breakpoints: { down } }) => ({
         '& .infinite-scroll-component,.infinite-scroll-component__outerdiv': {
             display: 'contents'
         },
-        '&>div>div>.MuiCard-root': {
+        '& .MuiCard-root': {
             margin: 15
         },
         [down('xs')]: {
@@ -105,11 +104,3 @@ const useStyles = makeStyles(({ breakpoints: { down } }) => ({
         }
     }
 }));
-
-export const lottieStyle = {
-    lottieLarge: {
-        // display: 'contents',
-        width: '70%'
-    },
-    lottieSmall: {}
-};
