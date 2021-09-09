@@ -3,7 +3,7 @@ const useFetch: UseFetchType = async (endpoint, init) => {
     try {
         const response = await fetch(`https://miwine.herokuapp.com${endpoint}`, {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' /*'Access-Control-Allow-Origin': '*'*/ },
+            // headers: { 'Content-Type': 'application/json' /*'Access-Control-Allow-Origin': '*'*/ },
             credentials: 'include',
             ...init
         });
