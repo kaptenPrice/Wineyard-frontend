@@ -4,8 +4,9 @@ const useFetch: UseFetchType = async (endpoint, init) => {
         const response = await fetch(`https://miwine.herokuapp.com${endpoint}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+            // credentials: 'include',
             ...init,
-            credentials: 'include'
+          
         });
         console.log(response)
         status = response.status;
