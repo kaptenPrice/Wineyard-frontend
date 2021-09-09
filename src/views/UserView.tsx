@@ -5,8 +5,9 @@ import useFetch from '../components/hooks/useFetch';
 import { WineCard } from '../components/WineCard';
 import { useProfile } from '../global/provider/ProfileProvider';
 import wineImg from '../global/images/wine-image.jpg';
+import { emailToInitials } from '../lib/utils';
 
-const User = () => {
+const UserView = () => {
     const classes = useStyles();
     const {
         breakpoints: { down }
@@ -14,38 +15,19 @@ const User = () => {
     const isSmallScreen = useMediaQuery(down('xs'));
     const { t, i18n } = useTranslation();
     const { fetchProfile, profile } = useProfile();
-
-    const [favoriteWines, setFavoriteWines] = useState([]);
     const [expandedItemId, setExpandedItemId] = useState<null | string>(null);
 
-    const splitter = (email: string) => {
-        const name = email.split('@')[0].split('.');
-        const init = (name[0].split('')[0] + name[1].split('')[0]).toUpperCase();
-        return init;
-    };
     useEffect(() => {
-        showProfile();
+        fetchProfile();
     }, []);
+    
+    const splitter = emailToInitials(profile?.email);
 
-    const showProfile = async () => {
-        const {
-            data: { profile },
-            status,
-            error
-        } = await useFetch('/profile');
-
-        if (status === 200) {
-            const { email, favoriteWines } = profile;
-            setFavoriteWines(favoriteWines);
-        } else {
-            console.log('error ', error);
-        }
-    };
     const handleExpandItem = (id: string) => {
         setExpandedItemId((prev) => (prev !== id ? id : null));
     };
     const handleGetWines = () => {
-        return favoriteWines.map(({ _id, ...props }) => (
+        return profile.favoriteWines.map(({ _id, ...props }) => (
             <WineCard
                 key={_id}
                 image={wineImg}
@@ -61,7 +43,7 @@ const User = () => {
         <>
             <Box boxShadow={5} bgcolor='background.paper' m={2} p={2}>
                 <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='primary'>
-                    {t('home_welcome')} {splitter(profile?.email)}
+                    {t('home_welcome')} {splitter}
                 </Typography>
             </Box>
             <Grid container xl={5} className={classes.container} id='winesContainer'>
@@ -71,7 +53,7 @@ const User = () => {
     );
 };
 
-export default User;
+export default UserView;
 
 const useStyles = makeStyles(({ breakpoints: { down } }) => ({
     container: {

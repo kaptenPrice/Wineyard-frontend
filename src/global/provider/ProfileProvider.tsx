@@ -7,6 +7,7 @@ const ProfileProvider = (props: any) => {
     const [profile, setProfile] = useState(undefined);
     const fetchProfile = async () => {
         const result = await useFetch('/profile');
+        console.log('here', result.data?.profile);
         setProfile(result.data?.profile || null);
     };
 

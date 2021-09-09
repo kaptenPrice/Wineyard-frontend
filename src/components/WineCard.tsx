@@ -18,7 +18,7 @@ import useFetch from './hooks/useFetch';
 
 //1. send item-id to endpoint -done
 //1.1 diasable button if its liked by this user -done
-//2. retrive data with users wines 
+//2. retrive data with users wines
 //3. save users wines
 //4.show users wines in userpage
 //5.if id exists in users favoritswines mark the wine on winepage with a like
@@ -33,10 +33,11 @@ export const WineCard = ({
     image,
     date,
     year,
-    _id
+    _id,
+    likedBy
 }: WineProps) => {
     const classes = useStyles({ expanded });
-    const [isLiked, setIsLiked] = useState(0);
+    const [isLiked, setIsLiked] = useState(likedBy);
     const handleLike = () => {
         setIsLiked((current) => current + 1);
     };
@@ -87,7 +88,7 @@ export const WineCard = ({
                         disabled={Boolean(isLiked)}
                         aria-label='add to favorites'
                     >
-                        <FavoriteIcon fontSize="small" color={isLiked ? 'error' : 'disabled'} />
+                        <FavoriteIcon fontSize='small' color={isLiked ? 'error' : 'disabled'} />
                     </IconButton>
                     <Typography variant='caption' aria-label='amount of likes'>
                         {isLiked}
@@ -211,4 +212,5 @@ interface WineProps {
     date?: string;
     year?: string;
     _id?: string;
+    likedBy?: number;
 }

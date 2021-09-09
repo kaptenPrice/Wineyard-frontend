@@ -35,6 +35,7 @@ const WinesView = () => {
                 method: 'POST',
                 body: JSON.stringify({ size: currentSize, page: nextPageIndex })
             });
+         
 
             if (status === 200) {
                 setWineData((current) => [...current, ...data]);
@@ -45,7 +46,7 @@ const WinesView = () => {
             console.error(error);
         }
     };
-
+    console.log(wineData)
     const handleExpandItem = (id: string) => {
         setExpandedItemId((prev) => (prev !== id ? id : null));
     };
@@ -94,7 +95,7 @@ const useStyles = makeStyles(({ breakpoints: { down } }) => ({
         '& .infinite-scroll-component,.infinite-scroll-component__outerdiv': {
             display: 'contents'
         },
-        '& .MuiCard-root': {
+        '&>div>div>.MuiCard-root': {
             margin: 15
         },
         [down('xs')]: {

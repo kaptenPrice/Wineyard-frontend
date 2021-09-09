@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core';
 import { useProfile } from '../global/provider/ProfileProvider';
 import { useTranslation } from 'react-i18next';
-import Lottie from 'react-lottie';
 
 const Home = () => {
     const { fetchProfile, profile } = useProfile();
@@ -33,9 +32,12 @@ const Home = () => {
         <>
             <Grid container direction='column'>
                 <Box boxShadow={5} bgcolor='background.paper' m={2} p={2}>
-                    <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary'>
+                    {profile ? (  <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary'>
                         {t('home_welcome')} {profile?.email}
-                    </Typography>
+                    </Typography>) : (  <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary'>
+                        {t('home_welcome')} 
+                    </Typography>)}
+                  
                 </Box>
                 <Grid container direction='row' className={classes.container}>
                     <Paper className={classes.animationBox}>

@@ -24,6 +24,7 @@ const LoginComponent = ({
             <Typography variant='h3' component='div' color='primary'>
                 {isResetPasswordMode ? 'Reset password' : 'Log in'}
             </Typography>
+        
             <TextField
                 variant='standard'
                 color='primary'

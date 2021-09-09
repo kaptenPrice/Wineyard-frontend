@@ -4,3 +4,5 @@ export const handleCookie = (cookieName: string, cookieValue: string, hoursToExp
     return (document.cookie =
         cookieName + ' = ' + cookieValue + '; expires = ' + date.toLocaleDateString());
 };
+
+
