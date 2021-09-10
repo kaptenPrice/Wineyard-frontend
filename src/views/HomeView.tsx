@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-    Grid,
-    Typography,
-    Paper,
-    Box,
-    makeStyles,
-    useTheme,
-    useMediaQuery
-} from '@material-ui/core';
+import { Grid, Typography, Paper, Box, makeStyles, useTheme, useMediaQuery } from '@material-ui/core';
 import { useProfile } from '../global/provider/ProfileProvider';
 import { useTranslation } from 'react-i18next';
 
@@ -28,16 +20,20 @@ const Home = () => {
     //         preserveAspectRatio: 'xMidYMid slice'
     //     }
     // };
+
     return (
         <>
             <Grid container direction='column'>
                 <Box boxShadow={5} bgcolor='background.paper' m={2} p={2}>
-                    {profile ? (  <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary'>
-                        {t('home_welcome')} {profile?.email}
-                    </Typography>) : (  <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary'>
-                        {t('home_welcome')} 
-                    </Typography>)}
-                  
+                    {profile ? (
+                        <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary'>
+                            {t('home_welcome')} {profile?.email}
+                        </Typography>
+                    ) : (
+                        <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary'>
+                            {t('home_welcome')}
+                        </Typography>
+                    )}
                 </Box>
                 <Grid container direction='row' className={classes.container}>
                     <Paper className={classes.animationBox}>
@@ -45,6 +41,7 @@ const Home = () => {
                         options={defaultOptions}
                         style={!isSmallScreen ? lottieStyle.lottieLarge : lottieStyle.lottieSmall}
                     /> */}
+                        {}
                     </Paper>
                 </Grid>
             </Grid>
