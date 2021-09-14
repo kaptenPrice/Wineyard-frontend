@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState, Dispatch } from 'react';
-import useFetch from './../../components/hooks/useFetch';
+import useFetch from '../../lib/useFetch';
 
 export const UserData = createContext(undefined);
 
@@ -7,8 +7,8 @@ const ProfileProvider = (props: any) => {
     const [profile, setProfile] = useState(undefined);
     const fetchProfile = async () => {
         const result = await useFetch('/profile');
-        console.log('here', result.data?.profile);
         setProfile(result.data?.profile || null);
+
     };
 
     useEffect(() => {

@@ -14,15 +14,12 @@ import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import useFetch from './hooks/useFetch';
+import useFetch from '../lib/useFetch';
+import { useProfile } from '../global/provider/ProfileProvider';
+import { emailToInitials } from '../lib/utils';
 
-//1. send item-id to endpoint -done
-//1.1 diasable button if its liked by this user -done
-//2. retrive data with users wines
-//3. save users wines
-//4.show users wines in userpage
-//5.if id exists in users favoritswines mark the wine on winepage with a like
-//6.increase amount of likes
+//If userId exists in wines list of users who liked the wine => isliked is true
+
 export const WineCard = ({
     handleExpandOnClick,
     expanded,
@@ -34,26 +31,26 @@ export const WineCard = ({
     date,
     year,
     _id,
-    likedBy
+    likedBy,
 }: WineProps) => {
     const classes = useStyles({ expanded });
-    const [isLiked, setIsLiked] = useState(likedBy);
-    const handleLike = () => {
-        setIsLiked((current) => current + 1);
-    };
+    const { profile } = useProfile();
+
+    const initials = emailToInitials(name, ' ');
+    const isLikedByCurrentUser = likedBy && likedBy?.length ? likedBy.includes(profile?._id) : false;
+
     const handleAddToFavorites = async () => {
-        console.log('ID: ', _id);
         try {
             const response = await useFetch('/user/addfavoritewine', {
                 method: 'PATCH',
                 body: JSON.stringify({ id: _id })
             });
-            console.log('ADDWINE: ', response);
+
         } catch (error) {
             console.log(error);
         }
     };
-
+    
     return (
         <>
             {expanded && <div className={classes.cover} onClick={handleExpandOnClick} />}
@@ -62,7 +59,7 @@ export const WineCard = ({
                     className={classes.cardHeader}
                     avatar={
                         <Avatar aria-label='wine' className={classes.avtar}>
-                            Init
+                            {initials}
                         </Avatar>
                     }
                     title={name}
@@ -84,18 +81,15 @@ export const WineCard = ({
                 </CardContent>
                 <CardActions className={classes.actionContainer} disableSpacing>
                     <IconButton
-                        onClick={() => [handleLike(), handleAddToFavorites()]}
-                        disabled={Boolean(isLiked)}
+                        onClick={() => handleAddToFavorites()}
+                        disabled={isLikedByCurrentUser}
                         aria-label='add to favorites'
                     >
-                        <FavoriteIcon fontSize='small' color={isLiked ? 'error' : 'disabled'} />
+                        <FavoriteIcon fontSize='small' color={isLikedByCurrentUser ? 'error' : 'disabled'} />
                     </IconButton>
                     <Typography variant='caption' aria-label='amount of likes'>
-                        {isLiked}
+                        {likedBy?.length ? likedBy.length : ''} {"LIKES"}
                     </Typography>
-                    {/* <IconButton aria-label='share'>
-                        <ShareIcon />
-                    </IconButton> */}
                     <IconButton
                         className={clsx(classes.expand, {
                             [classes.expandOpen]: expanded
@@ -212,5 +206,5 @@ interface WineProps {
     date?: string;
     year?: string;
     _id?: string;
-    likedBy?: number;
+    likedBy?: Array<string>;
 }

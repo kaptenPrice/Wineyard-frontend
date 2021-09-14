@@ -2,7 +2,7 @@ import { Button, makeStyles, TextField, Typography } from '@material-ui/core';
 import { Grid, Paper } from '@material-ui/core';
 import React, { useState } from 'react';
 import LoginComponent from '../components/LoginComponent';
-import useFetch from '../components/hooks/useFetch';
+import useFetch from '../lib/useFetch';
 import SendIcon from '@material-ui/icons/Send';
 import { useEffect } from 'react';
 import { Link, NavLink, useParams, useHistory } from 'react-router-dom';
@@ -38,7 +38,6 @@ const ResetPassView = () => {
     //fetchData
     const handleChangePassword = async (e) => {
         e.preventDefault();
-        console.log(password, tempPassword);
         if (password === tempPassword) {
             const { data, status, error } = await useFetch(`/user/resetPassword/${token}`, {
                 method: 'POST',

@@ -1,18 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useProfile } from '../global/provider/ProfileProvider';
 import IsLoading from '../components/IsLoading';
-import useFetch from '../components/hooks/useFetch';
+import useFetch from '../lib/useFetch';
 import { Grid, makeStyles, useTheme, useMediaQuery } from '@material-ui/core';
 import wineImg from '../global/images/wine-image.jpg';
 import { WineCard } from '../components/WineCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { io } from 'socket.io-client';
+import { useSocket } from '../lib/useSocket';
+import { NewLineKind } from 'typescript';
 
 const WinesView = () => {
     const [wineData, setWineData] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [currentSize, setCurrentSize] = useState(10);
     const [actualSize, setActualSize] = useState(0);
+
+    //const [likedItemId, setLikedItem] = useState(null);
 
     const [expandedItemId, setExpandedItemId] = useState<null | string>(null);
     const {
@@ -24,6 +29,15 @@ const WinesView = () => {
     useEffect(() => {
         fetchWines();
     }, []);
+    useEffect(() => {
+        // openSocket();
+    }, []);
+
+    useSocket('wine-liked', (newLikedWineData) => {
+        setWineData((current) =>
+            current.map((currentWine) => (currentWine._id === newLikedWineData._id ? newLikedWineData : currentWine))
+        );
+    });
 
     const fetchWines = async () => {
         const nextPageIndex = currentPage + 1;
@@ -35,8 +49,6 @@ const WinesView = () => {
                 method: 'POST',
                 body: JSON.stringify({ size: currentSize, page: nextPageIndex })
             });
-         
-
             if (status === 200) {
                 setWineData((current) => [...current, ...data]);
                 setActualSize(amountWines);
@@ -46,7 +58,7 @@ const WinesView = () => {
             console.error(error);
         }
     };
-    console.log(wineData)
+
     const handleExpandItem = (id: string) => {
         setExpandedItemId((prev) => (prev !== id ? id : null));
     };
@@ -61,7 +73,6 @@ const WinesView = () => {
                 handleExpandOnClick={() => handleExpandItem(_id)}
                 _id={_id}
                 {...props}
-
             />
         ));
     };

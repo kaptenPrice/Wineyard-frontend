@@ -1,7 +1,7 @@
 import { Box, Grid, Typography, useMediaQuery, makeStyles, useTheme } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import useFetch from '../components/hooks/useFetch';
+import useFetch from '../lib/useFetch';
 import { WineCard } from '../components/WineCard';
 import { useProfile } from '../global/provider/ProfileProvider';
 import wineImg from '../global/images/wine-image.jpg';
@@ -21,7 +21,7 @@ const UserView = () => {
         fetchProfile();
     }, []);
     
-    const splitter = emailToInitials(profile?.email);
+    const splittedName = emailToInitials(profile?.email, ".");
 
     const handleExpandItem = (id: string) => {
         setExpandedItemId((prev) => (prev !== id ? id : null));
@@ -34,6 +34,7 @@ const UserView = () => {
                 handleExpandOnClick={() => handleExpandItem(_id)}
                 expanded={expandedItemId === _id}
                 _id={_id}
+                // likedBy={_id}
                 {...props}
             />
         ));
@@ -43,7 +44,7 @@ const UserView = () => {
         <>
             <Box boxShadow={5} bgcolor='background.paper' m={2} p={2}>
                 <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='primary'>
-                    {t('home_welcome')} {splitter}
+                    {t('home_welcome')} {splittedName}
                 </Typography>
             </Box>
             <Grid container xl={5} className={classes.container} id='winesContainer'>
