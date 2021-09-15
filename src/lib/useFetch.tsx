@@ -45,7 +45,7 @@ type EndPointType =
     | '/wine/byNameOrCountry'
     | '/wine/delete'
     | '/user/addfavoritewine'
-    | '/user/deletewine'
+    | `/user/deletewine/${string}`
     | '/user/forgotpassword'
     | '/user/getall'
     | '/user/getbyid'

@@ -20,6 +20,7 @@ const UserView = () => {
     useEffect(() => {
         fetchProfile();
     }, []);
+  
     
     const splittedName = emailToInitials(profile?.email, ".");
 
@@ -34,7 +35,6 @@ const UserView = () => {
                 handleExpandOnClick={() => handleExpandItem(_id)}
                 expanded={expandedItemId === _id}
                 _id={_id}
-                // likedBy={_id}
                 {...props}
             />
         ));

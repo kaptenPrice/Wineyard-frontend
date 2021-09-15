@@ -17,6 +17,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import useFetch from '../lib/useFetch';
 import { useProfile } from '../global/provider/ProfileProvider';
 import { emailToInitials } from '../lib/utils';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 //If userId exists in wines list of users who liked the wine => isliked is true
 
@@ -31,7 +32,7 @@ export const WineCard = ({
     date,
     year,
     _id,
-    likedBy,
+    likedBy
 }: WineProps) => {
     const classes = useStyles({ expanded });
     const { profile } = useProfile();
@@ -45,12 +46,17 @@ export const WineCard = ({
                 method: 'PATCH',
                 body: JSON.stringify({ id: _id })
             });
-
         } catch (error) {
             console.log(error);
         }
     };
-    
+    const handleRemoveFromFavorites = async (wineId: string) => {
+        const response = await useFetch(`/user/deletewine/${wineId}`, {
+            method: 'PUT'
+        });
+        // console.log(response.data)
+    };
+
     return (
         <>
             {expanded && <div className={classes.cover} onClick={handleExpandOnClick} />}
@@ -88,8 +94,17 @@ export const WineCard = ({
                         <FavoriteIcon fontSize='small' color={isLikedByCurrentUser ? 'error' : 'disabled'} />
                     </IconButton>
                     <Typography variant='caption' aria-label='amount of likes'>
-                        {likedBy?.length ? likedBy.length : ''} {"LIKES"}
+                        {likedBy?.length ? likedBy.length : ''} {'LIKES'}
                     </Typography>
+                    {isLikedByCurrentUser && (
+                        <IconButton onClick={() => handleRemoveFromFavorites(_id)} disabled={!isLikedByCurrentUser}>
+                            <DeleteIcon
+                                fontSize='small'
+                                color={!isLikedByCurrentUser ? 'disabled' : 'error'}
+                            ></DeleteIcon>
+                        </IconButton>
+                    )}
+
                     <IconButton
                         className={clsx(classes.expand, {
                             [classes.expandOpen]: expanded

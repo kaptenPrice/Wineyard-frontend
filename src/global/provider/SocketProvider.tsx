@@ -9,10 +9,8 @@ const SocketProvider = ({ children }: PropsWithChildren<any>) => {
 
     useEffect(() => {
         const socket = io('http://localhost:3001');
-        setSocket(socket);
-
         socket.on('connect', () => {
-            console.log('socketIo is connected');
+            setSocket(socket);
         });
 
         socket.on('disconnect', () => {
