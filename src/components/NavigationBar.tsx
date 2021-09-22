@@ -1,33 +1,23 @@
 /* eslint-disable no-undef */
-import React, { useState, forwardRef, useEffect } from 'react';
+import React, { useState, forwardRef, useEffect, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import {
-    Button,
-    Grid,
     makeStyles,
     Menu,
-    Popover,
     Slide,
-    Tab,
-    Tabs,
     useTheme,
-    Paper, useMediaQuery
+    useMediaQuery,
+    Typography,
+    MenuItem,
+    SlideProps,
+    AppBar
 } from '@material-ui/core';
-import { IconButton, Typography } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import Brightness4 from '@material-ui/icons/Brightness4';
-import Brightness5 from '@material-ui/icons/Brightness5';
-import AppBar from '@material-ui/core/AppBar';
+
 import ToolBar from '@material-ui/core/Toolbar';
-import { MenuItem } from '@material-ui/core';
 import { useProfile } from '../global/provider/ProfileProvider';
 import { useTranslation } from 'react-i18next';
-import { SlideProps } from '@material-ui/core';
 import { useThemeProvider } from '../global/provider/ThemeProvider';
-import Lottie from 'react-lottie';
-import themeButton from './lottieFiles/themeButtonSvg.json';
 import hamMenu from './lottieFiles/hamburger-menu.json';
-import { useRef } from 'react';
 import LottieButton from './LottieButton';
 
 const CustomSlide = forwardRef((props: SlideProps, ref) => {
@@ -42,35 +32,24 @@ export const NavigationBar = () => {
     const {
         breakpoints: { down }
     } = useTheme();
-    const isSmallScreen = useMediaQuery(down('sm'));
+    // const isSmallScreen = useMediaQuery(down('sm'));
     const lottieRef = useRef(null);
-    const [selectedTab, setSelectedTab]: any = useState(0);
     const [anchorEl, setAnchorEl] = useState(null);
-    const { fetchProfile, profile } = useProfile();
-    const { isDarkMode, setIsDarkMode } = useThemeProvider();
+    const { profile } = useProfile();
+    const { isDarkMode } = useThemeProvider();
 
     const classes = useStyles();
     const history = useHistory();
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
-    const handleChange = (event: any, newValue: number) => {
-        setSelectedTab(newValue);
-    };
-
-    const handleClick = (event: any) => {
-        setAnchorEl((current) => (current ? null : event.currentTarget));
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl((current: HTMLAnchorElement) => (current ? null : event.currentTarget));
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
     const handleRedirectHome = () => {
         history.push('/home');
-    };
-    const changeLanguage = (language: string) => {
-        i18n.changeLanguage(language);
-    };
-    const handleChangeTheme = () => {
-        setIsDarkMode((isDarkMode) => !isDarkMode);
     };
 
     useEffect(() => {
@@ -80,12 +59,7 @@ export const NavigationBar = () => {
     return (
         <AppBar className={classes.NavigationBar} color='primary' elevation={anchorEl ? 0 : 3}>
             <ToolBar>
-                <Typography
-                    onClick={handleRedirectHome}
-                    className={classes.title}
-                    variant='h6'
-                    color='secondary'
-                >
+                <Typography onClick={handleRedirectHome} className={classes.title} variant='h6' color='secondary'>
                     WINEYARD
                 </Typography>
                 <Typography className={classes.email}>{profile?.email}</Typography>
@@ -133,7 +107,7 @@ export const NavigationBar = () => {
     );
 };
 
-const useStyles = makeStyles(({ spacing, breakpoints: { down }, palette: { primary } }) => ({
+const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary } }) => ({
     NavigationBar: {
         position: 'relative',
         zIndex: 1500,
@@ -148,7 +122,6 @@ const useStyles = makeStyles(({ spacing, breakpoints: { down }, palette: { prima
     },
     menuButton: {
         marginLeft: 0,
-        // backgroundColor:"red",
         '& path': { fill: '#dbdbdb' },
         [down('xs')]: {
             marginLeft: 'auto'

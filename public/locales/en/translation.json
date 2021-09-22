@@ -1,12 +1,15 @@
 {
     "navbar": {
         "label_one": "Wines",
-        "label_two": "Users",
+        "label_two": "Profile",
         "login": "Login",
         "logout": "Logout",
         "settings": "Settings"
     },
 
     "home_welcome": "Welcome",
+    "profile":{
+        "add_wine":"Add new wine"
+    },
     "settings": { "language": "Language", "theme":"Theme" }
 }

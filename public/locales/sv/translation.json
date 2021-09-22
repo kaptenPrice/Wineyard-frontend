@@ -1,12 +1,15 @@
 {
     "navbar": {
         "label_one": "Viner",
-        "label_two": "Användare",
+        "label_two": "Profil",
         "login": "Logga in",
         "logout": "Logga ut",
         "settings": "Inställningar"
     },
 
     "home_welcome": "Välkommen",
+    "profile":{
+        "add_wine":"Lägg till nytt vin"
+    },
     "settings": { "language": "Språk" , "theme":"Tema"}
 }

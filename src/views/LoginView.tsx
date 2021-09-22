@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Grid, Modal, Paper, Typography } from '@material-ui/core';
-import { Link, useHistory } from 'react-router-dom';
+import { Grid, Paper, Typography } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import { useProfile } from '../global/provider/ProfileProvider';
 import useFetch from '../lib/useFetch';
@@ -34,8 +34,8 @@ const LoginView = () => {
                 setServerMessage(response?.data.message);
             }
         } catch (error) {
-            setServerMessage("Server seems to be tired, visit later please")
-            console.log({error:error, message: "error rån logon"});
+            setServerMessage('Server seems to be tired, visit later please');
+            console.log({ error: error, message: 'error rån logon' });
         }
     };
 
@@ -80,12 +80,7 @@ const LoginView = () => {
 
     return (
         <form autoComplete='on'>
-            <Grid
-                container
-                justifyContent='center'
-                alignContent='center'
-                className={classes.LoginView}
-            >
+            <Grid container justifyContent='center' alignContent='center' className={classes.LoginView}>
                 <Grid className={classes.cardContainer}>
                     <ReactCardFlip isFlipped={isFlipped} flipDirection='horizontal'>
                         <Paper className={classes.loginBox} style={{ opacity: isFlipped ? 0 : 1 }}>
@@ -98,11 +93,7 @@ const LoginView = () => {
                                 handleRegister={handleRegister}
                                 serverMessage={serverMessage}
                             />
-                            <Typography
-                                variant='button'
-                                className={classes.link}
-                                onClick={handleFlipp}
-                            >
+                            <Typography variant='button' className={classes.link} onClick={handleFlipp}>
                                 Reset password
                             </Typography>
                         </Paper>
@@ -114,11 +105,7 @@ const LoginView = () => {
                                 handleClick={handleForgottPassword}
                                 serverMessage={serverMessage}
                             />
-                            <Typography
-                                variant='button'
-                                onClick={handleFlipp}
-                                className={classes.link}
-                            >
+                            <Typography variant='button' onClick={handleFlipp} className={classes.link}>
                                 Log in
                             </Typography>
                         </Paper>
@@ -134,7 +121,7 @@ const useStyles = makeStyles(({ palette: { primary, background }, breakpoints: {
     LoginView: {
         height: 'calc(100vh - 64px)',
         width: '100%',
-        background:background.default,
+        background: background.default,
         overflow: 'hidden'
     },
     cardContainer: {
@@ -149,7 +136,7 @@ const useStyles = makeStyles(({ palette: { primary, background }, breakpoints: {
         borderRadius: 20,
         textAlign: 'center',
         border: `3px solid ${primary.main}`,
-        background:background.paper,
+        background: background.paper,
 
         '&>div': {
             height: 450,

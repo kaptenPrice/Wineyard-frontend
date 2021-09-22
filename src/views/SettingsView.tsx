@@ -1,6 +1,5 @@
 import { Button, Grid, Paper, Typography, useTheme, makeStyles } from '@material-ui/core';
 import React from 'react';
-import {} from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LottieButton from '../components/LottieButton';
 import { useThemeProvider } from '../global/provider/ThemeProvider';

@@ -5,7 +5,6 @@ import wineImg from '../global/images/wine-image.jpg';
 import { WineCard } from './WineCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { io } from 'socket.io-client';
 import { useSocket } from '../lib/useSocket';
 
 export const Wines = () => {
@@ -17,31 +16,9 @@ export const Wines = () => {
 
     useEffect(() => {
         fetchWines();
+        
     }, []);
-    const checkSocket = (ev: string) => {
-        const socket = io('http://localhost:3001');
-        socket.on(ev, () => {
-            console.log('socketIo is connected');
-        });
-        socket.on(ev, (newLikedWineData) => {
-            console.log(newLikedWineData);
-            setWineData((currentWines) =>
-                currentWines.map((currentWine) =>
-                    currentWine._id === newLikedWineData._id ? newLikedWineData : currentWine
-                )
-            );
-        });
-        // socket.on('wine-unliked', (newWineData) => {
-        //     setWineData((currentWines) =>
-        //         currentWines.map((currentWine) =>
-        //             currentWine._id === newWineData._id ? newWineData : currentWine
-        //         )
-        //     );
-        // });
-        socket.on('disconnect', () => {
-            console.log('Socket disconnecting');
-        });
-    };
+ 
 
     const fetchWines = async () => {
         const nextPageIndex = currentPage + 1;
@@ -62,7 +39,6 @@ export const Wines = () => {
             console.error(error);
         }
     };
-    // console.log(wineData)
 
     useSocket(['wine-liked', 'wine-unliked'], (newLikedWineData) => {
         setWineData((current) =>
@@ -76,7 +52,7 @@ export const Wines = () => {
         return wineData.map(({ _id, updatedAt, ...props }) => (
             <WineCard
                 key={_id}
-                image={wineImg}
+                image={props?.avatar ? `http://localhost:3001/${props.avatar}` : wineImg}
                 date={updatedAt}
                 expanded={expandedItemId === _id}
                 handleExpandOnClick={() => handleExpandItem(_id)}

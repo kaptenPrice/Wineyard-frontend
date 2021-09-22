@@ -5,8 +5,6 @@ const useFetch: UseFetchType = async (endpoint, init) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
-                // 'Access-Control-Allow-Origin': 'http://localhost:3001'
-                // 'Access-Control-Allow-Credentials': 'true'
             },
             credentials: 'include',
             ...init

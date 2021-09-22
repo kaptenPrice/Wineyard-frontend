@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -18,8 +18,6 @@ import useFetch from '../lib/useFetch';
 import { useProfile } from '../global/provider/ProfileProvider';
 import { emailToInitials } from '../lib/utils';
 import DeleteIcon from '@material-ui/icons/Delete';
-
-//If userId exists in wines list of users who liked the wine => isliked is true
 
 export const WineCard = ({
     handleExpandOnClick,
@@ -51,10 +49,9 @@ export const WineCard = ({
         }
     };
     const handleRemoveFromFavorites = async (wineId: string) => {
-        const response = await useFetch(`/user/deletewine/${wineId}`, {
+        await useFetch(`/user/deletewine/${wineId}`, {
             method: 'PUT'
         });
-        // console.log(response.data)
     };
 
     return (
@@ -152,7 +149,6 @@ const useStyles = makeStyles(({ transitions, palette: { background }, breakpoint
             overflow: 'hidden',
             lineBreak: 'anywhere',
             whiteSpace: 'nowrap'
-            //wordBreak: 'break-word'
         }
     },
     mediaContainer: {

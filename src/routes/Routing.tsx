@@ -39,7 +39,6 @@ const useStyles = makeStyles(({ palette: { background } }) => ({
         }
     }
 }));
-// isLoading
 const Routing = () => {
     const { profile } = useProfile();
     useStyles();
