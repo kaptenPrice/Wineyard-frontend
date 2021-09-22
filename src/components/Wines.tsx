@@ -16,9 +16,7 @@ export const Wines = () => {
 
     useEffect(() => {
         fetchWines();
-        
     }, []);
- 
 
     const fetchWines = async () => {
         const nextPageIndex = currentPage + 1;
@@ -40,10 +38,12 @@ export const Wines = () => {
         }
     };
 
-    useSocket(['wine-liked', 'wine-unliked'], (newLikedWineData) => {
+    useSocket(['wine-liked', 'wine-unliked', 'wine-added'], (newWineData) => {
         setWineData((current) =>
-            current.map((currentWine) => (currentWine._id === newLikedWineData._id ? newLikedWineData : currentWine))
+            current.map((currentWine) => (currentWine._id === newWineData._id  ? newWineData : currentWine))
         );
+        !wineData.includes(newWineData._id) && setWineData((current)=>[...current, newWineData])
+        
     });
     const handleExpandItem = (id: string) => {
         setExpandedItemId((prev) => (prev !== id ? id : null));
