@@ -34,6 +34,9 @@ const useStyles = makeStyles(({ palette: { background } }) => ({
             paddingRight: '0!important',
             boxSizing: 'border-box'
         },
+        path: {
+            fill: '#dbdbdb'
+        },
         input: {
             color: 'rgb(168, 87, 20) !important'
         }
@@ -60,11 +63,7 @@ const Routing = () => {
                 <Route exact path='/settings' component={blockRouteIfNotLoggedIn(SettingsView)} />
                 <Route exact path='/login' component={blockRouteIfAuthenticated(LoginView)} />
                 <Route exact path='/logout' component={blockRouteIfNotLoggedIn(LogoutView)} />
-                <Route
-                    exact
-                    path='/resetpassword/:token'
-                    component={blockRouteIfAuthenticated(ResetPassView)}
-                />
+                <Route exact path='/resetpassword/:token' component={blockRouteIfAuthenticated(ResetPassView)} />
                 <Route component={NoMatchView} />
             </Switch>
         </Router>

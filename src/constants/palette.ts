@@ -13,11 +13,13 @@ export const darkPalette: PaletteOptions = {
 
 export const lightPalette: PaletteOptions = {
     primary: {
-        main: '#00B9C5'
+        main: '#00B9C5',
+        
     },
     secondary: {
         main: '#0B2545'
     },
+
     type: 'light',
      background: { default: '#e4e4e4' },
 };

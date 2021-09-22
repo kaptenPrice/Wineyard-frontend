@@ -18,6 +18,7 @@ import useFetch from '../lib/useFetch';
 import { useProfile } from '../global/provider/ProfileProvider';
 import { emailToInitials } from '../lib/utils';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { Palette } from '@material-ui/icons';
 
 export const WineCard = ({
     handleExpandOnClick,
@@ -30,17 +31,19 @@ export const WineCard = ({
     date,
     year,
     _id,
-    likedBy
+    likedBy,
+    showActionButtons,
+    addedBy
 }: WineProps) => {
     const classes = useStyles({ expanded });
     const { profile } = useProfile();
 
-    const initials = emailToInitials(name, ' ');
+   const initials = emailToInitials(name, ' ');
     const isLikedByCurrentUser = likedBy && likedBy?.length ? likedBy.includes(profile?._id) : false;
 
     const handleAddToFavorites = async () => {
         try {
-            const response = await useFetch('/user/addfavoritewine', {
+            await useFetch('/user/addfavoritewine', {
                 method: 'PATCH',
                 body: JSON.stringify({ id: _id })
             });
@@ -53,7 +56,6 @@ export const WineCard = ({
             method: 'PUT'
         });
     };
-
     return (
         <>
             {expanded && <div className={classes.cover} onClick={handleExpandOnClick} />}
@@ -66,7 +68,7 @@ export const WineCard = ({
                         </Avatar>
                     }
                     title={name}
-                    subheader={date}
+                    subheader={addedBy &&"Added by: "+addedBy}
                 />
                 <div className={classes.mediaContainer}>
                     <CardMedia component='img' className={classes.media} image={image} alt={name} />
@@ -83,22 +85,29 @@ export const WineCard = ({
                     </Typography>
                 </CardContent>
                 <CardActions className={classes.actionContainer} disableSpacing>
-                    <IconButton
-                        onClick={() => handleAddToFavorites()}
-                        disabled={isLikedByCurrentUser}
-                        aria-label='add to favorites'
-                    >
-                        <FavoriteIcon fontSize='small' color={isLikedByCurrentUser ? 'error' : 'disabled'} />
-                    </IconButton>
-                    <Typography variant='caption' aria-label='amount of likes'>
-                        {likedBy?.length ? likedBy.length : ''} {'LIKES'}
-                    </Typography>
+                    {showActionButtons && (
+                        <>
+                            <IconButton
+                                onClick={() => handleAddToFavorites()}
+                                disabled={isLikedByCurrentUser}
+                                aria-label='add to favorites'
+                            >
+                                <FavoriteIcon
+                                    fontSize='small'
+                                    className={
+                                        isLikedByCurrentUser ? classes.likeButtonLiked : classes.likeButtonUnliked
+                                    }
+                                />
+                            </IconButton>
+                            <Typography variant='caption' aria-label='amount of likes'>
+                                {likedBy?.length ? likedBy.length : ''} {'LIKES'}
+                            </Typography>
+                        </>
+                    )}
+
                     {isLikedByCurrentUser && (
                         <IconButton onClick={() => handleRemoveFromFavorites(_id)} disabled={!isLikedByCurrentUser}>
-                            <DeleteIcon
-                                fontSize='small'
-                                color={!isLikedByCurrentUser ? 'disabled' : 'error'}
-                            ></DeleteIcon>
+                            <DeleteIcon fontSize='small' className={isLikedByCurrentUser && classes.likeButtonLiked} />
                         </IconButton>
                     )}
 
@@ -160,8 +169,10 @@ const useStyles = makeStyles(({ transitions, palette: { background }, breakpoint
         width: 'inherit',
         height: 'inherit',
         transition: 'transform 1s',
+        opacity: 0.95,
         '&:hover': {
-            transform: 'scale(1.2)'
+            transform: 'scale(1.2)',
+            opacity: 1
         }
     },
     actionContainer: {
@@ -199,9 +210,19 @@ const useStyles = makeStyles(({ transitions, palette: { background }, breakpoint
             //@ts-ignore
             paddingBottom: ({ expanded }) => (expanded ? 96 : 0)
         }
+    },
+    likeButtonLiked: {
+        '& path': { fill: '#fb2b2be1' }
+    },
+    likeButtonUnliked: {
+        '& path': { fill: background }
     }
 }));
-
+/**   menuButton: {
+        marginLeft: 0,
+        '& path': { fill: '#dbdbdb' },
+       
+    }, */
 /* -------------------------------------------------------------------------- */
 /*                                    types                                   */
 /* -------------------------------------------------------------------------- */
@@ -218,4 +239,6 @@ interface WineProps {
     year?: string;
     _id?: string;
     likedBy?: Array<string>;
+    showActionButtons?: boolean;
+    addedBy?: string;
 }

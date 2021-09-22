@@ -122,7 +122,6 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary } }) =
     },
     menuButton: {
         marginLeft: 0,
-        '& path': { fill: '#dbdbdb' },
         [down('xs')]: {
             marginLeft: 'auto'
         }

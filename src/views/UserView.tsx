@@ -12,7 +12,9 @@ import {
     DialogContentText,
     TextField,
     DialogActions,
-    Input
+    Input,
+    IconButton,
+    Tooltip
 } from '@material-ui/core';
 
 import AddIcon from '@material-ui/icons/Add';
@@ -56,6 +58,7 @@ const UserView = () => {
         setExpandedItemId((prev) => (prev !== id ? id : null));
     };
     const handleModal = () => {
+        console.log('clicked');
         setIsOpen((current) => !current);
         setImage(null);
         setError('');
@@ -97,7 +100,7 @@ const UserView = () => {
         }
     };
 
-    const handleAddWine = () => {
+    const addWineModal = () => {
         return (
             <NewWineModal
                 open={isOpen}
@@ -135,21 +138,35 @@ const UserView = () => {
                     {t('home_welcome')} {splittedName}
                 </Typography>
             </Box>
-            <Grid container justifyContent='center' className={classes.containerIcon}>
-                <AddIcon fontSize='large' className={classes.addIcon} onClick={handleModal} />
-                {handleAddWine()}
-            </Grid>
 
             <Grid container xl={6} className={classes.containerWines} id='winesContainer'>
                 {handleGetWines()}
             </Grid>
+            <Tooltip title="Add new wine">
+                <IconButton onClick={handleModal} className={classes.addIcon}>
+                    <AddIcon fontSize='large' color='action' />
+                </IconButton>
+            </Tooltip>
+            <NewWineModal
+                open={isOpen}
+                onClose={handleModal}
+                setName={(e) => setName(e.target.value)}
+                setCountry={(e) => setCountry(e.target.value)}
+                setYear={(e) => setYear(e.target.value)}
+                setDescription={(e) => setDescription(e.target.value)}
+                handleAddFile={handleFile}
+                image={image}
+                error={error}
+                handleCancel={handleModal}
+                handleSave={handleSubmitWine}
+            />
         </>
     );
 };
 
 export default UserView;
 
-const useStyles = makeStyles(({ breakpoints: { down } }) => ({
+const useStyles = makeStyles(({ palette: { primary }, breakpoints: { down } }) => ({
     containerWines: {
         maxWidth: 1720,
         justifyContent: 'center',
@@ -168,34 +185,29 @@ const useStyles = makeStyles(({ breakpoints: { down } }) => ({
     containerIcon: {
         '& :hover': { cursor: 'pointer' }
     },
-    addIcon: {
-        backgroundColor: 'red',
-        padding: 25,
-        borderRadius: '50%'
-    },
+
     containerDialog: {},
     mediaContainer: { maxWidth: '100px', maxHeight: '150px' },
     media: {
         width: '100%',
-        // height: "200%",
         display: 'block'
     },
     fileInput: {
         height: 0,
         width: 0,
         opacity: 0
-        // display: 'none'
     },
-    label: {
-        display: 'block',
-        width: 30,
-        height: 30,
-        margin: '25px 0px 0px 0px',
-        // lineHeight: 30,
-        fontWeight: 'bold',
-        fontSize: 24,
-        color: 'red',
-        '& :hover': { cursor: 'pointer', opacity: 0.5 }
+    addIcon: {
+        backgroundColor: primary.main,
+        padding: 20,
+        position: 'fixed',
+        bottom: 10,
+        right: 10,
+        boxShadow: '0 3px 10px #888888',
+
+        [down('xs')]: {
+            bottom: 70
+        }
     }
 }));
 

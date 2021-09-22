@@ -36,7 +36,7 @@ const NewWineModal = ({
                 <Grid container direction='column'>
                     <TextField
                         autoFocus
-                        // required
+                        required
                         margin='dense'
                         id='name'
                         label='Name'
@@ -46,7 +46,7 @@ const NewWineModal = ({
                         onChange={setName}
                     />
                     <TextField
-                        // required
+                        required
                         margin='dense'
                         id='country'
                         label='Country'
@@ -56,7 +56,7 @@ const NewWineModal = ({
                         onChange={setCountry}
                     />
                     <TextField
-                        // required
+                        required
                         margin='dense'
                         id='year'
                         label='Year'
@@ -66,7 +66,7 @@ const NewWineModal = ({
                         onChange={setYear}
                     />
                     <TextField
-                        // required
+                        required
                         margin='dense'
                         id='description'
                         label='Description'

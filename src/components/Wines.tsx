@@ -6,6 +6,7 @@ import { WineCard } from './WineCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useSocket } from '../lib/useSocket';
+import { emailToInitials } from '../lib/utils';
 
 export const Wines = () => {
     const [wineData, setWineData] = useState([]);
@@ -13,6 +14,7 @@ export const Wines = () => {
     const [currentSize, setCurrentSize] = useState(10);
     const [actualSize, setActualSize] = useState(0);
     const [expandedItemId, setExpandedItemId] = useState<null | string>(null);
+    const showActionButtons: boolean = true;
 
     useEffect(() => {
         fetchWines();
@@ -38,25 +40,30 @@ export const Wines = () => {
         }
     };
 
-    useSocket(['wine-liked', 'wine-unliked', 'wine-added'], (newWineData) => {
+    useSocket(['wine-liked', 'wine-unliked'], (newWineData) => {
         setWineData((current) =>
-            current.map((currentWine) => (currentWine._id === newWineData._id  ? newWineData : currentWine))
+            current.map((currentWine) => (currentWine._id === newWineData._id ? newWineData : currentWine))
         );
-        !wineData.includes(newWineData._id) && setWineData((current)=>[...current, newWineData])
-        
+    });
+
+    useSocket('wine-added', (newData) => {
+        !wineData.includes(newData._id) && setWineData((current) => [...current, newData]);
     });
     const handleExpandItem = (id: string) => {
         setExpandedItemId((prev) => (prev !== id ? id : null));
     };
+
     const getWines = () => {
-        return wineData.map(({ _id, updatedAt, ...props }) => (
+        return wineData.map(({ _id, updatedAt, addedByUser, ...props }) => (
             <WineCard
                 key={_id}
+                addedBy={emailToInitials(addedByUser, '.')}
                 image={props?.avatar ? `http://localhost:3001/${props.avatar}` : wineImg}
                 date={updatedAt}
                 expanded={expandedItemId === _id}
                 handleExpandOnClick={() => handleExpandItem(_id)}
                 _id={_id}
+                showActionButtons={showActionButtons}
                 {...props}
             />
         ));
