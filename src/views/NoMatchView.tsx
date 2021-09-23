@@ -9,12 +9,7 @@ const NoMatchView = () => {
     const classes = useStyles();
     return (
         <Grid>
-            <Grid
-                container
-                justifyContent='center'
-                alignContent='center'
-                className={classes.LoginView}
-            >
+            <Grid container justifyContent='center' alignContent='center' className={classes.LoginView}>
                 <Grid className={classes.cardContainer}>
                     <Paper className={classes.loginBox}>
                         <Grid
@@ -24,19 +19,13 @@ const NoMatchView = () => {
                             alignContent='center'
                             alignItems='center'
                         >
-                            {/* <CloseIcon color='error' fontSize='large' /> */}
                             <Typography variant='h5' component='div' color='error'>
                                 {location.pathname}
                             </Typography>
                             <Typography variant='h3' component='div' color='error' display='block'>
                                 404 (not found)
                             </Typography>
-                            <Grid
-                                container
-                                direction='row'
-                                alignItems='center'
-                                justifyContent='space-evenly'
-                            ></Grid>
+                            <Grid container direction='row' alignItems='center' justifyContent='space-evenly'></Grid>
                         </Grid>
                     </Paper>
                 </Grid>
@@ -46,11 +35,11 @@ const NoMatchView = () => {
 };
 
 export default NoMatchView;
-const useStyles = makeStyles(({ palette: { primary , background}, breakpoints: { down } }) => ({
+const useStyles = makeStyles(({ palette: { primary, background }, breakpoints: { down } }) => ({
     LoginView: {
         height: 'calc(100vh - 64px)',
         width: '100%',
-        background:background.default,
+        background: background.default,
         overflow: 'hidden'
     },
     cardContainer: {

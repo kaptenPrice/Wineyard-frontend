@@ -1,15 +1,16 @@
 import { Button, makeStyles, TextField, Typography } from '@material-ui/core';
 import { Grid, Paper } from '@material-ui/core';
 import React, { useState } from 'react';
-import LoginComponent from '../components/LoginComponent';
 import useFetch from '../lib/useFetch';
 import SendIcon from '@material-ui/icons/Send';
 import { useEffect } from 'react';
-import { Link, NavLink, useParams, useHistory } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
+import useMyHistory from '../components/hooks/useMyHistory';
+import { AppRoutes } from '../routes/AppRoutes';
 
 const ResetPassView = () => {
     const { token } = useParams<{ token: string }>();
-    const history = useHistory();
+    const history = useMyHistory();
     const [password, setPassword] = useState('');
     const [tempPassword, setTempPassword] = useState('');
     const [serverMessage, setServerMessage] = useState('');
@@ -35,7 +36,6 @@ const ResetPassView = () => {
         }
     };
 
-    //fetchData
     const handleChangePassword = async (e) => {
         e.preventDefault();
         if (password === tempPassword) {
@@ -53,7 +53,7 @@ const ResetPassView = () => {
                 setPassword('');
                 setTempPassword('');
                 setTimeout(() => {
-                    history.push('/login');
+                    history.push(AppRoutes.LOGIN);
                     setServerMessage('');
                 }, 2000);
 
@@ -67,12 +67,7 @@ const ResetPassView = () => {
     return (
         <>
             <form>
-                <Grid
-                    container
-                    justifyContent='center'
-                    alignContent='center'
-                    className={classes.LoginView}
-                >
+                <Grid container justifyContent='center' alignContent='center' className={classes.LoginView}>
                     <Grid className={classes.cardContainer}>
                         <Paper className={classes.loginBox}>
                             <Grid
@@ -122,7 +117,7 @@ const ResetPassView = () => {
                                         <Typography variant='h5' component='div' color='primary'>
                                             {serverMessage}
                                             {'. \n\n Go to '}
-                                            <NavLink className={classes.NavLink} to='/login'>
+                                            <NavLink className={classes.NavLink} to={AppRoutes.LOGIN}>
                                                 Login
                                             </NavLink>
                                         </Typography>
@@ -139,42 +134,40 @@ const ResetPassView = () => {
 
 export default ResetPassView;
 
-const useStyles = makeStyles(
-    ({ palette: { primary, background, secondary }, breakpoints: { down } }) => ({
-        LoginView: {
-            height: 'calc(100vh - 64px)',
-            width: '100%',
-            background: '#0004',
-            overflow: 'hidden'
-        },
-        cardContainer: {
-            marginTop: -100,
-            [down('xs')]: {
-                marginTop: 0
-            }
-        },
-        loginBox: {
-            padding: '50px 30px',
-            width: 400,
-            borderRadius: 20,
-            textAlign: 'center',
-            border: `3px solid ${primary.main}`,
-            '&>div': {
-                height: 450,
-                '&>.MuiGrid-root': {
-                    flexBasis: '25%'
-                }
-            }
-        },
-        NavLink: {
-            color: secondary.main,
-            fontSize: '1.6rem',
-            lineHeight: '1.6rem',
-            textDecoration: 'underline',
-            cursor: 'pointer',
-            '&:hover': {
-                color: primary.main
+const useStyles = makeStyles(({ palette: { primary, background, secondary }, breakpoints: { down } }) => ({
+    LoginView: {
+        height: 'calc(100vh - 64px)',
+        width: '100%',
+        background: '#0004',
+        overflow: 'hidden'
+    },
+    cardContainer: {
+        marginTop: -100,
+        [down('xs')]: {
+            marginTop: 0
+        }
+    },
+    loginBox: {
+        padding: '50px 30px',
+        width: 400,
+        borderRadius: 20,
+        textAlign: 'center',
+        border: `3px solid ${primary.main}`,
+        '&>div': {
+            height: 450,
+            '&>.MuiGrid-root': {
+                flexBasis: '25%'
             }
         }
-    })
-);
+    },
+    NavLink: {
+        color: secondary.main,
+        fontSize: '1.6rem',
+        lineHeight: '1.6rem',
+        textDecoration: 'underline',
+        cursor: 'pointer',
+        '&:hover': {
+            color: primary.main
+        }
+    }
+}));

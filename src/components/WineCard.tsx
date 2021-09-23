@@ -38,7 +38,7 @@ export const WineCard = ({
     const classes = useStyles({ expanded });
     const { profile } = useProfile();
 
-   const initials = emailToInitials(name, ' ');
+    const initials = emailToInitials(name, ' ');
     const isLikedByCurrentUser = likedBy && likedBy?.length ? likedBy.includes(profile?._id) : false;
 
     const handleAddToFavorites = async () => {
@@ -68,7 +68,7 @@ export const WineCard = ({
                         </Avatar>
                     }
                     title={name}
-                    subheader={addedBy &&"Added by: "+addedBy}
+                    subheader={addedBy && 'Added by: ' + addedBy}
                 />
                 <div className={classes.mediaContainer}>
                     <CardMedia component='img' className={classes.media} image={image} alt={name} />
@@ -94,9 +94,9 @@ export const WineCard = ({
                             >
                                 <FavoriteIcon
                                     fontSize='small'
-                                    className={
-                                        isLikedByCurrentUser ? classes.likeButtonLiked : classes.likeButtonUnliked
-                                    }
+                                    className={clsx(classes.likeButtonUnliked, {
+                                        [classes.likeButtonLiked]: isLikedByCurrentUser
+                                    })}
                                 />
                             </IconButton>
                             <Typography variant='caption' aria-label='amount of likes'>

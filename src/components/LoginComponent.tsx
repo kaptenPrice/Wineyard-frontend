@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { MouseEventHandler } from 'react';
 import { Button, TextField, Typography, Grid } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';

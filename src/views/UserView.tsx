@@ -100,24 +100,6 @@ const UserView = () => {
         }
     };
 
-    const addWineModal = () => {
-        return (
-            <NewWineModal
-                open={isOpen}
-                onClose={handleModal}
-                setName={(e) => setName(e.target.value)}
-                setCountry={(e) => setCountry(e.target.value)}
-                setYear={(e) => setYear(e.target.value)}
-                setDescription={(e) => setDescription(e.target.value)}
-                handleAddFile={handleFile}
-                image={image}
-                error={error}
-                handleCancel={handleModal}
-                handleSave={handleSubmitWine}
-            />
-        );
-    };
-
     const handleGetWines = () => {
         return profile.favoriteWines.map(({ _id, ...props }) => (
             <WineCard

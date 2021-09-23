@@ -12,14 +12,7 @@ const Home = () => {
     } = useTheme();
     const isSmallScreen = useMediaQuery(down('xs'));
 
-    // const defaultOptions = {
-    //     loop: true,
-    //     autoplay: true,
-    //     animationData: animationData,
-    //     rendererSettings: {
-    //         preserveAspectRatio: 'xMidYMid slice'
-    //     }
-    // };
+ 
 
     return (
         <>
@@ -37,11 +30,7 @@ const Home = () => {
                 </Box>
                 <Grid container direction='row' className={classes.container}>
                     <Paper className={classes.animationBox}>
-                        {/* <Lottie
-                        options={defaultOptions}
-                        style={!isSmallScreen ? lottieStyle.lottieLarge : lottieStyle.lottieSmall}
-                    /> */}
-                        {}
+              
                     </Paper>
                 </Grid>
             </Grid>

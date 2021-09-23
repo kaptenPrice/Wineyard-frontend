@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import React, { useState, forwardRef, useEffect, useRef } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
     makeStyles,
     Menu,
@@ -19,6 +19,8 @@ import { useTranslation } from 'react-i18next';
 import { useThemeProvider } from '../global/provider/ThemeProvider';
 import hamMenu from './lottieFiles/hamburger-menu.json';
 import LottieButton from './LottieButton';
+import { AppRoutes } from '../routes/AppRoutes';
+import useMyHistory from './hooks/useMyHistory';
 
 const CustomSlide = forwardRef((props: SlideProps, ref) => {
     const {
@@ -39,7 +41,7 @@ export const NavigationBar = () => {
     const { isDarkMode } = useThemeProvider();
 
     const classes = useStyles();
-    const history = useHistory();
+    const history = useMyHistory();
     const { t } = useTranslation();
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -49,7 +51,7 @@ export const NavigationBar = () => {
         setAnchorEl(null);
     };
     const handleRedirectHome = () => {
-        history.push('/home');
+        history.push(AppRoutes.HOME);
     };
 
     useEffect(() => {
@@ -80,23 +82,23 @@ export const NavigationBar = () => {
                     transitionDuration={75}
                 >
                     {!profile && (
-                        <MenuItem component={Link} to='/login' onClick={handleClose}>
+                        <MenuItem component={Link} to={AppRoutes.LOGIN} onClick={handleClose}>
                             {t('navbar.login')}
                         </MenuItem>
                     )}
 
                     {profile && (
                         <div>
-                            <MenuItem component={Link} to='/wines' onClick={handleClose}>
+                            <MenuItem component={Link} to={AppRoutes.WINES} onClick={handleClose}>
                                 {t('navbar.label_one')}
                             </MenuItem>
-                            <MenuItem component={Link} to='/users' onClick={handleClose}>
+                            <MenuItem component={Link} to={AppRoutes.USERS} onClick={handleClose}>
                                 {t('navbar.label_two')}
                             </MenuItem>
-                            <MenuItem component={Link} to='/settings' onClick={handleClose}>
+                            <MenuItem component={Link} to={AppRoutes.SETTINGS} onClick={handleClose}>
                                 {t('navbar.settings')}
                             </MenuItem>
-                            <MenuItem component={Link} to='/logout' onClick={handleClose}>
+                            <MenuItem component={Link} to={AppRoutes.LOGOUT} onClick={handleClose}>
                                 {t('navbar.logout')}
                             </MenuItem>{' '}
                         </div>

@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { Grid, Paper, Typography } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import { useProfile } from '../global/provider/ProfileProvider';
 import useFetch from '../lib/useFetch';
 import LoginComponent, { LoginComponentPropsType } from '../components/LoginComponent';
 import ReactCardFlip from 'react-card-flip';
-
+import { motion } from 'framer-motion';
+import { AppRoutes } from '../routes/AppRoutes';
+import useMyHistory from '../components/hooks/useMyHistory';
 const LoginView = () => {
     const classes = useStyles();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [serverMessage, setServerMessage] = useState('');
-    const history = useHistory();
+    const history = useMyHistory();
     const { fetchProfile, profile } = useProfile();
     const [isFlipped, setIsFlipped] = useState(false);
 
@@ -29,7 +30,7 @@ const LoginView = () => {
             });
             if (response.status === 200) {
                 fetchProfile();
-                history.push('/home');
+                history.push(AppRoutes.HOME);
             } else {
                 setServerMessage(response?.data.message);
             }
@@ -79,7 +80,7 @@ const LoginView = () => {
     };
 
     return (
-        <form autoComplete='on'>
+        <motion.form autoComplete='on'>
             <Grid container justifyContent='center' alignContent='center' className={classes.LoginView}>
                 <Grid className={classes.cardContainer}>
                     <ReactCardFlip isFlipped={isFlipped} flipDirection='horizontal'>
@@ -112,7 +113,7 @@ const LoginView = () => {
                     </ReactCardFlip>
                 </Grid>
             </Grid>
-        </form>
+        </motion.form>
     );
 };
 

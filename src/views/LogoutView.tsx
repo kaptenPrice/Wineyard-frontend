@@ -1,19 +1,20 @@
 import { Button, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import SendIcon from '@material-ui/icons/Send';
-import { useHistory } from 'react-router-dom';
 import useFetch from '../lib/useFetch';
 import { useProfile } from '../global/provider/ProfileProvider';
+import { AppRoutes } from '../routes/AppRoutes';
+import useMyHistory from '../components/hooks/useMyHistory';
 
 const LogoutView = () => {
     const { profile, setProfile } = useProfile();
     const classes = useStyles();
-    const history = useHistory();
+    const history = useMyHistory()
     const [serverMessage, setServerMessage] = useState('');
     const [seconds, setSeconds] = useState(5);
     useEffect(() => {
         if (seconds === 0) {
-            history.replace('/home');
+            history.replace('/');
         }
     }, [seconds]);
 
@@ -27,13 +28,12 @@ const LogoutView = () => {
                 setSeconds((seconds) => seconds - 1);
             }, 1000);
         } else {
-         
             setServerMessage(response.data.message);
         }
     };
 
     const handleRegret = () => {
-        history.push('/home');
+        history.push(AppRoutes.HOME);
     };
 
     return (
@@ -55,12 +55,7 @@ const LogoutView = () => {
                                 <Typography variant='h5' component='div' color='secondary'>
                                     Are you sure?
                                 </Typography>
-                                <Grid
-                                    container
-                                    direction='row'
-                                    alignItems='center'
-                                    justifyContent='space-evenly'
-                                >
+                                <Grid container direction='row' alignItems='center' justifyContent='space-evenly'>
                                     <Button
                                         className={classes.button}
                                         color='primary'

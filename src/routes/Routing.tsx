@@ -12,6 +12,7 @@ import ResetPassView from '../views/ResetPassView';
 import { SettingsView } from '../views/SettingsView';
 import UserView from '../views/UserView';
 import WineView from '../views/WinesView';
+import { AppRoutes } from './AppRoutes';
 const useStyles = makeStyles(({ palette: { background } }) => ({
     '@global': {
         '*': {
@@ -56,14 +57,13 @@ const Routing = () => {
         <Router>
             <NavigationBar />
             <Switch>
-                <Route exact path='/' component={Home} />
-                <Route exact path='/home' component={Home} />
-                <Route exact path='/users' component={blockRouteIfNotLoggedIn(UserView)} />
-                <Route exact path='/wines' component={blockRouteIfNotLoggedIn(WineView)} />
-                <Route exact path='/settings' component={blockRouteIfNotLoggedIn(SettingsView)} />
-                <Route exact path='/login' component={blockRouteIfAuthenticated(LoginView)} />
-                <Route exact path='/logout' component={blockRouteIfNotLoggedIn(LogoutView)} />
-                <Route exact path='/resetpassword/:token' component={blockRouteIfAuthenticated(ResetPassView)} />
+                <Route exact path={AppRoutes.HOME} component={Home} />
+                <Route exact path={AppRoutes.USERS} component={blockRouteIfNotLoggedIn(UserView)} />
+                <Route exact path={AppRoutes.WINES} component={blockRouteIfNotLoggedIn(WineView)} />
+                <Route exact path={AppRoutes.SETTINGS} component={blockRouteIfNotLoggedIn(SettingsView)} />
+                <Route exact path={AppRoutes.LOGIN} component={blockRouteIfAuthenticated(LoginView)} />
+                <Route exact path={AppRoutes.LOGOUT} component={blockRouteIfNotLoggedIn(LogoutView)} />
+                <Route exact path={AppRoutes.RESET_PASSWORD} component={blockRouteIfAuthenticated(ResetPassView)} />
                 <Route component={NoMatchView} />
             </Switch>
         </Router>
@@ -72,6 +72,4 @@ const Routing = () => {
 
 export default Routing;
 
-// namespace JSX {
-//     interface Element extends React.ReactElement<any,any>{}
-// }
+
