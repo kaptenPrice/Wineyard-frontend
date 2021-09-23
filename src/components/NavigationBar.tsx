@@ -21,6 +21,7 @@ import hamMenu from './lottieFiles/hamburger-menu.json';
 import LottieButton from './LottieButton';
 import { AppRoutes } from '../routes/AppRoutes';
 import useMyHistory from './hooks/useMyHistory';
+import { useAppRoutes } from '../routes/useAppRoutes';
 
 const CustomSlide = forwardRef((props: SlideProps, ref) => {
     const {
@@ -34,15 +35,14 @@ export const NavigationBar = () => {
     const {
         breakpoints: { down }
     } = useTheme();
-    // const isSmallScreen = useMediaQuery(down('sm'));
     const lottieRef = useRef(null);
     const [anchorEl, setAnchorEl] = useState(null);
     const { profile } = useProfile();
     const { isDarkMode } = useThemeProvider();
 
     const classes = useStyles();
-    const history = useMyHistory();
     const { t } = useTranslation();
+    const { goToHome, goToWines } = useAppRoutes();
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl((current: HTMLAnchorElement) => (current ? null : event.currentTarget));
@@ -51,7 +51,7 @@ export const NavigationBar = () => {
         setAnchorEl(null);
     };
     const handleRedirectHome = () => {
-        history.push(AppRoutes.HOME);
+        goToHome();
     };
 
     useEffect(() => {
@@ -109,7 +109,7 @@ export const NavigationBar = () => {
     );
 };
 
-const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary } }) => ({
+const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defaultSvg } }) => ({
     NavigationBar: {
         position: 'relative',
         zIndex: 1500,
@@ -124,6 +124,9 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary } }) =
     },
     menuButton: {
         marginLeft: 0,
+        '& path': {
+            fill: defaultSvg.main
+        },
         [down('xs')]: {
             marginLeft: 'auto'
         }

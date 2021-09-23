@@ -35,9 +35,9 @@ const useStyles = makeStyles(({ palette: { background } }) => ({
             paddingRight: '0!important',
             boxSizing: 'border-box'
         },
-        path: {
-            fill: '#dbdbdb'
-        },
+        // path: {
+        //     fill: '#dbdbdb'
+        // },
         input: {
             color: 'rgb(168, 87, 20) !important'
         }

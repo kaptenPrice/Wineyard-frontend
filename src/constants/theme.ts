@@ -10,6 +10,5 @@ export default {
         h4: {
             fontSize: 24
         }
-    },
-
+    }
 };

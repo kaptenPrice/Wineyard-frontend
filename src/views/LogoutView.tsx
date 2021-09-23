@@ -5,6 +5,8 @@ import useFetch from '../lib/useFetch';
 import { useProfile } from '../global/provider/ProfileProvider';
 import { AppRoutes } from '../routes/AppRoutes';
 import useMyHistory from '../components/hooks/useMyHistory';
+import { useAppRoutes } from '../routes/useAppRoutes';
+
 
 const LogoutView = () => {
     const { profile, setProfile } = useProfile();
@@ -12,6 +14,9 @@ const LogoutView = () => {
     const history = useMyHistory()
     const [serverMessage, setServerMessage] = useState('');
     const [seconds, setSeconds] = useState(5);
+    const {goToHome}=useAppRoutes()
+
+
     useEffect(() => {
         if (seconds === 0) {
             history.replace('/');
@@ -33,7 +38,7 @@ const LogoutView = () => {
     };
 
     const handleRegret = () => {
-        history.push(AppRoutes.HOME);
+        goToHome()
     };
 
     return (

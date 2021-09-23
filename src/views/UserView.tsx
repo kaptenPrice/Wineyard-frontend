@@ -148,7 +148,7 @@ const UserView = () => {
 
 export default UserView;
 
-const useStyles = makeStyles(({ palette: { primary }, breakpoints: { down } }) => ({
+const useStyles = makeStyles(({ palette: { primary, defaultSvg }, breakpoints: { down } }) => ({
     containerWines: {
         maxWidth: 1720,
         justifyContent: 'center',
@@ -186,6 +186,9 @@ const useStyles = makeStyles(({ palette: { primary }, breakpoints: { down } }) =
         bottom: 10,
         right: 10,
         boxShadow: '0 3px 10px #888888',
+        '& path': {
+            fill: defaultSvg.main
+        },
 
         [down('xs')]: {
             bottom: 70

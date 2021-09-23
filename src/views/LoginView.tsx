@@ -6,17 +6,16 @@ import useFetch from '../lib/useFetch';
 import LoginComponent, { LoginComponentPropsType } from '../components/LoginComponent';
 import ReactCardFlip from 'react-card-flip';
 import { motion } from 'framer-motion';
-import { AppRoutes } from '../routes/AppRoutes';
 import useMyHistory from '../components/hooks/useMyHistory';
+import { useAppRoutes } from '../routes/useAppRoutes';
 const LoginView = () => {
     const classes = useStyles();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [serverMessage, setServerMessage] = useState('');
-    const history = useMyHistory();
     const { fetchProfile, profile } = useProfile();
     const [isFlipped, setIsFlipped] = useState(false);
-
+    const { goToHome } = useAppRoutes();
     const handleFlipp = () => {
         setIsFlipped((current) => !current);
     };
@@ -30,7 +29,7 @@ const LoginView = () => {
             });
             if (response.status === 200) {
                 fetchProfile();
-                history.push(AppRoutes.HOME);
+                goToHome();
             } else {
                 setServerMessage(response?.data.message);
             }

@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import useMyHistory from '../components/hooks/useMyHistory';
 import { AppRoutes } from '../routes/AppRoutes';
+import { useAppRoutes } from '../routes/useAppRoutes';
 
 const ResetPassView = () => {
     const { token } = useParams<{ token: string }>();
@@ -16,6 +17,7 @@ const ResetPassView = () => {
     const [serverMessage, setServerMessage] = useState('');
     const [isValid, setIsValid] = useState(false);
     const classes = useStyles();
+    const {goToLogin}=useAppRoutes()
     useEffect(() => {
         handleTokenVerify();
     }, []);
@@ -53,7 +55,7 @@ const ResetPassView = () => {
                 setPassword('');
                 setTempPassword('');
                 setTimeout(() => {
-                    history.push(AppRoutes.LOGIN);
+                    goToLogin()
                     setServerMessage('');
                 }, 2000);
 
