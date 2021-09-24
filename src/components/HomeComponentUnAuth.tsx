@@ -1,17 +1,17 @@
+import React from 'react';
 import { makeStyles, Typography, useMediaQuery, useTheme } from '@material-ui/core';
 import { motion } from 'framer-motion';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useProfile } from '../provider/ProfileProvider';
 import { AppRoutes } from '../routes/AppRoutes';
 import CollectionSvg from './svg/CollectionSvg';
 import ProfileSvg from './svg/ProfileSvg';
-import ProfileComponent from './svg/ProfileSvg';
 import SettingsSvg from './svg/SettingsSvg';
+import LoginSvg from './svg/LoginSvg';
 
-const HomeComponent = () => {
-    const { fetchProfile, profile } = useProfile();
+const HomeComponentUnAuth = () => {
+    const { profile } = useProfile();
     const { t, i18n } = useTranslation();
     const classes = useStyles();
     const {
@@ -22,29 +22,11 @@ const HomeComponent = () => {
     return (
         <div className={classes.mainDiv}>
             <motion.div className={classes.header} animate={{ y: 30 }}>
-                {profile ? (
-                    <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary'>
-                        {t('home_welcome')} {profile?.email}
-                    </Typography>
-                ) : (
-                    <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary'>
-                        {t('home_welcome')}
-                    </Typography>
-                )}
+                <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary'>
+                    {t('home_welcome')}
+                </Typography>
             </motion.div>
 
-            {/*   <div className={classes.linkContainer}>
-                <motion.div className={classes.linkHolder}>
-                    <Collection width='12em' height='12em' />
-                    <Link className={classes.link} to={AppRoutes.WINES}>
-                        Wines
-                    </Link>
-                </motion.div>
-                <motion.div className={classes.linkHolder}>
-                    <Collection width='12em' height='12em' />
-                </motion.div>
-                <motion.div className={classes.linkHolder}></motion.div>
-            </div> */}
             <div className={classes.linkContainer}>
                 <motion.div
                     className={classes.linkHolder}
@@ -53,34 +35,9 @@ const HomeComponent = () => {
                     transition={{ delay: 0.3 }}
                     whileHover={{ translateY: -15 }}
                 >
-                    <CollectionSvg className={classes.svg} />
-                    <Link className={classes.link} to={AppRoutes.WINES}>
-                        Wines
-                    </Link>
-                </motion.div>
-                <motion.div
-                    className={classes.linkHolder}
-                    initial={{ y: -1550 }}
-                    animate={{ y: 0 }}
-                    transition={{ delay: 0.35 }}
-                    whileHover={{ translateY: -15 }}
-                >
-                    <ProfileSvg className={classes.svg} />
-
-                    <Link className={classes.link} to={AppRoutes.USERS}>
-                        My wines
-                    </Link>
-                </motion.div>
-                <motion.div
-                    className={classes.linkHolder}
-                    initial={{ y: -1550 }}
-                    animate={{ y: 0 }}
-                    transition={{ delay: 0.4 }}
-                    whileHover={{ translateY: -15 }}
-                >
-                    <SettingsSvg className={classes.svg} />
-                    <Link className={classes.link} to={AppRoutes.SETTINGS}>
-                        Settings
+                    <LoginSvg className={classes.svg} />
+                    <Link className={classes.link} to={AppRoutes.LOGIN}>
+                        Login
                     </Link>
                 </motion.div>
             </div>
@@ -88,7 +45,7 @@ const HomeComponent = () => {
     );
 };
 
-export default HomeComponent;
+export default HomeComponentUnAuth;
 const useStyles = makeStyles(({ palette: { background }, breakpoints: { down } }) => ({
     mainDiv: {
         minHeight: '100%'
@@ -126,7 +83,7 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints: { down } }
         Width: '',
         background: background.paper,
         borderRadius: 10,
-        padding:10,
+        padding: 10,
         // boxShadow: '0 1px 5px #888888',
         [down('xs' || 'md')]: {
             width: 192,
@@ -135,11 +92,6 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints: { down } }
             justifyContent: 'space-around',
             alignItems: 'center',
             marginBottom: 10
-        },
-        '&:hover': {
-            opacity: 0.8,
-            borderRadius: 12,
-            cursor: 'pointer'
         }
     },
     svg: {
@@ -156,6 +108,13 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints: { down } }
         fontSize: 24,
         fontWeight: 'bold',
         fontFamily: 'Roboto',
-        color: '#00B9C5'
+        color: '#00B9C5',
+        // boxShadow: '0 1px 1px #888888',
+
+        '&:hover': {
+            opacity: 0.8,
+            borderRadius: 12,
+            cursor: 'pointer'
+        }
     }
 }));

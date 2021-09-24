@@ -79,7 +79,7 @@ const LoginView = () => {
     };
 
     return (
-        <motion.form autoComplete='on'>
+        <form autoComplete='on'>
             <Grid container justifyContent='center' alignContent='center' className={classes.LoginView}>
                 <Grid className={classes.cardContainer}>
                     <ReactCardFlip isFlipped={isFlipped} flipDirection='horizontal'>
@@ -112,7 +112,7 @@ const LoginView = () => {
                     </ReactCardFlip>
                 </Grid>
             </Grid>
-        </motion.form>
+        </form>
     );
 };
 

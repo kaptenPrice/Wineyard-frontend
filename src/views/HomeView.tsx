@@ -1,20 +1,13 @@
 import React from 'react';
-import { Grid, Typography, Paper, Box, makeStyles, useTheme, useMediaQuery } from '@material-ui/core';
 import { useProfile } from '../provider/ProfileProvider';
-import { useTranslation } from 'react-i18next';
-import HomeComponent from '../components/HomeComponent';
+
+import HomeComponentAuth from '../components/HomeComponentAuth';
+import HomeComponentUnAuth from '../components/HomeComponentUnAuth';
 
 const Home = () => {
-   
+    const { profile } = useProfile();
 
-    return (
-        <>
-           
-            <HomeComponent />
-        </>
-    );
+    return <>{profile ? <HomeComponentAuth /> : <HomeComponentUnAuth />}</>;
 };
 
 export default Home;
-
-
