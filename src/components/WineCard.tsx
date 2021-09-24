@@ -15,8 +15,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import useFetch from '../lib/useFetch';
-import { useProfile } from '../global/provider/ProfileProvider';
-import { emailToInitials } from '../lib/utils';
+import { useProfile } from '../provider/ProfileProvider';
+import { stringToInitials } from '../lib/utils';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Palette } from '@material-ui/icons';
 
@@ -38,7 +38,7 @@ export const WineCard = ({
     const classes = useStyles({ expanded });
     const { profile } = useProfile();
 
-    const initials = emailToInitials(name, ' ');
+    const initials = stringToInitials(name, ' ');
     const isLikedByCurrentUser = likedBy && likedBy?.length ? likedBy.includes(profile?._id) : false;
 
     const handleAddToFavorites = async () => {

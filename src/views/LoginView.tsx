@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Grid, Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
-import { useProfile } from '../global/provider/ProfileProvider';
+import { useProfile } from '../provider/ProfileProvider';
 import useFetch from '../lib/useFetch';
 import LoginComponent, { LoginComponentPropsType } from '../components/LoginComponent';
 import ReactCardFlip from 'react-card-flip';

@@ -1,5 +1,4 @@
 import { Palette, PaletteOptions } from '@material-ui/core/styles/createPalette';
-import { purple } from '@material-ui/core/colors';
 
 export const darkPalette: PaletteOptions & CustomPaletteType = {
     // primary: {

@@ -2,7 +2,7 @@ import { Button, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import SendIcon from '@material-ui/icons/Send';
 import useFetch from '../lib/useFetch';
-import { useProfile } from '../global/provider/ProfileProvider';
+import { useProfile } from '../provider/ProfileProvider';
 import { AppRoutes } from '../routes/AppRoutes';
 import useMyHistory from '../components/hooks/useMyHistory';
 import { useAppRoutes } from '../routes/useAppRoutes';

@@ -1,29 +1,12 @@
-import {
-    Box,
-    Grid,
-    Typography,
-    useMediaQuery,
-    makeStyles,
-    useTheme,
-    Button,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogContentText,
-    TextField,
-    DialogActions,
-    Input,
-    IconButton,
-    Tooltip
-} from '@material-ui/core';
+import { Box, Grid, Typography, useMediaQuery, makeStyles, useTheme, IconButton, Tooltip } from '@material-ui/core';
 
 import AddIcon from '@material-ui/icons/Add';
 import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { WineCard } from '../components/WineCard';
-import { useProfile } from '../global/provider/ProfileProvider';
+import { useProfile } from '../provider/ProfileProvider';
 import wineImg from '../global/images/wine-image.jpg';
-import { emailToInitials } from '../lib/utils';
+import { stringToInitials } from '../lib/utils';
 import useFetch from '../lib/useFetch';
 import NewWineModal from '../components/NewWineModal';
 
@@ -52,7 +35,7 @@ const UserView = () => {
         fetchProfile();
     }, []);
 
-    const splittedName = emailToInitials(profile?.email, '.');
+    const splittedName = stringToInitials(profile?.email, '.');
 
     const handleExpandItem = (id: string) => {
         setExpandedItemId((prev) => (prev !== id ? id : null));
@@ -124,7 +107,7 @@ const UserView = () => {
             <Grid container xl={6} className={classes.containerWines} id='winesContainer'>
                 {handleGetWines()}
             </Grid>
-            <Tooltip title="Add new wine">
+            <Tooltip title='Add new wine'>
                 <IconButton onClick={handleModal} className={classes.addIcon}>
                     <AddIcon fontSize='large' color='action' />
                 </IconButton>

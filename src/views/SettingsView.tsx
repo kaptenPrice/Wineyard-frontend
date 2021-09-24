@@ -2,7 +2,7 @@ import { Button, Grid, Paper, Typography, useTheme, makeStyles } from '@material
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import LottieButton from '../components/LottieButton';
-import { useThemeProvider } from '../global/provider/ThemeProvider';
+import { useThemeProvider } from '../provider/ThemeProvider';
 import themeButton from '../components/lottieFiles/themeButtonSvg.json';
 
 import Flags from 'country-flag-icons/react/3x2';

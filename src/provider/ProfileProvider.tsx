@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState, Dispatch } from 'react';
-import useFetch from '../../lib/useFetch';
+import useFetch from '../lib/useFetch';
 
 export const UserData = createContext(undefined);
 

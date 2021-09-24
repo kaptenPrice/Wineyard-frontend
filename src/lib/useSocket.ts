@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getSocket } from '../global/provider/SocketProvider';
+import { getSocket } from '../provider/SocketProvider';
 
 export const useSocket = (...props: useSocketPropsType) => {
     const [isActive, setIsActive] = useState(false);

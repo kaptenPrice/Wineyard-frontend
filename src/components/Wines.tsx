@@ -6,7 +6,7 @@ import { WineCard } from './WineCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useSocket } from '../lib/useSocket';
-import { emailToInitials } from '../lib/utils';
+import { stringToInitials } from '../lib/utils';
 
 export const Wines = () => {
     const [wineData, setWineData] = useState([]);
@@ -57,7 +57,7 @@ export const Wines = () => {
         return wineData.map(({ _id, updatedAt, addedByUser, ...props }) => (
             <WineCard
                 key={_id}
-                addedBy={emailToInitials(addedByUser, '.')}
+                addedBy={stringToInitials(addedByUser, '.')}
                 image={props?.avatar ? `http://localhost:3001/${props.avatar}` : wineImg}
                 date={updatedAt}
                 expanded={expandedItemId === _id}

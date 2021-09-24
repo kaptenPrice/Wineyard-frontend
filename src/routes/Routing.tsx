@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { NavigationBar } from '../components/NavigationBar';
-import { useProfile } from '../global/provider/ProfileProvider';
+import { useProfile } from '../provider/ProfileProvider';
 import Home from '../views/HomeView';
 import LoginView from '../views/LoginView';
 import LogoutView from '../views/LogoutView';
@@ -18,9 +18,11 @@ const useStyles = makeStyles(({ palette: { background } }) => ({
         '*': {
             transition: 'background-color .3s',
             margin: 0,
-            padding: 0
+            padding: 0,
+            
         },
         html: {
+            fontFamily:"Roboto",
             height: '100%',
             width: '100%',
             boxSizing: 'border-box'
@@ -35,9 +37,7 @@ const useStyles = makeStyles(({ palette: { background } }) => ({
             paddingRight: '0!important',
             boxSizing: 'border-box'
         },
-        // path: {
-        //     fill: '#dbdbdb'
-        // },
+
         input: {
             color: 'rgb(168, 87, 20) !important'
         }

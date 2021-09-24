@@ -14,9 +14,9 @@ import {
 } from '@material-ui/core';
 
 import ToolBar from '@material-ui/core/Toolbar';
-import { useProfile } from '../global/provider/ProfileProvider';
+import { useProfile } from '../provider/ProfileProvider';
 import { useTranslation } from 'react-i18next';
-import { useThemeProvider } from '../global/provider/ThemeProvider';
+import { useThemeProvider } from '../provider/ThemeProvider';
 import hamMenu from './lottieFiles/hamburger-menu.json';
 import LottieButton from './LottieButton';
 import { AppRoutes } from '../routes/AppRoutes';

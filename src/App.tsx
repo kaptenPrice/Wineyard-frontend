@@ -1,13 +1,10 @@
 import React, { Suspense, useEffect } from 'react';
 import Routing from './routes/Routing';
-import ProfileProvider from './global/provider/ProfileProvider';
-import { makeStyles } from '@material-ui/core';
-import ThemeProvider from './global/provider/ThemeProvider';
-import { blue, orange } from '@material-ui/core/colors';
+import ProfileProvider from './provider/ProfileProvider';
+import ThemeProvider from './provider/ThemeProvider';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
-import { io } from 'socket.io-client';
-import SocketProvider, { getSocket } from './global/provider/SocketProvider';
+import SocketProvider from './provider/SocketProvider';
 
 const App = () => {
    
