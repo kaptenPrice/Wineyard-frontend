@@ -120,17 +120,17 @@ const UserView = () => {
 
     return (
         <>
-            <Box boxShadow={5} bgcolor='background.paper' m={2} p={2}>
+            {/* <Box boxShadow={5} bgcolor='background.paper' m={2} p={2}>
                 <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='primary'>
                     {t('home_welcome')} {splittedName}
                 </Typography>
-            </Box>{' '}
+            </Box> */}
             <Box boxShadow={5} bgcolor='background.paper' m={2} p={2}>
                 <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='primary'>
                     {handleGetWinesAddedByCurrent()}
                     
                 </Typography>
-            </Box>
+            </Box> 
             <Grid container xl={6} className={classes.containerWines} id='winesContainer'>
                 {handleGetWines()}
             </Grid>

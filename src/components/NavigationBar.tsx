@@ -17,7 +17,7 @@ import ToolBar from '@material-ui/core/Toolbar';
 import { useProfile } from '../provider/ProfileProvider';
 import { useTranslation } from 'react-i18next';
 import { useThemeProvider } from '../provider/ThemeProvider';
-import hamMenu from "../lottieFiles/hamburger-menu.json";
+import hamMenu from '../lottieFiles/hamburger-menu.json';
 import LottieButton from './LottieButton';
 import { AppRoutes } from '../routes/AppRoutes';
 import { useAppRoutes } from '../routes/useAppRoutes';
@@ -39,7 +39,7 @@ export const NavigationBar = () => {
     const { profile } = useProfile();
     const { isDarkMode } = useThemeProvider();
 
-    const classes = useStyles();
+    const classes = useStyles({ isDrawerVisible: Boolean(anchorEl) });
     const { t } = useTranslation();
     const { goToHome, goToWines } = useAppRoutes();
 
@@ -58,53 +58,76 @@ export const NavigationBar = () => {
     }, []);
 
     return (
-        <AppBar className={classes.NavigationBar} color='primary' elevation={anchorEl ? 0 : 3}>
-            <ToolBar>
-                <Typography onClick={handleRedirectHome} className={classes.title} variant='h6' color='secondary'>
-                    WINEYARD
-                </Typography>
-                <Typography className={classes.email}>{profile?.email}</Typography>
-                <LottieButton
-                    onClick={handleClick}
-                    animationData={hamMenu}
-                    isClicked={anchorEl}
-                    className={classes.menuButton}
-                />
-                <Menu
-                    classes={{ paper: classes.menuPaper }}
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                    elevation={0}
-                    TransitionComponent={CustomSlide}
-                    transitionDuration={75}
-                >
-                    {!profile && (
-                        <MenuItem component={Link} to={AppRoutes.LOGIN} onClick={handleClose}>
-                            {t('navbar.login')}
-                        </MenuItem>
-                    )}
+        <>
+            <AppBar className={classes.NavigationBar} color='primary' elevation={anchorEl ? 0 : 3}>
+                
+                <ToolBar>
+                    <Typography onClick={handleRedirectHome} className={classes.title} variant='h6' color='secondary'>
+                        WINEYARD
+                    </Typography>
+                    <Typography className={classes.email}>{profile?.email}</Typography>
+                    <LottieButton
+                        onClick={handleClick}
+                        animationData={hamMenu}
+                        isClicked={anchorEl}
+                        className={classes.menuButton}
+                    />
+                </ToolBar>
+            </AppBar>
+            <Menu
+                classes={{ paper: classes.menuPaper }}
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                elevation={0}
+                TransitionComponent={CustomSlide}
+                transitionDuration={75}
+            >
+                {!profile && (
+                    <MenuItem component={Link} to={AppRoutes.LOGIN} onClick={handleClose}>
+                        {t('navbar.login')}
+                    </MenuItem>
+                )}
 
-                    {profile && (
-                        <div>
-                            <MenuItem component={Link} to={AppRoutes.WINES} onClick={handleClose}>
-                                {t('navbar.label_one')}
-                            </MenuItem>
-                            <MenuItem component={Link} to={AppRoutes.USERS} onClick={handleClose}>
-                                {t('navbar.label_two')}
-                            </MenuItem>
-                            <MenuItem component={Link} to={AppRoutes.SETTINGS} onClick={handleClose}>
-                                {t('navbar.settings')}
-                            </MenuItem>
-                            <MenuItem component={Link} to={AppRoutes.LOGOUT} onClick={handleClose}>
-                                {t('navbar.logout')}
-                            </MenuItem>{' '}
-                        </div>
-                    )}
-                </Menu>
-            </ToolBar>
-        </AppBar>
+                {profile && (
+                    <div className={classes.menuItemContainer}>
+                        <MenuItem
+                            className={classes.menuItem}
+                            component={Link}
+                            to={AppRoutes.WINES}
+                            onClick={handleClose}
+                        >
+                            {t('navbar.label_one')}
+                        </MenuItem>
+                        <MenuItem
+                            className={classes.menuItem}
+                            component={Link}
+                            to={AppRoutes.USERS}
+                            onClick={handleClose}
+                        >
+                            {t('navbar.label_two')}
+                        </MenuItem>
+                        <MenuItem
+                            className={classes.menuItem}
+                            component={Link}
+                            to={AppRoutes.SETTINGS}
+                            onClick={handleClose}
+                        >
+                            {t('navbar.settings')}
+                        </MenuItem>
+                        <MenuItem
+                            className={classes.menuItem}
+                            component={Link}
+                            to={AppRoutes.LOGOUT}
+                            onClick={handleClose}
+                        >
+                            {t('navbar.logout')}
+                        </MenuItem>{' '}
+                    </div>
+                )}
+            </Menu>
+        </>
     );
 };
 
@@ -115,6 +138,7 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defau
         width: '100%',
         opacity: 1,
         top: 0,
+        // display: ({ isDrawerVisible }: any) => (isDrawerVisible ? 'none' : 'inherit'),
         [down('xs')]: {
             position: 'fixed',
             bottom: '0!important',
@@ -143,23 +167,29 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defau
         }
     },
     menuPaper: {
-        height: "100%",
-        width: "30%",
-        zIndex:1, 
+        height: '30%',
+        maxHeight: 'unset',
+        width: '15%',
+        right: 0,
+        top: '0px !important',
+        left: 'unset !important',
+        position: 'fixed',
+        // zIndex:1,
         // minWidth: 100,
         display: 'flex',
-        justifyContent: "flex-start",
-        alignItems:"center",
-        // paddingTop: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // paddingTop: 0,
         backgroundColor: primary.main,
-        marginLeft: 15,
-        marginTop: 48,
-        opacity: 0.98,
+        // marginLeft: 20,
+        // marginTop: 48,
+        opacity: 0.99,
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
         borderBottomLeftRadius: 5,
         borderBottomRightRadius: 5,
         [down('xs')]: {
+            width: '30%',
             marginLeft: 17,
             marginTop: -40,
             borderBottomLeftRadius: 0,
@@ -168,7 +198,14 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defau
             borderTopRightRadius: 5
         }
     },
-    menuPopover: {},
+    menuItem: {
+        padding: 20,
+        // left:20
+    },
+    menuItemContainer: {
+        paddingBottom: 0
+    },
+
     email: {
         marginLeft: 'auto',
         [down('xs')]: {
