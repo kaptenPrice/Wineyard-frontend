@@ -47,8 +47,13 @@ export const Wines = () => {
     });
 
     useSocket('wine-added', (newData) => {
-        !wineData.includes(newData._id) && setWineData((current) => [...current, newData]);
+        setWineData((current) => [...current, newData]);
     });
+
+    useSocket('wine-deleted', (newData) => {
+        setWineData((current) => current.filter((wine) => wine._id !== newData._id));
+    });
+
     const handleExpandItem = (id: string) => {
         setExpandedItemId((prev) => (prev !== id ? id : null));
     };
@@ -57,7 +62,7 @@ export const Wines = () => {
         return wineData.map(({ _id, updatedAt, addedByUser, ...props }) => (
             <WineCard
                 key={_id}
-                addedBy={stringToInitials(addedByUser, '.')}
+                addedBy={addedByUser && stringToInitials(addedByUser.email, '.')}
                 image={props?.avatar ? `http://localhost:3001/${props.avatar}` : wineImg}
                 date={updatedAt}
                 expanded={expandedItemId === _id}

@@ -10,6 +10,8 @@ const useFetch: UseFetchType = async (endpoint, init) => {
             ...init
         });
         status = response.status;
+        console.log(status);
+
         const data = await response.json();
         return { data, status };
     } catch (error) {
@@ -40,11 +42,12 @@ type EndPointType =
     | '/wine/getall'
     | '/wine/paginate'
     | `/wine/getbyid/${string}`
+    | '/wine/getbyaddedby'
     | '/wine/byNameOrCountry'
-    | '/wine/delete'
     | '/user/addfavoritewine'
     | `/user/deletewine/${string}`
     | '/user/forgotpassword'
     | '/user/getall'
     | '/user/getbyid'
-    | `/user/resetPassword/${string}`;
+    | `/user/resetPassword/${string}`
+    | `/wine/delete/${string}`;

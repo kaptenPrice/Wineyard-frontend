@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useProfile } from '../provider/ProfileProvider';
 import { AppRoutes } from '../routes/AppRoutes';
-import CollectionSvg from './svg/CollectionSvg';
-import ProfileSvg from './svg/ProfileSvg';
-import SettingsSvg from './svg/SettingsSvg';
-import LoginSvg from './svg/LoginSvg';
+import CollectionSvg from '../svg/CollectionSvg';
+import ProfileSvg from '../svg/ProfileSvg';
+import SettingsSvg from '../svg/SettingsSvg';
+import LoginSvg from '../svg/LoginSvg';
 
 const HomeComponentUnAuth = () => {
     const { profile } = useProfile();

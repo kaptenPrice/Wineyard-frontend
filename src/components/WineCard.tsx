@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -19,6 +19,8 @@ import { useProfile } from '../provider/ProfileProvider';
 import { stringToInitials } from '../lib/utils';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Palette } from '@material-ui/icons';
+import { Button } from '@material-ui/core';
+import { useSnackbar } from 'notistack';
 
 export const WineCard = ({
     handleExpandOnClick,
@@ -37,6 +39,7 @@ export const WineCard = ({
 }: WineProps) => {
     const classes = useStyles({ expanded });
     const { profile } = useProfile();
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const initials = stringToInitials(name, ' ');
     const isLikedByCurrentUser = likedBy && likedBy?.length ? likedBy.includes(profile?._id) : false;
@@ -55,6 +58,29 @@ export const WineCard = ({
         await useFetch(`/user/deletewine/${wineId}`, {
             method: 'PUT'
         });
+    };
+    const handleDeleteWine = async (wineId: string) => {
+        try {
+            const response = await useFetch(`/wine/delete/${wineId}`, {
+                method: 'DELETE'
+            });
+            if (response.status === 200) {
+                console.log(response.data.message);
+                enqueueSnackbar(`Successfully deleted: ${response.data.name}`, {
+                    variant: 'success',
+                   
+                });
+            } else {
+                enqueueSnackbar('Something went wrong, reload the page and try again', {
+                    variant: 'warning'
+                });
+            }
+        } catch (error) {
+            enqueueSnackbar('Something went wrong, reload the page and try again', {
+                variant: 'error'
+            });
+            console.log(error);
+        }
     };
     return (
         <>
@@ -128,6 +154,9 @@ export const WineCard = ({
                             Description:
                             {description}
                         </Typography>
+                        <Button color='default' variant='outlined' key={_id} onClick={() => handleDeleteWine(_id)}>
+                            REMOVE
+                        </Button>
                     </CardContent>
                 </Collapse>
             </Card>
@@ -218,11 +247,7 @@ const useStyles = makeStyles(({ transitions, palette: { background }, breakpoint
         '& path': { fill: background }
     }
 }));
-/**   menuButton: {
-        marginLeft: 0,
-        '& path': { fill: '#dbdbdb' },
-       
-    }, */
+
 /* -------------------------------------------------------------------------- */
 /*                                    types                                   */
 /* -------------------------------------------------------------------------- */
@@ -241,4 +266,5 @@ interface WineProps {
     likedBy?: Array<string>;
     showActionButtons?: boolean;
     addedBy?: string;
+    handleRemove?: () => void;
 }

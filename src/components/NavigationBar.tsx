@@ -17,10 +17,9 @@ import ToolBar from '@material-ui/core/Toolbar';
 import { useProfile } from '../provider/ProfileProvider';
 import { useTranslation } from 'react-i18next';
 import { useThemeProvider } from '../provider/ThemeProvider';
-import hamMenu from './lottieFiles/hamburger-menu.json';
+import hamMenu from "../lottieFiles/hamburger-menu.json";
 import LottieButton from './LottieButton';
 import { AppRoutes } from '../routes/AppRoutes';
-import useMyHistory from './hooks/useMyHistory';
 import { useAppRoutes } from '../routes/useAppRoutes';
 
 const CustomSlide = forwardRef((props: SlideProps, ref) => {
@@ -144,16 +143,18 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defau
         }
     },
     menuPaper: {
-        maxHeight: 200,
-        maxWidth: 110,
-        minWidth: 100,
+        height: "100%",
+        width: "30%",
+        zIndex:1, 
+        // minWidth: 100,
         display: 'flex',
-        justifyContent: 'center',
-        paddingTop: 10,
+        justifyContent: "flex-start",
+        alignItems:"center",
+        // paddingTop: 10,
         backgroundColor: primary.main,
-        marginLeft: -25,
+        marginLeft: 15,
         marginTop: 48,
-        opacity: 0.96,
+        opacity: 0.98,
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
         borderBottomLeftRadius: 5,

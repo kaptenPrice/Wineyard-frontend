@@ -3,10 +3,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import LottieButton from '../components/LottieButton';
 import { useThemeProvider } from '../provider/ThemeProvider';
-import themeButton from '../components/lottieFiles/themeButtonSvg.json';
+import themeButton from '../lottieFiles/themeButtonSvg.json';
 
 import Flags from 'country-flag-icons/react/3x2';
-import Lottie from 'react-lottie';
 import { useMediaQuery } from '@material-ui/core';
 
 export const SettingsView = () => {

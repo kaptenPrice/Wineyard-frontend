@@ -5,9 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useProfile } from '../provider/ProfileProvider';
 import { AppRoutes } from '../routes/AppRoutes';
-import CollectionSvg from './svg/CollectionSvg';
-import ProfileSvg from './svg/ProfileSvg';
-import SettingsSvg from './svg/SettingsSvg';
+import CollectionSvg from "../svg/CollectionSvg"
+import ProfileSvg from '../svg/ProfileSvg';
+import SettingsSvg from '../svg/SettingsSvg';
+import bgImage from '../global/images/backgroundImage1.jpg';
 
 const HomeComponentAuth = () => {
     const { profile } = useProfile();
@@ -20,6 +21,7 @@ const HomeComponentAuth = () => {
 
     return (
         <div className={classes.mainDiv}>
+            <div className={classes.overLay} />
             <motion.div className={classes.header} animate={{ y: 30 }}>
                 {profile ? (
                     <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary'>
@@ -71,6 +73,20 @@ const HomeComponentAuth = () => {
                     </Link>
                 </motion.div>
             </div>
+            <div>
+                <div
+                    style={{
+                        zIndex: 1,
+                        position: 'absolute',
+                        left: '10%',
+                        right: '10%',
+                        height: 200,
+                        backgroundColor: '#fff',
+                        color: 'white',
+                        padding: 0
+                    }}
+                ></div>
+            </div>
         </div>
     );
 };
@@ -78,7 +94,23 @@ const HomeComponentAuth = () => {
 export default HomeComponentAuth;
 const useStyles = makeStyles(({ palette: { background }, breakpoints: { down } }) => ({
     mainDiv: {
-        minHeight: '100%'
+        position: 'relative',
+        height: 1972,
+        backgroundImage: `url(${bgImage})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        filter: 'brightness("50%")'
+        // zIndex: 1
+    },
+    overLay: {
+        opacity: 0.75,
+        backgroundColor: 'black',
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        height: 1972,
+        width: '100%'
     },
     header: {
         display: 'flex',
@@ -91,7 +123,8 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints: { down } }
         marginLeft: 'auto',
         marginRight: 'auto',
         padding: 20,
-        borderRadius: 10
+        borderRadius: 10,
+        opacity: 0.9
     },
     linkContainer: {
         display: 'flex',
@@ -99,6 +132,8 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints: { down } }
         justifyContent: 'space-evenly',
         alignContent: 'center',
         margin: '100px 0px 10px 0px',
+        opacity: 0.9,
+
         [down('xs')]: {
             flexDirection: 'column',
             justifyContent: 'space-around',
@@ -111,6 +146,8 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints: { down } }
         justifyContent: 'center',
         alignItems: 'center',
         Width: '',
+        maxHeight: '25%',
+        // backgroundColor:"red",
         background: background.paper,
         borderRadius: 10,
         padding: 10,
@@ -138,7 +175,7 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints: { down } }
         }
     },
     link: {
-        padding: 80,
+        padding: 20,
         textDecoration: 'none',
         fontSize: 24,
         fontWeight: 'bold',

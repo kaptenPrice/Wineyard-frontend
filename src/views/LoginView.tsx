@@ -5,8 +5,6 @@ import { useProfile } from '../provider/ProfileProvider';
 import useFetch from '../lib/useFetch';
 import LoginComponent, { LoginComponentPropsType } from '../components/LoginComponent';
 import ReactCardFlip from 'react-card-flip';
-import { motion } from 'framer-motion';
-import useMyHistory from '../components/hooks/useMyHistory';
 import { useAppRoutes } from '../routes/useAppRoutes';
 const LoginView = () => {
     const classes = useStyles();
@@ -35,7 +33,7 @@ const LoginView = () => {
             }
         } catch (error) {
             setServerMessage('Server seems to be tired, visit later please');
-            console.log({ error: error, message: 'error rån logon' });
+            console.log({ error: error, message: 'error from login' });
         }
     };
 

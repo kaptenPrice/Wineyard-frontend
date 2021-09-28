@@ -1,4 +1,15 @@
-import { Box, Grid, Typography, useMediaQuery, makeStyles, useTheme, IconButton, Tooltip } from '@material-ui/core';
+import {
+    Box,
+    Grid,
+    Typography,
+    useMediaQuery,
+    makeStyles,
+    useTheme,
+    IconButton,
+    Tooltip,
+    Paper,
+    Button
+} from '@material-ui/core';
 
 import AddIcon from '@material-ui/icons/Add';
 import React, { useEffect, useState, useRef } from 'react';
@@ -19,7 +30,6 @@ const UserView = () => {
     const { t } = useTranslation();
     const { fetchProfile, profile } = useProfile();
     const [expandedItemId, setExpandedItemId] = useState<null | string>(null);
-    const endRef: React.MutableRefObject<HTMLBodyElement> = useRef();
     const [isOpen, setIsOpen] = useState(false);
 
     const [image, setImage] = useState({ avatar: null, previewImage: null });
@@ -30,9 +40,11 @@ const UserView = () => {
     const [country, setCountry] = useState(null);
     const [year, setYear] = useState(null);
     const [description, setDescription] = useState(null);
+    const [WinesAddedByCurrent, setWinesAddedByCurrent] = useState([]);
 
     useEffect(() => {
         fetchProfile();
+        fetchWinesAddedByCurrentId();
     }, []);
 
     const splittedName = stringToInitials(profile?.email, '.');
@@ -82,7 +94,14 @@ const UserView = () => {
             console.log(error);
         }
     };
-
+    const fetchWinesAddedByCurrentId = async () => {
+        try {
+            const response = await useFetch('/wine/getbyaddedby');
+            setWinesAddedByCurrent(response.data);
+        } catch (error) {
+            console.log('error: ', error);
+        }
+    };
     const handleGetWines = () => {
         return profile.favoriteWines.map(({ _id, ...props }) => (
             <WineCard
@@ -95,6 +114,9 @@ const UserView = () => {
             />
         ));
     };
+    const handleGetWinesAddedByCurrent = () => {
+        return WinesAddedByCurrent.map((element) => <p key={element._id}>{element.name} </p>);
+    };
 
     return (
         <>
@@ -102,8 +124,13 @@ const UserView = () => {
                 <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='primary'>
                     {t('home_welcome')} {splittedName}
                 </Typography>
+            </Box>{' '}
+            <Box boxShadow={5} bgcolor='background.paper' m={2} p={2}>
+                <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='primary'>
+                    {handleGetWinesAddedByCurrent()}
+                    
+                </Typography>
             </Box>
-
             <Grid container xl={6} className={classes.containerWines} id='winesContainer'>
                 {handleGetWines()}
             </Grid>

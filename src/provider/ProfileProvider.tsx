@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useEffect, useState, Dispatch } from 'react';
 import useFetch from '../lib/useFetch';
 
-export const UserData = createContext(undefined);
+export const UserData = createContext(null);
 
 const ProfileProvider = (props: any) => {
-    const [profile, setProfile] = useState(undefined);
+    const [profile, setProfile] = useState(null);
     const fetchProfile = async () => {
         const result = await useFetch('/profile');
         setProfile(result.data?.profile || null);
