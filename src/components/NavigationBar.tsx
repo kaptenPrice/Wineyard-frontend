@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { SetStateAction, Dispatch } from 'react';
+import React, { SetStateAction, Dispatch, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles, Typography, MenuItem, AppBar, Drawer } from '@material-ui/core';
 
@@ -12,18 +12,18 @@ import { AppRoutes } from '../routes/AppRoutes';
 import { useAppRoutes } from '../routes/useAppRoutes';
 
 export const NavigationBar = ({ drawerState }: NavigationBarPropsType) => {
-    const [isOpen, setIsOpen] = drawerState;
+    const [isDrawerOpen, setIsDrawerOpen] = drawerState;
     const { profile } = useProfile();
+    const classes = useStyles(isDrawerOpen);
 
-    const classes = useStyles({ isDrawerVisible: Boolean(isOpen) });
     const { t } = useTranslation();
     const { goToHome } = useAppRoutes();
 
     const handleClick = () => {
-        setIsOpen(true);
+        setIsDrawerOpen(true);
     };
     const handleClose = () => {
-        setIsOpen(false);
+        setIsDrawerOpen(false);
     };
     const handleRedirectHome = () => {
         goToHome();
@@ -36,17 +36,18 @@ export const NavigationBar = ({ drawerState }: NavigationBarPropsType) => {
                     <Typography onClick={handleRedirectHome} className={classes.title} variant='h6' color='inherit'>
                         WINEYARD
                     </Typography>
+
                     <Typography className={classes.email}>{profile?.email}</Typography>
                     <LottieButton
-                        onClick={isOpen ? handleClose : handleClick}
+                        onClick={isDrawerOpen ? handleClose : handleClick}
                         animationData={hamMenu}
-                        isClicked={isOpen}
+                        isClicked={isDrawerOpen}
                         className={classes.menuButton}
                     />
                 </ToolBar>
             </AppBar>
 
-            <Drawer anchor='right' open={isOpen} onClose={handleClose} className={classes.drawer}>
+            <Drawer anchor='right' open={isDrawerOpen} onClose={handleClose} className={classes.drawer}>
                 {!profile && (
                     <MenuItem className={classes.menuItem} component={Link} to={AppRoutes.LOGIN} onClick={handleClose}>
                         {t('navbar.login').toUpperCase()}
@@ -106,11 +107,13 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defau
         width: '100%',
         opacity: 1,
         top: 0,
-        // display: ({ isDrawerVisible }: any) => (isDrawerVisible ? 'none' : 'inherit'),
+        // paddingBottom:50,
+        display: ({ isOpen }: any) => (isOpen ? 'none' : 'inherit'),
         [down('xs')]: {
             position: 'fixed',
             bottom: '0!important',
-            top: 'initial'
+            top: 'initial',
+            background: background.default
         }
     },
     menuButton: {
@@ -123,17 +126,15 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defau
         }
     },
     title: {
-        '&:hover': { cursor: 'pointer' }
-    },
-    lottie: {
-        '& svg': {
-            margin: 'auto',
-            display: 'flex',
-            '&>g': {
-                transform: 'scale(2) translate(-25%,-25%)'
-            }
+        marginLeft: (isDrawerOpen: boolean) => (isDrawerOpen ? 'calc(100vw - 600px)' : 0),
+        transition: 'margin .3s',
+        '&:hover': { cursor: 'pointer', opacity: 0.7 },
+
+        [down('md')]: {
+            marginLeft: '0 !important'
         }
     },
+
     drawer: {
         '& > .MuiDrawer-paper': {
             width: 600,
@@ -152,7 +153,8 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defau
         paddingBottom: 200,
         [down('md')]: {
             paddingBottom: 0,
-            paddingTop: '50%'
+            paddingTop: '50%',
+            zIndex: 1
         }
     },
 
@@ -169,16 +171,12 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defau
         bottom: 20,
         position: 'absolute',
         [down('md')]: {
-            top: 40
+            top: 60
         }
     },
 
     bottomLink: { backgroundColor: background.default, width: '100%', borderRadius: 35 },
     bottomItem: {
-        // padding: 10,
-        // margin:"auto",
-        // textAlign: 'center',
-        // textJustify:"inter-word",
         display: 'flex',
         justifyContent: 'center',
         alignContent: 'center',
@@ -193,10 +191,6 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defau
             display: 'none'
         },
         paddingRight: 12
-    },
-
-    themeIcon: {
-        '&:hover': { cursor: 'pointer' }
     }
 }));
 /*/
@@ -205,36 +199,3 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defau
 /* -------------------------------------------------------------------------- */
 
 type NavigationBarPropsType = { drawerState: [boolean, Dispatch<SetStateAction<boolean>>] };
-
-/**menuPaper: {
-        height: '30%',
-        maxHeight: 'unset',
-        width: '15%',
-        right: 0,
-        top: '0px !important',
-        left: 'unset !important',
-        position: 'fixed',
-        // zIndex:1,
-        // minWidth: 100,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        // paddingTop: 0,
-        backgroundColor: primary.main,
-        // marginLeft: 20,
-        // marginTop: 48,
-        opacity: 0.99,
-        borderTopLeftRadius: 0,
-        borderTopRightRadius: 0,
-        borderBottomLeftRadius: 5,
-        borderBottomRightRadius: 5,
-        [down('xs')]: {
-            width: '30%',
-            marginLeft: 17,
-            marginTop: -40,
-            borderBottomLeftRadius: 0,
-            borderBottomRightRadius: 0,
-            borderTopLeftRadius: 5,
-            borderTopRightRadius: 5
-        }
-    }, */

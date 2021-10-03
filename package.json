@@ -12,6 +12,7 @@
         "@testing-library/user-event": "^12.8.3",
         "clsx": "^1.1.1",
         "country-flag-icons": "^1.4.5",
+        "d": "^1.0.1",
         "eslint": "^7.31.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-prettier": "^3.4.0",
@@ -71,7 +72,7 @@
         "@types/react": "^17.0.15",
         "@types/react-dom": "^17.0.9",
         "@types/react-lottie": "^1.2.6",
-        "@types/react-router-dom": "^5.1.8",
+        "@types/react-router-dom": "^5.3.0",
         "@typescript-eslint/parser": "^4.28.5"
     }
 }

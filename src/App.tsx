@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import Routing from './routes/Routing';
+import Routing from './routes/Routes';
 import ProfileProvider from './provider/ProfileProvider';
 import ThemeProvider from './provider/ThemeProvider';
 import { I18nextProvider } from 'react-i18next';
