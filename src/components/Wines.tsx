@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useFetch from '../lib/useFetch';
-import { Grid } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import wineImg from '../global/images/wine-image.jpg';
 import { WineCard } from './WineCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -15,6 +15,7 @@ export const Wines = () => {
     const [actualSize, setActualSize] = useState(0);
     const [expandedItemId, setExpandedItemId] = useState<null | string>(null);
     const showActionButtons: boolean = true;
+    const classes = useStyles();
 
     useEffect(() => {
         fetchWines();
@@ -74,17 +75,41 @@ export const Wines = () => {
         ));
     };
     return (
-        <InfiniteScroll
-            next={fetchWines}
-            hasMore={wineData.length < actualSize}
-            loader={
-                <Grid container justifyContent='center' item xs={12}>
-                    <CircularProgress />
-                </Grid>
-            }
-            dataLength={wineData.length}
-        >
-            {getWines()}
-        </InfiniteScroll>
+        <Grid container xl={12} className={classes.container} id='winesContainer'>
+            <InfiniteScroll
+                next={fetchWines}
+                hasMore={wineData.length < actualSize}
+                loader={
+                    <Grid container justifyContent='center' item xs={12}>
+                        <CircularProgress />
+                    </Grid>
+                }
+                dataLength={wineData.length}
+            >
+                {getWines()}
+            </InfiniteScroll>
+        </Grid>
     );
 };
+const useStyles = makeStyles(({ breakpoints: { down } }) => ({
+    container: {
+        background:"white",
+        // maxWidth: 1720,
+        justifyContent: 'center',
+        margin: 'auto',
+        position: 'relative',
+        paddingBottom: 10,
+        '& .infinite-scroll-component,.infinite-scroll-component__outerdiv': {
+            display: 'contents'
+        },
+        '&>div>div>.MuiCard-root': {
+            margin: 15
+        },
+        [down('xs')]: {
+            paddingBottom: 66,
+            flexDirection: 'column',
+            alignContent: 'space-evenly',
+            
+        }
+    }
+}));

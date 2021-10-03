@@ -10,7 +10,6 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -18,7 +17,6 @@ import useFetch from '../lib/useFetch';
 import { useProfile } from '../provider/ProfileProvider';
 import { stringToInitials } from '../lib/utils';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Palette } from '@material-ui/icons';
 import { Button } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 
@@ -39,7 +37,7 @@ export const WineCard = ({
 }: WineProps) => {
     const classes = useStyles({ expanded });
     const { profile } = useProfile();
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
 
     const initials = stringToInitials(name, ' ');
     const isLikedByCurrentUser = likedBy && likedBy?.length ? likedBy.includes(profile?._id) : false;
@@ -67,8 +65,7 @@ export const WineCard = ({
             if (response.status === 200) {
                 console.log(response.data.message);
                 enqueueSnackbar(`Successfully deleted: ${response.data.name}`, {
-                    variant: 'success',
-                   
+                    variant: 'success'
                 });
             } else {
                 enqueueSnackbar('Something went wrong, reload the page and try again', {
@@ -84,15 +81,11 @@ export const WineCard = ({
     };
     return (
         <>
-            {expanded && <div className={classes.cover} onClick={handleExpandOnClick} />}
-            <Card className={classes.root}>
+            {/* {expanded && <div className={classes.cover} onClick={handleExpandOnClick} />} */}
+            <Card elevation={0} className={classes.root}>
                 <CardHeader
                     className={classes.cardHeader}
-                    avatar={
-                        <Avatar aria-label='wine' className={classes.avtar}>
-                            {initials}
-                        </Avatar>
-                    }
+                    avatar={<Avatar className={classes.avtar}>{initials}</Avatar>}
                     title={name}
                     subheader={addedBy && 'Added by: ' + addedBy}
                 />
@@ -165,20 +158,25 @@ export const WineCard = ({
 };
 
 const useStyles = makeStyles(({ transitions, palette: { background }, breakpoints: { down } }) => ({
-    cover: {
-        width: '100vw',
-        background: '#0005',
-        position: 'absolute',
-        zIndex: 200,
-        backdropFilter: ' blur(1.5px) grayscale(.3)'
-    },
+    // cover: {
+    //     width: '100vw',
+    //     // background: '#0005',
+    //     background: 'red',
+    //     position: 'absolute',
+    //     left:0,
+    //     top:0,
+    //     zIndex: 200,
+    //     backdropFilter: ' blur(1.5px) grayscale(.3)'
+    // },
     root: {
         overflow: 'visible',
         width: 325,
         height: 570,
-        position: 'relative',
+        borderRadius:10,
+        boxShadow: '0px 0px 12px 0px #e0dde0'
+
         //@ts-ignore
-        zIndex: ({ expanded }) => (expanded ? 200 : 'auto')
+        // zIndex: ({ expanded }) => (expanded ? 200 : 'auto')
     },
     cardHeader: {
         '& .MuiCardHeader-title': {
@@ -205,11 +203,11 @@ const useStyles = makeStyles(({ transitions, palette: { background }, breakpoint
         }
     },
     actionContainer: {
-        display: 'flex',
-        alignContent: 'flex-end',
-        marginTop: 'auto',
-        background: 'inherit',
-        position: 'relative'
+        // display: 'flex',
+        // alignContent: 'flex-end',
+        // marginTop: 'auto',
+        // background: 'inherit',
+        // position: 'relative'
     },
     expand: {
         transform: 'rotate(0deg)',
@@ -222,18 +220,19 @@ const useStyles = makeStyles(({ transitions, palette: { background }, breakpoint
         transform: 'rotate(180deg)'
     },
     avtar: {
-        backgroundColor: red[900]
+        color: 'black',
+        backgroundColor: background.default
     },
     collapse: {
         position: 'absolute',
         zIndex: 200,
         width: 'inherit',
-        backgroundColor: 'transparent',
-        marginTop: -5,
+        // backgroundColor: 'red',
+        marginTop: -7,
 
         '&>div': {
             background: background.paper,
-            boxShadow: `0px 2px -6px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)`
+            // boxShadow: `0px 2px -6px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)`
         },
         [down('xs')]: {
             //@ts-ignore

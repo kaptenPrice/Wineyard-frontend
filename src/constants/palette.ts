@@ -16,16 +16,18 @@ export const darkPalette: PaletteOptions & CustomPaletteType = {
 
 export const lightPalette: PaletteOptions & CustomPaletteType = {
     primary: {
-        main: '#00B9C5'
+        // main: '#00B9C5'
+        main: '#CA2C46'
     },
+    text: { primary: '#222222', secondary: '#AAAAAA' },
     secondary: {
         main: '#0B2545'
     },
     defaultSvg: {
-        main: '#dbdbdb'
+        main: '#222222'
     },
     type: 'light',
-    background: { default: '#e4e4e4' }
+    background: { default: '#fbddc8' }
 };
 
 export type CustomPaletteType = {

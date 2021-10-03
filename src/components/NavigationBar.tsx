@@ -1,137 +1,105 @@
 /* eslint-disable no-undef */
-import React, { useState, forwardRef, useEffect, useRef } from 'react';
+import React, { SetStateAction, Dispatch } from 'react';
 import { Link } from 'react-router-dom';
-import {
-    makeStyles,
-    Menu,
-    Slide,
-    useTheme,
-    useMediaQuery,
-    Typography,
-    MenuItem,
-    SlideProps,
-    AppBar
-} from '@material-ui/core';
+import { makeStyles, Typography, MenuItem, AppBar, Drawer } from '@material-ui/core';
 
 import ToolBar from '@material-ui/core/Toolbar';
 import { useProfile } from '../provider/ProfileProvider';
 import { useTranslation } from 'react-i18next';
-import { useThemeProvider } from '../provider/ThemeProvider';
 import hamMenu from '../lottieFiles/hamburger-menu.json';
 import LottieButton from './LottieButton';
 import { AppRoutes } from '../routes/AppRoutes';
 import { useAppRoutes } from '../routes/useAppRoutes';
 
-const CustomSlide = forwardRef((props: SlideProps, ref) => {
-    const {
-        breakpoints: { down }
-    } = useTheme();
-    const isSmallScreen = useMediaQuery(down('sm'));
-    return <Slide {...props} direction={isSmallScreen ? 'up' : 'down'} ref={ref} />;
-});
-
-export const NavigationBar = () => {
-    const {
-        breakpoints: { down }
-    } = useTheme();
-    const lottieRef = useRef(null);
-    const [anchorEl, setAnchorEl] = useState(null);
+export const NavigationBar = ({ drawerState }: NavigationBarPropsType) => {
+    const [isOpen, setIsOpen] = drawerState;
     const { profile } = useProfile();
-    const { isDarkMode } = useThemeProvider();
 
-    const classes = useStyles({ isDrawerVisible: Boolean(anchorEl) });
+    const classes = useStyles({ isDrawerVisible: Boolean(isOpen) });
     const { t } = useTranslation();
-    const { goToHome, goToWines } = useAppRoutes();
+    const { goToHome } = useAppRoutes();
 
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl((current: HTMLAnchorElement) => (current ? null : event.currentTarget));
+    const handleClick = () => {
+        setIsOpen(true);
     };
     const handleClose = () => {
-        setAnchorEl(null);
+        setIsOpen(false);
     };
     const handleRedirectHome = () => {
         goToHome();
     };
 
-    useEffect(() => {
-        lottieRef.current?.anim.goToAndStop(isDarkMode ? 132 : 0, true);
-    }, []);
-
     return (
         <>
-            <AppBar className={classes.NavigationBar} color='primary' elevation={anchorEl ? 0 : 3}>
-                
+            <AppBar className={classes.NavigationBar} color='transparent' elevation={0}>
                 <ToolBar>
-                    <Typography onClick={handleRedirectHome} className={classes.title} variant='h6' color='secondary'>
+                    <Typography onClick={handleRedirectHome} className={classes.title} variant='h6' color='inherit'>
                         WINEYARD
                     </Typography>
                     <Typography className={classes.email}>{profile?.email}</Typography>
                     <LottieButton
-                        onClick={handleClick}
+                        onClick={isOpen ? handleClose : handleClick}
                         animationData={hamMenu}
-                        isClicked={anchorEl}
+                        isClicked={isOpen}
                         className={classes.menuButton}
                     />
                 </ToolBar>
             </AppBar>
-            <Menu
-                classes={{ paper: classes.menuPaper }}
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-                elevation={0}
-                TransitionComponent={CustomSlide}
-                transitionDuration={75}
-            >
+
+            <Drawer anchor='right' open={isOpen} onClose={handleClose} className={classes.drawer}>
                 {!profile && (
-                    <MenuItem component={Link} to={AppRoutes.LOGIN} onClick={handleClose}>
-                        {t('navbar.login')}
+                    <MenuItem className={classes.menuItem} component={Link} to={AppRoutes.LOGIN} onClick={handleClose}>
+                        {t('navbar.login').toUpperCase()}
                     </MenuItem>
                 )}
-
                 {profile && (
-                    <div className={classes.menuItemContainer}>
-                        <MenuItem
-                            className={classes.menuItem}
-                            component={Link}
-                            to={AppRoutes.WINES}
-                            onClick={handleClose}
-                        >
-                            {t('navbar.label_one')}
-                        </MenuItem>
-                        <MenuItem
-                            className={classes.menuItem}
-                            component={Link}
-                            to={AppRoutes.USERS}
-                            onClick={handleClose}
-                        >
-                            {t('navbar.label_two')}
-                        </MenuItem>
-                        <MenuItem
-                            className={classes.menuItem}
-                            component={Link}
-                            to={AppRoutes.SETTINGS}
-                            onClick={handleClose}
-                        >
-                            {t('navbar.settings')}
-                        </MenuItem>
-                        <MenuItem
-                            className={classes.menuItem}
-                            component={Link}
-                            to={AppRoutes.LOGOUT}
-                            onClick={handleClose}
-                        >
-                            {t('navbar.logout')}
-                        </MenuItem>{' '}
-                    </div>
+                    <>
+                        <div className={classes.menuItemContainer}>
+                            <MenuItem
+                                className={classes.menuItem}
+                                component={Link}
+                                to={AppRoutes.WINES}
+                                onClick={handleClose}
+                            >
+                                {t('navbar.label_one').toUpperCase()}
+                            </MenuItem>
+                            <MenuItem
+                                className={classes.menuItem}
+                                component={Link}
+                                to={AppRoutes.USERS}
+                                onClick={handleClose}
+                            >
+                                {t('navbar.label_two').toUpperCase()}
+                            </MenuItem>
+                            <MenuItem
+                                className={classes.menuItem}
+                                component={Link}
+                                to={AppRoutes.SETTINGS}
+                                onClick={handleClose}
+                            >
+                                {t('navbar.settings').toUpperCase()}
+                            </MenuItem>
+                        </div>
+                        <div className={classes.bottomLinkContainer}>
+                            <div className={classes.bottomLink}>
+                                <MenuItem
+                                    className={classes.bottomItem}
+                                    component={Link}
+                                    to={AppRoutes.LOGOUT}
+                                    onClick={handleClose}
+                                >
+                                    {t('navbar.logout').toUpperCase()}
+                                </MenuItem>
+                            </div>
+                        </div>
+                    </>
                 )}
-            </Menu>
+            </Drawer>
         </>
     );
 };
 
-const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defaultSvg } }) => ({
+const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defaultSvg, background } }) => ({
     NavigationBar: {
         position: 'relative',
         zIndex: 1500,
@@ -166,7 +134,79 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defau
             }
         }
     },
-    menuPaper: {
+    drawer: {
+        '& > .MuiDrawer-paper': {
+            width: 600,
+            backgroundColor: primary.main,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            [down('md')]: {
+                width: '100%'
+            }
+        }
+    },
+
+    menuItemContainer: {
+        width: '100%',
+        paddingBottom: 200,
+        [down('md')]: {
+            paddingBottom: 0,
+            paddingTop: '50%'
+        }
+    },
+
+    menuItem: {
+        padding: 20,
+        textAlign: 'center',
+        display: 'block',
+        fontSize: 24,
+        color: '#FFF2E9'
+    },
+
+    bottomLinkContainer: {
+        width: 150,
+        bottom: 20,
+        position: 'absolute',
+        [down('md')]: {
+            top: 40
+        }
+    },
+
+    bottomLink: { backgroundColor: background.default, width: '100%', borderRadius: 35 },
+    bottomItem: {
+        // padding: 10,
+        // margin:"auto",
+        // textAlign: 'center',
+        // textJustify:"inter-word",
+        display: 'flex',
+        justifyContent: 'center',
+        alignContent: 'center',
+        fontSize: 18,
+        fontWeight: 500,
+        color: primary.main
+    },
+
+    email: {
+        marginLeft: 'auto',
+        [down('xs')]: {
+            display: 'none'
+        },
+        paddingRight: 12
+    },
+
+    themeIcon: {
+        '&:hover': { cursor: 'pointer' }
+    }
+}));
+/*/
+/* -------------------------------------------------------------------------- */
+/*                                    Types                                   */
+/* -------------------------------------------------------------------------- */
+
+type NavigationBarPropsType = { drawerState: [boolean, Dispatch<SetStateAction<boolean>>] };
+
+/**menuPaper: {
         height: '30%',
         maxHeight: 'unset',
         width: '15%',
@@ -197,28 +237,4 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defau
             borderTopLeftRadius: 5,
             borderTopRightRadius: 5
         }
-    },
-    menuItem: {
-        padding: 20,
-        // left:20
-    },
-    menuItemContainer: {
-        paddingBottom: 0
-    },
-
-    email: {
-        marginLeft: 'auto',
-        [down('xs')]: {
-            display: 'none'
-        },
-        paddingRight: 12
-    },
-    langChoice: {
-        [down('xs')]: {
-            display: 'none'
-        }
-    },
-    themeIcon: {
-        '&:hover': { cursor: 'pointer' }
-    }
-}));
+    }, */

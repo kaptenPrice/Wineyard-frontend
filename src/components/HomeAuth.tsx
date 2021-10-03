@@ -134,7 +134,7 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints: { down } }
         margin: '100px 0px 10px 0px',
         opacity: 0.9,
 
-        [down('xs')]: {
+        [down('md')]: {
             flexDirection: 'column',
             justifyContent: 'space-around',
             alignItems: 'center'
@@ -150,7 +150,8 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints: { down } }
         // backgroundColor:"red",
         background: background.paper,
         borderRadius: 10,
-        padding: 10,
+        padding: 40,
+        margin:10,
         // boxShadow: '0 1px 5px #888888',
         [down('xs' || 'md')]: {
             width: 192,

@@ -7,15 +7,13 @@ import { AppRoutes } from '../routes/AppRoutes';
 import useMyHistory from '../components/hooks/useMyHistory';
 import { useAppRoutes } from '../routes/useAppRoutes';
 
-
 const LogoutView = () => {
     const { profile, setProfile } = useProfile();
     const classes = useStyles();
-    const history = useMyHistory()
+    const history = useMyHistory();
     const [serverMessage, setServerMessage] = useState('');
     const [seconds, setSeconds] = useState(5);
-    const {goToHome}=useAppRoutes()
-
+    const { goToHome } = useAppRoutes();
 
     useEffect(() => {
         if (seconds === 0) {
@@ -38,12 +36,12 @@ const LogoutView = () => {
     };
 
     const handleRegret = () => {
-        goToHome()
+        goToHome();
     };
 
     return (
-        <Grid container justifyContent='center' alignContent='center' className={classes.LoginView}>
-            <Grid className={classes.cardContainer}>
+        <Grid container xs={11} sm={12} justifyContent='center' alignContent='center' className={classes.LoginView}>
+            <Grid container className={classes.cardContainer}>
                 <Paper className={classes.loginBox}>
                     <Grid
                         container
@@ -96,22 +94,25 @@ export default LogoutView;
 const useStyles = makeStyles(({ palette: { primary, background }, breakpoints: { down } }) => ({
     LoginView: {
         height: 'calc(100vh - 64px)',
-        width: '100%',
+        maxWidth: 400,
         background: background.default,
-        overflow: 'hidden'
+        margin: 'auto'
     },
     cardContainer: {
         marginTop: -100,
-        [down('xs')]: {
+        [down('md')]: {
             marginTop: 0
         }
     },
     loginBox: {
         padding: '50px 30px',
-        width: 400,
         borderRadius: 20,
         textAlign: 'center',
         border: `3px solid ${primary.main}`,
+        [down('md')]: {
+            width: '100%',
+            padding: '15px 10px'
+        },
         '&>div': {
             height: 400,
             '&>.MuiGrid-root': {
