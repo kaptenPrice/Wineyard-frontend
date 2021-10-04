@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, makeStyles, Typography } from '@material-ui/core';
+import { Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import { Wines } from '../components/Wines';
 
 const WinesView = () => {
@@ -9,7 +9,7 @@ const WinesView = () => {
         <Grid container className={classes.viewRoot}>
             <Grid container item xs={12} md={9} lg={7} xl={6} className={classes.titleRoot}>
                 <Grid className={classes.titleContainer}>
-                    <Typography gutterBottom color='secondary' className={classes.title}>
+                    <Typography gutterBottom className={classes.title}>
                         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium ea earum debitis illo
                         sapiente quas tempore dolorum, perferendis numquam iusto iure, iste sed consectetur quaerat
                         quisquam unde cumque similique klum.
@@ -22,7 +22,8 @@ const WinesView = () => {
 };
 
 export default WinesView;
-const useStyles = makeStyles(({ breakpoints: { down, between }, typography }) => ({
+
+const useStyles = makeStyles(({ breakpoints: { down, between }, typography, palette }) => ({
     viewRoot: {
         display: 'flex',
         flexDirection: 'column',
@@ -30,10 +31,10 @@ const useStyles = makeStyles(({ breakpoints: { down, between }, typography }) =>
         height: '100%',
         marginBottom: 100,
         padding: 50,
-        [between('xs',"md")]: {
+        [between('xs', 'md')]: {
             padding: 0,
-            marginTop:20,
-            marginBottom:400,
+            marginTop: 20,
+            marginBottom: 400
         }
     },
     titleRoot: {
@@ -43,7 +44,7 @@ const useStyles = makeStyles(({ breakpoints: { down, between }, typography }) =>
         paddingBottom: 40,
 
         borderBottom: '1px solid #222222',
-        [between('xs',"md")]: {
+        [between('xs', 'md')]: {
             width: '80%',
             margin: 'auto',
             marginBottom: 80
@@ -56,7 +57,8 @@ const useStyles = makeStyles(({ breakpoints: { down, between }, typography }) =>
     },
     title: {
         ...typography.h3,
-        [between('xs', 'sm')]: {
+        color: palette.text.primary,
+        [down('sm')]: {
             ...typography.h6
         }
     }

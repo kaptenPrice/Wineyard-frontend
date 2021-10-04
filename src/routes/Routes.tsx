@@ -9,7 +9,7 @@ import LogoutView from '../views/LogoutView';
 import NoMatchView from '../views/NoMatchView';
 import ResetPassView from '../views/ResetPassView';
 import { SettingsView } from '../views/SettingsView';
-import UserView from '../views/UserView';
+import ProfileView from '../views/ProfileView';
 import WinesView from '../views/WinesView';
 import { AppRoutes } from './AppRoutes';
 
@@ -27,8 +27,8 @@ const Routing = () => {
 
     const routes: RouteProps[] = [
         {
-            path: AppRoutes.USERS,
-            component: blockRouteIfNotAuthenticated(UserView),
+            path: AppRoutes.PROFILE,
+            component: blockRouteIfNotAuthenticated(ProfileView),
             exact: true
         },
         {

@@ -56,7 +56,7 @@ const HomeComponentAuth = () => {
                 >
                     <ProfileSvg className={classes.svg} />
 
-                    <Link className={classes.link} to={AppRoutes.USERS}>
+                    <Link className={classes.link} to={AppRoutes.PROFILE}>
                         My wines
                     </Link>
                 </motion.div>

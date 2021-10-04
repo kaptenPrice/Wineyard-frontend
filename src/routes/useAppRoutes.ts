@@ -17,7 +17,7 @@ export const useAppRoutes = () => {
     };
 
     const goToUser = () => {
-        history.push(AppRoutes.USERS);
+        history.push(AppRoutes.PROFILE);
     };
 
     const goToSettings = () => {

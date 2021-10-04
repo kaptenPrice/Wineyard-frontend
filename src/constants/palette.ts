@@ -1,33 +1,37 @@
 import { Palette, PaletteOptions } from '@material-ui/core/styles/createPalette';
 
 export const darkPalette: PaletteOptions & CustomPaletteType = {
-    // primary: {
-    //     main: '#00ABE7'
-    // },
-    // secondary: {
-    //     main: '#F26DF9'
-    // },
-    defaultSvg: {
-        main: '#dbdbdb'
+    background: { default: '#140000', paper: '#433333' },
+
+    primary: {
+        main: '#393232'
     },
-    type: 'dark',
-    background: { default: '#05162c', paper: '#0B2545' }
+    secondary: {
+        main: '#433333'
+    },
+
+    text: { primary: '#999999', secondary: '#8d1e31' },
+    defaultSvg: {
+        main: '#999999'
+    },
+    type: 'dark'
 };
 
 export const lightPalette: PaletteOptions & CustomPaletteType = {
+    background: { default: '#fbddc8' },
+
     primary: {
-        // main: '#00B9C5'
         main: '#CA2C46'
     },
-    text: { primary: '#222222', secondary: '#AAAAAA' },
     secondary: {
         main: '#0B2545'
     },
+    text: { primary: '#424242', secondary: '#AAAAAA' },
+
     defaultSvg: {
         main: '#222222'
     },
-    type: 'light',
-    background: { default: '#fbddc8' }
+    type: 'light'
 };
 
 export type CustomPaletteType = {

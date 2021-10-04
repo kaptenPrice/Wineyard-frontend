@@ -10,7 +10,6 @@ const useFetch: UseFetchType = async (endpoint, init) => {
             ...init
         });
         status = response.status;
-        console.log(status);
 
         const data = await response.json();
         return { data, status };

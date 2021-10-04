@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import {
     Grid,
     makeStyles,
@@ -12,21 +12,56 @@ import {
     Input
 } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
+import useFetch from '../lib/useFetch';
 
-const NewWineModal = ({
-    open,
-    onClose,
-    setName,
-    setCountry,
-    setYear,
-    setDescription,
-    handleAddFile,
-    image,
-    error,
-    handleCancel,
-    handleSave
-}) => {
+const NewWineModal = ({ open, onClose, handleModal, handleCancel, errorMessage, previewImage }: NewWineTypes) => {
     const classes = useStyles();
+    const [name, setName] = useState(null);
+    const [country, setCountry] = useState(null);
+    const [year, setYear] = useState(null);
+    const [description, setDescription] = useState(null);
+    const [avatar, setAvatar] = useState(null);
+    const [previewAvatar, setPreviewAvatar] = previewImage;
+    const [error, setError] = errorMessage;
+    const types = ['image/png', 'image/jpeg'];
+
+    const handleSubmitWine = async () => {
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('country', country);
+        formData.append('year', year);
+        formData.append('description', description);
+        avatar && formData.append('avatar', avatar);
+
+        try {
+            const respons = await useFetch('/wine/add', {
+                method: 'POST',
+                body: formData,
+                credentials: 'include',
+                headers: undefined
+            });
+            respons.status === 201 && handleModal();
+            respons.data.error && setError(respons.data.error);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const handleFile = (event: ChangeEvent<HTMLInputElement>) => {
+        const tempImage = event.target.files[0];
+        if (tempImage && types.includes(tempImage.type)) {
+            var reader = new FileReader();
+            reader.onloadend = () => {
+                setAvatar(tempImage);
+                setPreviewAvatar(reader.result);
+            };
+            reader.readAsDataURL(tempImage);
+            setError('');
+        } else {
+            setAvatar(null);
+            setPreviewAvatar(null);
+            setError(`File is not valid, please choose png/jpeg `);
+        }
+    };
 
     return (
         <Dialog className={classes.containerDialog} open={open} onClose={onClose}>
@@ -43,7 +78,7 @@ const NewWineModal = ({
                         type='text'
                         fullWidth={false}
                         variant='standard'
-                        onChange={setName}
+                        onChange={(e) => setName(e.target.value)}
                     />
                     <TextField
                         required
@@ -53,7 +88,7 @@ const NewWineModal = ({
                         type='text'
                         fullWidth={false}
                         variant='standard'
-                        onChange={setCountry}
+                        onChange={(e) => setCountry(e.target.value)}
                     />
                     <TextField
                         required
@@ -63,7 +98,7 @@ const NewWineModal = ({
                         type='text'
                         fullWidth={false}
                         variant='standard'
-                        onChange={setYear}
+                        onChange={(e) => setYear(e.target.value)}
                     />
                     <TextField
                         required
@@ -73,16 +108,16 @@ const NewWineModal = ({
                         type='text'
                         fullWidth={false}
                         variant='standard'
-                        onChange={setDescription}
+                        onChange={(e) => setDescription(e.target.value)}
                     />
                     <label className={classes.label}>
-                        <Input className={classes.fileInput} type='file' onChange={handleAddFile} />
+                        <Input className={classes.fileInput} type='file' onChange={handleFile} />
                         <ImageIcon />
                     </label>
                 </Grid>
-                {image && (
+                {previewAvatar && (
                     <div className={classes.mediaContainer}>
-                        <img className={classes.media} src={image.previewImage} alt={image.previewImage} />
+                        <img className={classes.media} src={previewAvatar} alt={previewAvatar} />
                     </div>
                 )}
                 {error && error}
@@ -90,7 +125,7 @@ const NewWineModal = ({
 
             <DialogActions>
                 <Button onClick={handleCancel}>Cancel</Button>
-                <Button onClick={handleSave}>Save</Button>
+                <Button onClick={handleSubmitWine}>Save</Button>
             </DialogActions>
         </Dialog>
     );
@@ -108,7 +143,6 @@ const useStyles = makeStyles(({ breakpoints: { down } }) => ({
         height: 0,
         width: 0,
         opacity: 0
-        // display: 'none'
     },
     label: {
         display: 'block',
@@ -121,3 +155,12 @@ const useStyles = makeStyles(({ breakpoints: { down } }) => ({
         '& :hover': { cursor: 'pointer', opacity: 0.5 }
     }
 }));
+
+type NewWineTypes = {
+    open?: boolean;
+    onClose?: () => void;
+    handleCancel?: () => void;
+    handleModal: () => void;
+    previewImage: [string, Dispatch<SetStateAction<string | ArrayBuffer>>];
+    errorMessage: [string, Dispatch<SetStateAction<string>>];
+};

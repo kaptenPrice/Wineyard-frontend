@@ -91,9 +91,9 @@ export const Wines = () => {
         </Grid>
     );
 };
-const useStyles = makeStyles(({ breakpoints: { down } }) => ({
+const useStyles = makeStyles(({ breakpoints: { down }, palette }) => ({
     container: {
-        background:"white",
+        background: palette.background.paper,
         // maxWidth: 1720,
         justifyContent: 'center',
         margin: 'auto',
@@ -108,8 +108,7 @@ const useStyles = makeStyles(({ breakpoints: { down } }) => ({
         [down('xs')]: {
             paddingBottom: 66,
             flexDirection: 'column',
-            alignContent: 'space-evenly',
-            
+            alignContent: 'space-evenly'
         }
     }
 }));

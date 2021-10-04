@@ -26,6 +26,7 @@ export const NavigationBar = ({ drawerState }: NavigationBarPropsType) => {
         setIsDrawerOpen(false);
     };
     const handleRedirectHome = () => {
+        handleClose();
         goToHome();
     };
 
@@ -33,7 +34,7 @@ export const NavigationBar = ({ drawerState }: NavigationBarPropsType) => {
         <>
             <AppBar className={classes.NavigationBar} color='transparent' elevation={0}>
                 <ToolBar>
-                    <Typography onClick={handleRedirectHome} className={classes.title} variant='h6' color='inherit'>
+                    <Typography onClick={handleRedirectHome} className={classes.title} variant='h6'>
                         WINEYARD
                     </Typography>
 
@@ -67,7 +68,7 @@ export const NavigationBar = ({ drawerState }: NavigationBarPropsType) => {
                             <MenuItem
                                 className={classes.menuItem}
                                 component={Link}
-                                to={AppRoutes.USERS}
+                                to={AppRoutes.PROFILE}
                                 onClick={handleClose}
                             >
                                 {t('navbar.label_two').toUpperCase()}
@@ -99,15 +100,20 @@ export const NavigationBar = ({ drawerState }: NavigationBarPropsType) => {
         </>
     );
 };
+/*/
+/* -------------------------------------------------------------------------- */
+/*                                    Types                                   */
+/* -------------------------------------------------------------------------- */
 
-const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defaultSvg, background } }) => ({
+type NavigationBarPropsType = { drawerState: [boolean, Dispatch<SetStateAction<boolean>>] };
+
+const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defaultSvg, background, text }, typography }) => ({
     NavigationBar: {
         position: 'relative',
         zIndex: 1500,
         width: '100%',
         opacity: 1,
         top: 0,
-        // paddingBottom:50,
         display: ({ isOpen }: any) => (isOpen ? 'none' : 'inherit'),
         [down('xs')]: {
             position: 'fixed',
@@ -129,7 +135,7 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defau
         marginLeft: (isDrawerOpen: boolean) => (isDrawerOpen ? 'calc(100vw - 600px)' : 0),
         transition: 'margin .3s',
         '&:hover': { cursor: 'pointer', opacity: 0.7 },
-
+        color:text.secondary,
         [down('md')]: {
             marginLeft: '0 !important'
         }
@@ -193,9 +199,3 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { primary, defau
         paddingRight: 12
     }
 }));
-/*/
-/* -------------------------------------------------------------------------- */
-/*                                    Types                                   */
-/* -------------------------------------------------------------------------- */
-
-type NavigationBarPropsType = { drawerState: [boolean, Dispatch<SetStateAction<boolean>>] };
