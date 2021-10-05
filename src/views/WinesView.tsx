@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Grid, makeStyles,  Typography } from '@material-ui/core';
 import { Wines } from '../components/Wines';
 
 const WinesView = () => {

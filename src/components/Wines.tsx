@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useFetch from '../lib/useFetch';
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid, makeStyles, Typography } from '@material-ui/core';
 import wineImg from '../global/images/wine-image.jpg';
 import { WineCard } from './WineCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -75,26 +75,32 @@ export const Wines = () => {
         ));
     };
     return (
-        <Grid container xl={12} className={classes.container} id='winesContainer'>
-            <InfiniteScroll
-                next={fetchWines}
-                hasMore={wineData.length < actualSize}
-                loader={
-                    <Grid container justifyContent='center' item xs={12}>
-                        <CircularProgress />
-                    </Grid>
-                }
-                dataLength={wineData.length}
-            >
-                {getWines()}
-            </InfiniteScroll>
-        </Grid>
+        <>
+            <Grid container xl={12} className={classes.container} direction='row' id='winesContainer'>
+                <Grid xs={12} item className={classes.titleContainer}>
+                    <Typography gutterBottom className={classes.title}>
+                        <span>-----</span>Our Wines
+                    </Typography>
+                </Grid>
+                <InfiniteScroll
+                    next={fetchWines}
+                    hasMore={wineData.length < actualSize}
+                    loader={
+                        <Grid container justifyContent='center' item xs={12}>
+                            <CircularProgress />
+                        </Grid>
+                    }
+                    dataLength={wineData.length}
+                >
+                    {getWines()}
+                </InfiniteScroll>
+            </Grid>
+        </>
     );
 };
-const useStyles = makeStyles(({ breakpoints: { down }, palette }) => ({
+const useStyles = makeStyles(({ breakpoints: { down }, palette: { background, text }, typography }) => ({
     container: {
-        background: palette.background.paper,
-        // maxWidth: 1720,
+        background: background.paper,
         justifyContent: 'center',
         margin: 'auto',
         position: 'relative',
@@ -109,6 +115,26 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette }) => ({
             paddingBottom: 66,
             flexDirection: 'column',
             alignContent: 'space-evenly'
+        }
+    },
+    titleContainer: {
+        marginBottom: 50,
+        marginLeft: 50,
+        marginTop: 40
+    },
+
+    title: {
+        ...typography.h5,
+        fontWeight: 300,
+        color: text.primary,
+     
+        letterSpacing: '0.19rem',
+        [down('sm')]: {
+            ...typography.body2
+        },
+        '&>span': {
+            letterSpacing: -4,
+            marginRight: 12
         }
     }
 }));

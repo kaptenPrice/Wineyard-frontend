@@ -12,6 +12,7 @@ import { SettingsView } from '../views/SettingsView';
 import ProfileView from '../views/ProfileView';
 import WinesView from '../views/WinesView';
 import { AppRoutes } from './AppRoutes';
+import Volkhov from '../constants/fonts/Volkhov';
 
 const Routing = () => {
     const { profile } = useProfile();
@@ -80,6 +81,7 @@ type authCheckPropstype = (view: ComponentType<any>) => ComponentType<any>;
 
 const useStyles = makeStyles(({ palette: { background }, transitions, breakpoints: { between, down } }) => ({
     '@global': {
+        '@font-face': Volkhov,
         '*': {
             transition: 'background-color .3s',
             margin: 0,
@@ -122,5 +124,3 @@ const useStyles = makeStyles(({ palette: { background }, transitions, breakpoint
         padding: '0'
     }
 }));
-
-

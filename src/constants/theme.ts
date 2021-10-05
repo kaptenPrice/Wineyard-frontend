@@ -1,9 +1,10 @@
 export default {
     typography: {
-        
+        fontFamily: 'Volkhov',
+
         h2: {
             fontSize: 52,
-             color: '#222222'
+            color: '#222222'
         },
         h3: {
             fontSize: 42,
