@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import { SnackbarProvider } from 'notistack';
 import { makeStyles } from '@material-ui/core';
 
-const Snackbar = ({ children }: SnackbarPropsType) => {
+const Snackbar = ({ children }: PropsWithChildren<any>) => {
     const classes = useStyles();
 
     return (
@@ -18,16 +18,6 @@ const Snackbar = ({ children }: SnackbarPropsType) => {
 };
 
 export default Snackbar;
-
-/* -------------------------------------------------------------------------- */
-/*                                    Types                                   */
-/* -------------------------------------------------------------------------- */
-
-type SnackbarPropsType = PropsWithChildren<any>;
-
-/* -------------------------------------------------------------------------- */
-/*                                   Styles                                   */
-/* -------------------------------------------------------------------------- */
 
 const useStyles = makeStyles(({}) => ({
     Snackbar: {

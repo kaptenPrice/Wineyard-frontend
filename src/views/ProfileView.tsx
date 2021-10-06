@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
-
 import NewWineModal from '../components/NewWineModal';
 import MyWines from '../components/MyWines';
 import AddWineButton from '../components/AddNewWine';
@@ -8,9 +7,7 @@ import AddWineButton from '../components/AddNewWine';
 const ProfileView = () => {
     const classes = useStyles();
     const [previewAvatar, setPreviewAvatar] = useState(null);
-
     const [isOpen, setIsOpen] = useState(false);
-
     const [error, setError] = useState<string | null>(null);
 
     const handleModal = () => {
@@ -35,7 +32,6 @@ const ProfileView = () => {
                     <span>-----</span>MY WINES
                 </Typography>
             </Grid>
-
             <MyWines />
             <AddWineButton onClick={handleModal} className={classes.addIcon} />
             <NewWineModal
@@ -63,7 +59,6 @@ const useStyles = makeStyles(
             '& path': {
                 fill: defaultSvg.main
             },
-
             [down('xs')]: {
                 bottom: 70
             }
@@ -86,7 +81,6 @@ const useStyles = makeStyles(
             marginBottom: 160,
             marginTop: 80,
             paddingBottom: 40,
-
             borderBottom: '1px solid #222222',
             [between('xs', 'md')]: {
                 width: '80%',

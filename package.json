@@ -3,6 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@fontsource/rubik-beastly": "^4.5.0",
+        "@fontsource/volkhov": "^4.5.0",
         "@lottiefiles/react-lottie-player": "^3.3.1",
         "@material-ui/core": "^4.12.2",
         "@material-ui/icons": "^4.11.2",
@@ -17,7 +19,6 @@
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-prettier": "^3.4.0",
         "eslint-plugin-react": "^7.24.0",
-        "fontsource-roboto": "^4.0.0",
         "framer-motion": "^4.1.17",
         "i18next": "^20.4.0",
         "i18next-browser-languagedetector": "^6.1.2",

@@ -1,18 +1,19 @@
+import { Theme } from '@material-ui/core';
+
 export default {
     typography: {
-        fontFamily: 'Volkhov',
-
-        h2: {
-            fontSize: 52,
-            color: '#222222'
-        },
-        h3: {
-            fontSize: 42,
-            color: '#222222'
-        },
-        h4: {
-            fontSize: 24,
-            color: '#222222'
+        fontFamily: 'Rubik Beastly'
+    },
+    overrides: {
+        MuiLink: {
+            root: {
+                fontFamily: 'Rubik Beastly'
+            },
+            underlineHover: {
+                '&:hover': {
+                    textDecoration: 'none'
+                }
+            }
         }
     }
-};
+} as unknown as Theme;

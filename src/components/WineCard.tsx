@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -13,12 +13,11 @@ import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import useFetch from '../lib/useFetch';
 import { useProfile } from '../provider/ProfileProvider';
 import { stringToInitials } from '../lib/utils';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Button } from '@material-ui/core';
-import { useSnackbar } from 'notistack';
+import { useAPIHandlers } from '../lib/useAPIHandlers';
 
 export const WineCard = ({
     handleExpandOnClick,
@@ -37,51 +36,13 @@ export const WineCard = ({
 }: WineProps) => {
     const classes = useStyles({ expanded });
     const { profile } = useProfile();
-    const { enqueueSnackbar } = useSnackbar();
 
+    const { handleDeleteWineDB, handleRemoveFromFavorites, handleAddToFavorites } = useAPIHandlers();
     const initials = stringToInitials(name, ' ');
     const isLikedByCurrentUser = likedBy && likedBy?.length ? likedBy.includes(profile?._id) : false;
 
-    const handleAddToFavorites = async () => {
-        try {
-            await useFetch('/user/addfavoritewine', {
-                method: 'PATCH',
-                body: JSON.stringify({ id: _id })
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
-    const handleRemoveFromFavorites = async (wineId: string) => {
-        await useFetch(`/user/deletewine/${wineId}`, {
-            method: 'PUT'
-        });
-    };
-    const handleDeleteWine = async (wineId: string) => {
-        try {
-            const response = await useFetch(`/wine/delete/${wineId}`, {
-                method: 'DELETE'
-            });
-            if (response.status === 200) {
-                console.log(response.data.message);
-                enqueueSnackbar(`Successfully deleted: ${response.data.name}`, {
-                    variant: 'success'
-                });
-            } else {
-                enqueueSnackbar('Something went wrong, reload the page and try again', {
-                    variant: 'warning'
-                });
-            }
-        } catch (error) {
-            enqueueSnackbar('Something went wrong, reload the page and try again', {
-                variant: 'error'
-            });
-            console.log(error);
-        }
-    };
     return (
         <>
-            {/* {expanded && <div className={classes.cover} onClick={handleExpandOnClick} />} */}
             <Card elevation={0} className={classes.root}>
                 <CardHeader
                     className={classes.cardHeader}
@@ -107,7 +68,7 @@ export const WineCard = ({
                     {showActionButtons && (
                         <>
                             <IconButton
-                                onClick={() => handleAddToFavorites()}
+                                onClick={() => handleAddToFavorites(_id)}
                                 disabled={isLikedByCurrentUser}
                                 aria-label='add to favorites'
                             >
@@ -147,7 +108,7 @@ export const WineCard = ({
                             Description:
                             {description}
                         </Typography>
-                        <Button color='default' variant='outlined' key={_id} onClick={() => handleDeleteWine(_id)}>
+                        <Button color='default' variant='outlined' key={_id} onClick={() => handleDeleteWineDB(_id)}>
                             REMOVE
                         </Button>
                     </CardContent>
@@ -158,25 +119,12 @@ export const WineCard = ({
 };
 
 const useStyles = makeStyles(({ transitions, palette: { background }, breakpoints: { down } }) => ({
-    // cover: {
-    //     width: '100vw',
-    //     // background: '#0005',
-    //     background: 'red',
-    //     position: 'absolute',
-    //     left:0,
-    //     top:0,
-    //     zIndex: 200,
-    //     backdropFilter: ' blur(1.5px) grayscale(.3)'
-    // },
     root: {
         overflow: 'visible',
         width: 325,
         height: 570,
-        borderRadius:10,
+        borderRadius: 10,
         boxShadow: '0px 0px 12px 0px #e0dde0'
-
-        //@ts-ignore
-        // zIndex: ({ expanded }) => (expanded ? 200 : 'auto')
     },
     cardHeader: {
         '& .MuiCardHeader-title': {
@@ -227,12 +175,10 @@ const useStyles = makeStyles(({ transitions, palette: { background }, breakpoint
         position: 'absolute',
         zIndex: 200,
         width: 'inherit',
-        // backgroundColor: 'red',
         marginTop: -7,
 
         '&>div': {
-            background: background.paper,
-            // boxShadow: `0px 2px -6px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)`
+            background: background.paper
         },
         [down('xs')]: {
             //@ts-ignore

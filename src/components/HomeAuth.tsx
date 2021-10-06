@@ -1,11 +1,10 @@
 import React from 'react';
-import { makeStyles, Typography, useMediaQuery, useTheme } from '@material-ui/core';
+import { makeStyles, Typography, useMediaQuery, useTheme, Link } from '@material-ui/core';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { useProfile } from '../provider/ProfileProvider';
 import { AppRoutes } from '../routes/AppRoutes';
-import CollectionSvg from "../svg/CollectionSvg"
+import CollectionSvg from '../svg/CollectionSvg';
 import ProfileSvg from '../svg/ProfileSvg';
 import SettingsSvg from '../svg/SettingsSvg';
 import bgImage from '../global/images/backgroundImage1.jpg';
@@ -43,7 +42,7 @@ const HomeComponentAuth = () => {
                     whileHover={{ translateY: -15 }}
                 >
                     <CollectionSvg className={classes.svg} />
-                    <Link className={classes.link} to={AppRoutes.WINES}>
+                    <Link className={classes.link} href={AppRoutes.WINES}>
                         Wines
                     </Link>
                 </motion.div>
@@ -56,7 +55,7 @@ const HomeComponentAuth = () => {
                 >
                     <ProfileSvg className={classes.svg} />
 
-                    <Link className={classes.link} to={AppRoutes.PROFILE}>
+                    <Link className={classes.link} href={AppRoutes.PROFILE} >
                         My wines
                     </Link>
                 </motion.div>
@@ -68,7 +67,7 @@ const HomeComponentAuth = () => {
                     whileHover={{ translateY: -15 }}
                 >
                     <SettingsSvg className={classes.svg} />
-                    <Link className={classes.link} to={AppRoutes.SETTINGS}>
+                    <Link className={classes.link} href={AppRoutes.SETTINGS}  >
                         Settings
                     </Link>
                 </motion.div>
@@ -92,7 +91,7 @@ const HomeComponentAuth = () => {
 };
 
 export default HomeComponentAuth;
-const useStyles = makeStyles(({ palette: { background }, breakpoints: { down } }) => ({
+const useStyles = makeStyles(({ palette: { background }, breakpoints: { down }, typography: { fontFamily } }) => ({
     mainDiv: {
         position: 'relative',
         height: 1972,
@@ -151,7 +150,7 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints: { down } }
         background: background.paper,
         borderRadius: 10,
         padding: 40,
-        margin:10,
+        margin: 10,
         // boxShadow: '0 1px 5px #888888',
         [down('xs' || 'md')]: {
             width: 192,
@@ -180,7 +179,7 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints: { down } }
         textDecoration: 'none',
         fontSize: 24,
         fontWeight: 'bold',
-        fontFamily: 'Roboto',
+        // fontFamily: fontFamily,
         color: '#00B9C5'
     }
 }));

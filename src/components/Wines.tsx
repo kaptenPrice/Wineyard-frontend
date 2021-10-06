@@ -7,6 +7,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useSocket } from '../lib/useSocket';
 import { stringToInitials } from '../lib/utils';
+import { useAPIHandlers } from '../lib/useAPIHandlers';
 
 export const Wines = () => {
     const [wineData, setWineData] = useState([]);
@@ -16,30 +17,12 @@ export const Wines = () => {
     const [expandedItemId, setExpandedItemId] = useState<null | string>(null);
     const showActionButtons: boolean = true;
     const classes = useStyles();
+    const { fetchWines } = useAPIHandlers();
 
     useEffect(() => {
-        fetchWines();
+        fetchWines(currentPage, currentSize, setWineData, setActualSize, setCurrentPage);
     }, []);
-
-    const fetchWines = async () => {
-        const nextPageIndex = currentPage + 1;
-        try {
-            const {
-                data: { data, page, amountWines },
-                status
-            } = await useFetch('/wine/paginate', {
-                method: 'POST',
-                body: JSON.stringify({ size: currentSize, page: nextPageIndex })
-            });
-            if (status === 200) {
-                setWineData((current) => [...current, ...data]);
-                setActualSize(amountWines);
-            }
-            setCurrentPage(page);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+ 
 
     useSocket(['wine-liked', 'wine-unliked'], (newWineData) => {
         setWineData((current) =>
@@ -83,7 +66,7 @@ export const Wines = () => {
                     </Typography>
                 </Grid>
                 <InfiniteScroll
-                    next={fetchWines}
+                    next={()=>fetchWines(currentPage, currentSize, setWineData, setActualSize, setCurrentPage)}
                     hasMore={wineData.length < actualSize}
                     loader={
                         <Grid container justifyContent='center' item xs={12}>
@@ -127,7 +110,7 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { background, te
         ...typography.h5,
         fontWeight: 300,
         color: text.primary,
-     
+
         letterSpacing: '0.19rem',
         [down('sm')]: {
             ...typography.body2

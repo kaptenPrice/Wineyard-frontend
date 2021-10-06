@@ -1,5 +1,5 @@
-import { makeStyles, Container } from '@material-ui/core';
 import React, { ComponentType, useState } from 'react';
+import { makeStyles, Container } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route, RouteProps } from 'react-router-dom';
 import { NavigationBar } from '../components/NavigationBar';
 import { useProfile } from '../provider/ProfileProvider';
@@ -12,7 +12,7 @@ import { SettingsView } from '../views/SettingsView';
 import ProfileView from '../views/ProfileView';
 import WinesView from '../views/WinesView';
 import { AppRoutes } from './AppRoutes';
-import Volkhov from '../constants/fonts/Volkhov';
+// import Volkhov from '../constants/fonts/Volkhov';
 
 const Routing = () => {
     const { profile } = useProfile();
@@ -81,30 +81,15 @@ type authCheckPropstype = (view: ComponentType<any>) => ComponentType<any>;
 
 const useStyles = makeStyles(({ palette: { background }, transitions, breakpoints: { between, down } }) => ({
     '@global': {
-        '@font-face': Volkhov,
+        // '@font-face': Volkhov,
         '*': {
-            transition: 'background-color .3s',
-            margin: 0,
-            padding: 0
-        },
-        html: {
-            fontFamily: 'Roboto',
-            height: '100%',
-            width: '100%',
-            boxSizing: 'border-box'
+            transition: 'background-color .3s'
         },
         body: {
             margin: 0,
-            padding: 0,
+            display: 'unset',
             background: background.default,
-            overflowX: 'hidden',
-            height: '100%',
-            width: '100%',
-            paddingRight: '0!important',
-            boxSizing: 'border-box'
-        },
-        input: {
-            color: 'rgb(168, 87, 20) !important'
+            overflowX: 'hidden'
         }
     },
     contentContainer: {

@@ -91,7 +91,7 @@ const ResetPassView = () => {
                                             label='password'
                                             required={true}
                                             value={tempPassword}
-                                            onChange={(e) => setTempPassword(e.target.value)}
+                                            onChange={(e) => setTempPassword(e.currentTarget.value)}
                                         />
                                         <TextField
                                             variant='standard'
@@ -100,7 +100,7 @@ const ResetPassView = () => {
                                             label='Repeat password'
                                             required={true}
                                             value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
+                                            onChange={(e) => setPassword(e.currentTarget.value)}
                                         />
                                         <Button
                                             endIcon={<SendIcon />}
