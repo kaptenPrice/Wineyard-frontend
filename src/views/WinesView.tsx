@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, makeStyles,  Typography } from '@material-ui/core';
-import { Wines } from '../components/Wines';
+import { Wines } from '../components/wines/Wines';
 
 const WinesView = () => {
     const classes = useStyles();

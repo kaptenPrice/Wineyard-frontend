@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import useFetch from '../lib/useFetch';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
-import wineImg from '../global/images/wine-image.jpg';
-import { WineCard } from './WineCard';
+import wineImg from '../../global/images/wine-image.jpg';
+import { WineCard } from '../wineCard/WineCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { useSocket } from '../lib/useSocket';
-import { stringToInitials } from '../lib/utils';
-import { useAPIHandlers } from '../lib/useAPIHandlers';
+import { useSocket } from '../../lib/useSocket';
+import { stringToInitials } from '../../lib/utils';
+import { winesHandlers } from './winesHandlers';
 
 export const Wines = () => {
     const [wineData, setWineData] = useState([]);
@@ -16,13 +15,13 @@ export const Wines = () => {
     const [actualSize, setActualSize] = useState(0);
     const [expandedItemId, setExpandedItemId] = useState<null | string>(null);
     const showActionButtons: boolean = true;
+    
     const classes = useStyles();
-    const { fetchWines } = useAPIHandlers();
+    const { fetchWines } = winesHandlers();
 
     useEffect(() => {
         fetchWines(currentPage, currentSize, setWineData, setActualSize, setCurrentPage);
     }, []);
- 
 
     useSocket(['wine-liked', 'wine-unliked'], (newWineData) => {
         setWineData((current) =>

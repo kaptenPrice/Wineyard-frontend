@@ -72,26 +72,13 @@ const HomeComponentAuth = () => {
                     </Link>
                 </motion.div>
             </div>
-            <div>
-                <div
-                    style={{
-                        zIndex: 1,
-                        position: 'absolute',
-                        left: '10%',
-                        right: '10%',
-                        height: 200,
-                        backgroundColor: '#fff',
-                        color: 'white',
-                        padding: 0
-                    }}
-                ></div>
-            </div>
+        
         </div>
     );
 };
 
 export default HomeComponentAuth;
-const useStyles = makeStyles(({ palette: { background }, breakpoints: { down }, typography: { fontFamily } }) => ({
+const useStyles = makeStyles(({ palette: { background , text}, breakpoints: { down }, typography: { fontFamily } }) => ({
     mainDiv: {
         position: 'relative',
         height: 1972,
@@ -144,18 +131,15 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints: { down }, 
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        Width: '',
         maxHeight: '25%',
-        // backgroundColor:"red",
         background: background.paper,
         borderRadius: 10,
-        padding: 40,
+        padding: "5px 120px",
         margin: 10,
-        // boxShadow: '0 1px 5px #888888',
         [down('xs' || 'md')]: {
             width: 192,
             flexDirection: 'column',
-            padding: 20,
+            padding: "20px 60px",
             justifyContent: 'space-around',
             alignItems: 'center',
             marginBottom: 10
@@ -170,16 +154,15 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints: { down }, 
         width: '21em',
         height: '21em',
         [down('xs')]: {
-            width: '10em',
-            height: '10em'
+            width: '15em',
+            height: '12em'
         }
     },
     link: {
-        padding: 20,
+        padding: "30px",
         textDecoration: 'none',
         fontSize: 24,
         fontWeight: 'bold',
-        // fontFamily: fontFamily,
-        color: '#00B9C5'
+        color: text.secondary
     }
 }));

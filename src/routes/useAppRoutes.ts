@@ -1,4 +1,4 @@
-import useMyHistory from '../components/hooks/useMyHistory';
+import useMyHistory from '../hooks/useMyHistory';
 import { AppRoutes } from './AppRoutes';
 
 export const useAppRoutes = () => {

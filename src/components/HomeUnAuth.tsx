@@ -11,7 +11,6 @@ import SettingsSvg from '../svg/SettingsSvg';
 import LoginSvg from '../svg/LoginSvg';
 
 const HomeComponentUnAuth = () => {
-    const { profile } = useProfile();
     const { t, i18n } = useTranslation();
     const classes = useStyles();
     const {

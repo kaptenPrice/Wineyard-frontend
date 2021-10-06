@@ -13,11 +13,11 @@ import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { useProfile } from '../provider/ProfileProvider';
-import { stringToInitials } from '../lib/utils';
+import { useProfile } from '../../provider/ProfileProvider';
+import { stringToInitials } from '../../lib/utils';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Button } from '@material-ui/core';
-import { useAPIHandlers } from '../lib/useAPIHandlers';
+import { wineCardHandlers } from './wineCardHandlers';
 
 export const WineCard = ({
     handleExpandOnClick,
@@ -37,7 +37,7 @@ export const WineCard = ({
     const classes = useStyles({ expanded });
     const { profile } = useProfile();
 
-    const { handleDeleteWineDB, handleRemoveFromFavorites, handleAddToFavorites } = useAPIHandlers();
+    const { handleDeleteWineDB, handleRemoveFromFavorites, handleAddToFavorites } = wineCardHandlers();
     const initials = stringToInitials(name, ' ');
     const isLikedByCurrentUser = likedBy && likedBy?.length ? likedBy.includes(profile?._id) : false;
 
@@ -150,13 +150,7 @@ const useStyles = makeStyles(({ transitions, palette: { background }, breakpoint
             opacity: 1
         }
     },
-    actionContainer: {
-        // display: 'flex',
-        // alignContent: 'flex-end',
-        // marginTop: 'auto',
-        // background: 'inherit',
-        // position: 'relative'
-    },
+    actionContainer: {},
     expand: {
         transform: 'rotate(0deg)',
         marginLeft: 'auto',

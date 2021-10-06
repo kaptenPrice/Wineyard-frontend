@@ -1,7 +1,7 @@
 import { Box, Grid, makeStyles, Typography, useMediaQuery, useTheme } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useProfile } from '../provider/ProfileProvider';
-import { WineCard } from './WineCard';
+import { WineCard } from './wineCard/WineCard';
 import wineImg from '../global/images/wine-image.jpg';
 import useFetch from '../lib/useFetch';
 import {} from '@material-ui/styles';

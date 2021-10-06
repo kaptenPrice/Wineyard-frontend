@@ -12,10 +12,10 @@ import {
     Input
 } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
-import { useAPIHandlers } from '../lib/useAPIHandlers';
-import { handleFile } from '../lib/utils';
+import { handleFile } from '../../lib/utils';
+import { addWineHandlers } from './addWineHandlers';
 
-const NewWineModal = ({ open, onClose, handleModal, handleCancel, errorMessage, previewImage }: NewWineTypes) => {
+const AddWineModal = ({ open, onClose, handleModal, handleCancel, errorMessage, previewImage }: NewWineTypes) => {
     const classes = useStyles();
     const [name, setName] = useState(null);
     const [country, setCountry] = useState(null);
@@ -25,8 +25,8 @@ const NewWineModal = ({ open, onClose, handleModal, handleCancel, errorMessage, 
     const [previewAvatar, setPreviewAvatar] = previewImage;
     const [error, setError] = errorMessage;
     const [isFormValid, setIsFormValid] = useState(true);
-    
-    const { handleAddNewWine } = useAPIHandlers();
+
+    const { handleAddNewWine } = addWineHandlers();
 
     return (
         <Dialog className={classes.containerDialog} open={open} onClose={onClose}>
@@ -105,7 +105,7 @@ const NewWineModal = ({ open, onClose, handleModal, handleCancel, errorMessage, 
     );
 };
 
-export default NewWineModal;
+export default AddWineModal;
 const useStyles = makeStyles(({ breakpoints: { down } }) => ({
     containerDialog: {},
     mediaContainer: { maxWidth: '100px', maxHeight: '150px' },

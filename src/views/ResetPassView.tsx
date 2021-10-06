@@ -5,7 +5,7 @@ import useFetch from '../lib/useFetch';
 import SendIcon from '@material-ui/icons/Send';
 import { useEffect } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
-import useMyHistory from '../components/hooks/useMyHistory';
+import useMyHistory from '../hooks/useMyHistory';
 import { AppRoutes } from '../routes/AppRoutes';
 import { useAppRoutes } from '../routes/useAppRoutes';
 

@@ -4,7 +4,7 @@ import SendIcon from '@material-ui/icons/Send';
 import useFetch from '../lib/useFetch';
 import { useProfile } from '../provider/ProfileProvider';
 import { AppRoutes } from '../routes/AppRoutes';
-import useMyHistory from '../components/hooks/useMyHistory';
+import useMyHistory from '../hooks/useMyHistory';
 import { useAppRoutes } from '../routes/useAppRoutes';
 
 const LogoutView = () => {

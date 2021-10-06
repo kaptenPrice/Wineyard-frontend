@@ -60,7 +60,7 @@ const Settings = () => {
 };
 
 export default Settings;
-const useStyles = makeStyles(({ palette: { primary, background, text }, breakpoints: { down } }) => ({
+const useStyles = makeStyles(({ palette: { primary, background, text, defaultSvg }, breakpoints: { down } }) => ({
     settingsView: {
         justifyContent: 'center',
         alignContent: 'center',
@@ -95,7 +95,7 @@ const useStyles = makeStyles(({ palette: { primary, background, text }, breakpoi
         minHeight: '70%',
         borderRadius: 20,
         textAlign: 'center',
-        border: `3px solid ${primary.main}`,
+        border: `3px solid ${defaultSvg.main}`,
         background: background.paper
     },
     title: {

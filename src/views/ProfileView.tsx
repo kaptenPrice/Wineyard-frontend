@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
-import NewWineModal from '../components/NewWineModal';
+import AddWineModal from '../components/addWineModal/AddWineModal';
 import MyWines from '../components/MyWines';
-import AddWineButton from '../components/AddNewWine';
+import AddWineButton from '../components/AddWineButton';
 
 const ProfileView = () => {
     const classes = useStyles();
@@ -34,7 +34,7 @@ const ProfileView = () => {
             </Grid>
             <MyWines />
             <AddWineButton onClick={handleModal} className={classes.addIcon} />
-            <NewWineModal
+            <AddWineModal
                 previewImage={[previewAvatar, setPreviewAvatar]}
                 errorMessage={[error, setError]}
                 open={isOpen}
