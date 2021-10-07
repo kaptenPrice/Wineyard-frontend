@@ -3,11 +3,7 @@ import { makeStyles, Typography, useMediaQuery, useTheme } from '@material-ui/co
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useProfile } from '../provider/ProfileProvider';
 import { AppRoutes } from '../routes/AppRoutes';
-import CollectionSvg from '../svg/CollectionSvg';
-import ProfileSvg from '../svg/ProfileSvg';
-import SettingsSvg from '../svg/SettingsSvg';
 import LoginSvg from '../svg/LoginSvg';
 
 const HomeComponentUnAuth = () => {
@@ -79,11 +75,9 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints: { down } }
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        Width: '',
         background: background.paper,
         borderRadius: 10,
         padding: 10,
-        // boxShadow: '0 1px 5px #888888',
         [down('xs' || 'md')]: {
             width: 192,
             flexDirection: 'column',
@@ -108,7 +102,6 @@ const useStyles = makeStyles(({ palette: { background }, breakpoints: { down } }
         fontWeight: 'bold',
         fontFamily: 'Roboto',
         color: '#00B9C5',
-        // boxShadow: '0 1px 1px #888888',
 
         '&:hover': {
             opacity: 0.8,

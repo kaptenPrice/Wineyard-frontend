@@ -8,8 +8,11 @@
     },
 
     "home_welcome": "Welcome",
-    "profile":{
-        "add_wine":"Add new wine"
+    "profile": {
+        "add_wine": "Add new wine"
     },
-    "settings": { "language": "Language", "theme":"Theme" }
+    "settings": { "language": "Language", "theme": "Theme" },
+    "homeViewAuthTitle": "123456Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium ea earum debitis illo sapiente quas tempore dolorum, perferendis numquam iusto iure, iste sed consectetur quaerat quisquam unde cumque similique klum.",
+    "winesViewTitle": "123456Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium ea earum debitis illo sapiente quas tempore dolorum, perferendis numquam iusto iure, iste sed consectetur quaerat quisquam unde cumque similique klum.",
+    "profileViewTitle": "123456Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium ea earum debitis illo sapiente quas tempore dolorum, perferendis numquam iusto iure, iste sed consectetur quaerat quisquam unde cumque similique klum."
 }

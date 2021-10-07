@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Typography, useMediaQuery, useTheme, Link } from '@material-ui/core';
+import { makeStyles, Typography, useMediaQuery, useTheme, Link, Grid } from '@material-ui/core';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useProfile } from '../provider/ProfileProvider';
@@ -7,7 +7,8 @@ import { AppRoutes } from '../routes/AppRoutes';
 import CollectionSvg from '../svg/CollectionSvg';
 import ProfileSvg from '../svg/ProfileSvg';
 import SettingsSvg from '../svg/SettingsSvg';
-import bgImage from '../global/images/backgroundImage1.jpg';
+import Title from './Title';
+import { titleHomeViewAuth } from '../content/titles';
 
 const HomeComponentAuth = () => {
     const { profile } = useProfile();
@@ -19,19 +20,21 @@ const HomeComponentAuth = () => {
     const isSmallScreen = useMediaQuery(down('xs'));
 
     return (
-        <div className={classes.mainDiv}>
-            <div className={classes.overLay} />
+        <>
             <motion.div className={classes.header} animate={{ y: 30 }}>
-                {profile ? (
-                    <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary'>
-                        {t('home_welcome')} {profile?.email}
-                    </Typography>
-                ) : (
-                    <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary'>
-                        {t('home_welcome')}
-                    </Typography>
-                )}
+                <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary'>
+                    {t('home_welcome')}
+                    {/* {profile?.email} */}
+                </Typography>
             </motion.div>
+            {/* <div className={classes.overLay} /> */}
+            <Title
+                classRoot={classes.titleRoot}
+                classContainer={classes.titleContainer}
+                classTitle={classes.title}
+            >
+                {"homeViewAuthTitle"}
+            </Title>
 
             <div className={classes.linkContainer}>
                 <motion.div
@@ -55,7 +58,7 @@ const HomeComponentAuth = () => {
                 >
                     <ProfileSvg className={classes.svg} />
 
-                    <Link className={classes.link} href={AppRoutes.PROFILE} >
+                    <Link className={classes.link} href={AppRoutes.PROFILE}>
                         My wines
                     </Link>
                 </motion.div>
@@ -67,28 +70,43 @@ const HomeComponentAuth = () => {
                     whileHover={{ translateY: -15 }}
                 >
                     <SettingsSvg className={classes.svg} />
-                    <Link className={classes.link} href={AppRoutes.SETTINGS}  >
+                    <Link className={classes.link} href={AppRoutes.SETTINGS}>
                         Settings
                     </Link>
                 </motion.div>
             </div>
-        
-        </div>
+        </>
     );
 };
 
 export default HomeComponentAuth;
-const useStyles = makeStyles(({ palette: { background , text}, breakpoints: { down }, typography: { fontFamily } }) => ({
-    mainDiv: {
-        position: 'relative',
-        height: 1972,
-        backgroundImage: `url(${bgImage})`,
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        filter: 'brightness("50%")'
-        // zIndex: 1
+const useStyles = makeStyles(({ palette: { background, text }, breakpoints: { down, between }, typography }) => ({
+    titleRoot: {
+        marginLeft: 40,
+        marginBottom: 160,
+        marginTop: 80,
+        paddingBottom: 40,
+
+        borderBottom: '1px solid #222222',
+        [between('xs', 'md')]: {
+            width: '80%',
+            margin: 'auto',
+            marginBottom: 80
+        }
     },
+    titleContainer: {
+        display: 'flex',
+        alignItems: 'flex-end',
+        position: 'relative'
+    },
+    title: {
+        ...typography.h3,
+        color: text.primary,
+        [down('sm')]: {
+            ...typography.h6
+        }
+    },
+
     overLay: {
         opacity: 0.75,
         backgroundColor: 'black',
@@ -119,6 +137,7 @@ const useStyles = makeStyles(({ palette: { background , text}, breakpoints: { do
         alignContent: 'center',
         margin: '100px 0px 10px 0px',
         opacity: 0.9,
+        marginBottom: 100,
 
         [down('md')]: {
             flexDirection: 'column',
@@ -134,12 +153,12 @@ const useStyles = makeStyles(({ palette: { background , text}, breakpoints: { do
         maxHeight: '25%',
         background: background.paper,
         borderRadius: 10,
-        padding: "5px 120px",
+        padding: '5px 120px',
         margin: 10,
         [down('xs' || 'md')]: {
             width: 192,
             flexDirection: 'column',
-            padding: "20px 60px",
+            padding: '20px 60px',
             justifyContent: 'space-around',
             alignItems: 'center',
             marginBottom: 10
@@ -159,7 +178,7 @@ const useStyles = makeStyles(({ palette: { background , text}, breakpoints: { do
         }
     },
     link: {
-        padding: "30px",
+        padding: '30px',
         textDecoration: 'none',
         fontSize: 24,
         fontWeight: 'bold',

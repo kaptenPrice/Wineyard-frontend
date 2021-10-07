@@ -3,6 +3,8 @@ import { Grid, makeStyles, Typography } from '@material-ui/core';
 import AddWineModal from '../components/addWineModal/AddWineModal';
 import MyWines from '../components/MyWines';
 import AddWineButton from '../components/AddWineButton';
+import { titleProfileView } from '../content/titles';
+import Title from '../components/Title';
 
 const ProfileView = () => {
     const classes = useStyles();
@@ -18,15 +20,13 @@ const ProfileView = () => {
 
     return (
         <Grid container className={classes.viewRoot}>
-            <Grid container item xs={12} md={9} lg={7} xl={6} className={classes.titleRoot}>
-                <Grid className={classes.titleContainer}>
-                    <Typography gutterBottom className={classes.title}>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium ea earum debitis illo
-                        sapiente quas tempore dolorum, perferendis numquam iusto iure, iste sed consectetur quaerat
-                        quisquam unde cumque similique klum.
-                    </Typography>
-                </Grid>
-            </Grid>
+            <Title
+                classRoot={classes.titleRoot}
+                classContainer={classes.titleContainer}
+                classTitle={classes.title}
+            >
+                {titleProfileView}
+            </Title>
             <Grid xs={12} item className={classes.subTitleContainer}>
                 <Typography gutterBottom className={classes.subTitle}>
                     <span>-----</span>MY WINES

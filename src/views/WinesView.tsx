@@ -1,23 +1,24 @@
 import React from 'react';
-import { Grid, makeStyles,  Typography } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import { Wines } from '../components/wines/Wines';
-
+import Title from '../components/Title';
+import { titleWinesView } from '../content/titles';
 const WinesView = () => {
     const classes = useStyles();
 
     return (
         <Grid container className={classes.viewRoot}>
-            <Grid container item xs={12} md={9} lg={7} xl={6} className={classes.titleRoot}>
-                <Grid className={classes.titleContainer}>
-                    <Typography gutterBottom className={classes.title}>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium ea earum debitis illo
-                        sapiente quas tempore dolorum, perferendis numquam iusto iure, iste sed consectetur quaerat
-                        quisquam unde cumque similique klum.
-                    </Typography>
-                </Grid>
-            </Grid>
+        <>
+            <Title
+                classRoot={classes.titleRoot}
+                classContainer={classes.titleContainer}
+                classTitle={classes.title}
+            >
+                {titleWinesView}
+            </Title>
             <Wines />
-        </Grid>
+        </>
+         </Grid>
     );
 };
 
