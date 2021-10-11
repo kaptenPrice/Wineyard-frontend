@@ -81,7 +81,7 @@ type authCheckPropstype = (view: ComponentType<any>) => ComponentType<any>;
 
 const useStyles = makeStyles(({ palette: { background }, transitions, breakpoints: { between, down } }) => ({
     '@global': {
-        // '@font-face': Volkhov,
+
         '*': {
             transition: 'background-color .3s'
         },

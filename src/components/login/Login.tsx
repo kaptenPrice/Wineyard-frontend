@@ -1,24 +1,23 @@
+import { Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
-import { Grid, Paper, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
-import { useProfile } from '../provider/ProfileProvider';
-import useFetch from '../lib/useFetch';
-import LoginComponent, { LoginComponentPropsType } from '../components/LoginComponent';
 import ReactCardFlip from 'react-card-flip';
-import { useAppRoutes } from '../routes/useAppRoutes';
-import Login from '../components/login/Login';
-const LoginView = () => {
-    const classes = useStyles();
+import useFetch from '../../lib/useFetch';
+import { useProfile } from '../../provider/ProfileProvider';
+import { useAppRoutes } from '../../routes/useAppRoutes';
+import LoginComponent, { LoginComponentPropsType } from '../LoginComponent';
+
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [serverMessage, setServerMessage] = useState('');
     const { fetchProfile, profile } = useProfile();
     const [isFlipped, setIsFlipped] = useState(false);
     const { goToHome } = useAppRoutes();
+    const classes = useStyles();
+
     const handleFlipp = () => {
         setIsFlipped((current) => !current);
     };
-
     const handleLogin: LoginComponentPropsType['handleClick'] = async (e) => {
         e.preventDefault();
         try {
@@ -37,7 +36,6 @@ const LoginView = () => {
             console.log({ error: error, message: 'error from login' });
         }
     };
-
     const handleRegister: LoginComponentPropsType['handleRegister'] = async (e) => {
         e.preventDefault();
         try {
@@ -76,10 +74,8 @@ const LoginView = () => {
             console.log('error', error);
         }
     };
-
     return (
-        <Login />
-        /*  <form autoComplete='on'>
+        <form autoComplete='on'>
             <Grid container justifyContent='center' alignContent='center' className={classes.LoginView}>
                 <Grid className={classes.cardContainer}>
                     <ReactCardFlip isFlipped={isFlipped} flipDirection='horizontal'>
@@ -112,11 +108,11 @@ const LoginView = () => {
                     </ReactCardFlip>
                 </Grid>
             </Grid>
-        </form>*/
+        </form>
     );
 };
 
-export default LoginView;
+export default Login;
 const useStyles = makeStyles(({ palette: { primary, background }, breakpoints: { down } }) => ({
     LoginView: {
         height: 'calc(100vh - 64px)',

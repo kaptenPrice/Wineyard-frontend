@@ -7,15 +7,16 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { useSocket } from '../../lib/useSocket';
 import { stringToInitials } from '../../lib/utils';
 import { winesHandlers } from './winesHandlers';
+import TypographyComp from '../TypographyComp';
 
-export const Wines = () => {
+export const WinesList = () => {
     const [wineData, setWineData] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [currentSize, setCurrentSize] = useState(10);
     const [actualSize, setActualSize] = useState(0);
     const [expandedItemId, setExpandedItemId] = useState<null | string>(null);
     const showActionButtons: boolean = true;
-    
+
     const classes = useStyles();
     const { fetchWines } = winesHandlers();
 
@@ -46,7 +47,8 @@ export const Wines = () => {
             <WineCard
                 key={_id}
                 addedBy={addedByUser && stringToInitials(addedByUser.email, '.')}
-                image={props?.avatar ? `http://localhost:3001/${props.avatar}` : wineImg}
+                // image={props?.avatar ? `http://localhost:3001/${props.avatar}` : wineImg}
+                image={props?.avatar ? process.env.REACT_APP_API_URL_DEV+`/${props.avatar}` : wineImg}
                 date={updatedAt}
                 expanded={expandedItemId === _id}
                 handleExpandOnClick={() => handleExpandItem(_id)}
@@ -56,16 +58,18 @@ export const Wines = () => {
             />
         ));
     };
+    //TODO ADD KEY to Transfiles
     return (
         <>
             <Grid container xl={12} className={classes.container} direction='row' id='winesContainer'>
                 <Grid xs={12} item className={classes.titleContainer}>
-                    <Typography gutterBottom className={classes.title}>
-                        <span>-----</span>Our Wines
-                    </Typography>
+                    <TypographyComp gutterBottom className={classes.title}>
+                        <span>-----</span>
+                        {'Our Wines'}
+                    </TypographyComp>
                 </Grid>
                 <InfiniteScroll
-                    next={()=>fetchWines(currentPage, currentSize, setWineData, setActualSize, setCurrentPage)}
+                    next={() => fetchWines(currentPage, currentSize, setWineData, setActualSize, setCurrentPage)}
                     hasMore={wineData.length < actualSize}
                     loader={
                         <Grid container justifyContent='center' item xs={12}>
@@ -108,7 +112,7 @@ const useStyles = makeStyles(({ breakpoints: { down }, palette: { background, te
     title: {
         ...typography.h5,
         fontWeight: 300,
-        color: text.primary,
+        color: text.secondary,
 
         letterSpacing: '0.19rem',
         [down('sm')]: {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
-import { Wines } from '../components/wines/Wines';
+import { WinesList } from '../components/wines/WinesList';
 import Title from '../components/Title';
 import { titleWinesView } from '../content/titles';
 const WinesView = () => {
@@ -8,17 +8,16 @@ const WinesView = () => {
 
     return (
         <Grid container className={classes.viewRoot}>
-        <>
-            <Title
-                classRoot={classes.titleRoot}
-                classContainer={classes.titleContainer}
-                classTitle={classes.title}
-            >
-                {titleWinesView}
-            </Title>
-            <Wines />
-        </>
-         </Grid>
+            <>
+                <Title
+                    classRoot={classes.titleRoot}
+                    classContainer={classes.titleContainer}
+                >
+                    {titleWinesView}
+                </Title>
+                <WinesList />
+            </>
+        </Grid>
     );
 };
 
@@ -55,12 +54,5 @@ const useStyles = makeStyles(({ breakpoints: { down, between }, typography, pale
         display: 'flex',
         alignItems: 'flex-end',
         position: 'relative'
-    },
-    title: {
-        ...typography.h3,
-        color: palette.text.primary,
-        [down('sm')]: {
-            ...typography.h6
-        }
     }
 }));

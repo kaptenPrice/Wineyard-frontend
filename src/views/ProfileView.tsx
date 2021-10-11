@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import AddWineModal from '../components/addWineModal/AddWineModal';
-import MyWines from '../components/MyWines';
+import Profile from '../components/Profile';
 import AddWineButton from '../components/AddWineButton';
 import { titleProfileView } from '../content/titles';
 import Title from '../components/Title';
@@ -23,7 +23,6 @@ const ProfileView = () => {
             <Title
                 classRoot={classes.titleRoot}
                 classContainer={classes.titleContainer}
-                classTitle={classes.title}
             >
                 {titleProfileView}
             </Title>
@@ -32,7 +31,7 @@ const ProfileView = () => {
                     <span>-----</span>MY WINES
                 </Typography>
             </Grid>
-            <MyWines />
+            <Profile />
             <AddWineButton onClick={handleModal} className={classes.addIcon} />
             <AddWineModal
                 previewImage={[previewAvatar, setPreviewAvatar]}

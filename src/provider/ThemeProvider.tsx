@@ -4,6 +4,7 @@ import theme from '../constants/theme';
 import { CustomPaletteType, darkPalette, lightPalette } from '../constants/palette';
 import { ThemeProvider as OrgProvider, createTheme } from '@material-ui/core';
 import { useState } from 'react';
+import "@fontsource/rubik-beastly";
 
 export const ThemeContext = createContext(undefined);
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Typography, useMediaQuery, useTheme, Link, Grid } from '@material-ui/core';
+import { makeStyles, useMediaQuery, useTheme, Link } from '@material-ui/core';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useProfile } from '../provider/ProfileProvider';
@@ -8,11 +8,11 @@ import CollectionSvg from '../svg/CollectionSvg';
 import ProfileSvg from '../svg/ProfileSvg';
 import SettingsSvg from '../svg/SettingsSvg';
 import Title from './Title';
-import { titleHomeViewAuth } from '../content/titles';
+import TypographyComp from './TypographyComp';
 
 const HomeComponentAuth = () => {
     const { profile } = useProfile();
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const classes = useStyles();
     const {
         breakpoints: { down }
@@ -22,18 +22,10 @@ const HomeComponentAuth = () => {
     return (
         <>
             <motion.div className={classes.header} animate={{ y: 30 }}>
-                <Typography variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary'>
-                    {t('home_welcome')}
-                    {/* {profile?.email} */}
-                </Typography>
+                <TypographyComp variant={!isSmallScreen ? 'h6' : 'body2'} color='secondary' transKey={'home_welcome'} />
             </motion.div>
-            {/* <div className={classes.overLay} /> */}
-            <Title
-                classRoot={classes.titleRoot}
-                classContainer={classes.titleContainer}
-                classTitle={classes.title}
-            >
-                {"homeViewAuthTitle"}
+            <Title classRoot={classes.titleRoot} classContainer={classes.titleContainer}>
+                {'homeViewAuthTitle'}
             </Title>
 
             <div className={classes.linkContainer}>
@@ -41,7 +33,7 @@ const HomeComponentAuth = () => {
                     className={classes.linkHolder}
                     initial={{ y: -1550 }}
                     animate={{ y: 0 }}
-                    transition={{ delay: 0.3 }}
+                    transition={{ delay: 0 }}
                     whileHover={{ translateY: -15 }}
                 >
                     <CollectionSvg className={classes.svg} />
@@ -53,7 +45,7 @@ const HomeComponentAuth = () => {
                     className={classes.linkHolder}
                     initial={{ y: -1550 }}
                     animate={{ y: 0 }}
-                    transition={{ delay: 0.35 }}
+                    transition={{ delay: 0 }}
                     whileHover={{ translateY: -15 }}
                 >
                     <ProfileSvg className={classes.svg} />
@@ -66,7 +58,7 @@ const HomeComponentAuth = () => {
                     className={classes.linkHolder}
                     initial={{ y: -1550 }}
                     animate={{ y: 0 }}
-                    transition={{ delay: 0.4 }}
+                    transition={{ delay: 0 }}
                     whileHover={{ translateY: -15 }}
                 >
                     <SettingsSvg className={classes.svg} />
@@ -80,7 +72,7 @@ const HomeComponentAuth = () => {
 };
 
 export default HomeComponentAuth;
-const useStyles = makeStyles(({ palette: { background, text }, breakpoints: { down, between }, typography }) => ({
+const useStyles = makeStyles(({ palette: { background, text, link }, breakpoints: { down, between }, typography }) => ({
     titleRoot: {
         marginLeft: 40,
         marginBottom: 160,
@@ -100,7 +92,7 @@ const useStyles = makeStyles(({ palette: { background, text }, breakpoints: { do
         position: 'relative'
     },
     title: {
-        ...typography.h3,
+        ...typography.h4,
         color: text.primary,
         [down('sm')]: {
             ...typography.h6
@@ -179,9 +171,6 @@ const useStyles = makeStyles(({ palette: { background, text }, breakpoints: { do
     },
     link: {
         padding: '30px',
-        textDecoration: 'none',
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: text.secondary
+        color: link.main
     }
 }));

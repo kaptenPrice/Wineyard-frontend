@@ -2,12 +2,14 @@ import { Theme } from '@material-ui/core';
 
 export default {
     typography: {
-        fontFamily: 'Rubik Beastly'
+        fontFamily: 'Ubuntu'
     },
     overrides: {
         MuiLink: {
             root: {
-                fontFamily: 'Rubik Beastly'
+                fontFamily: 'Ubuntu',
+                fontSize: 24,
+                fontWeight:"bold"
             },
             underlineHover: {
                 '&:hover': {

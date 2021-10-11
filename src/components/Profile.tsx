@@ -6,13 +6,12 @@ import wineImg from '../global/images/wine-image.jpg';
 import useFetch from '../lib/useFetch';
 import {} from '@material-ui/styles';
 
-const MyWines = () => {
+const Profile = () => {
     const classes = useStyles();
     const { profile, fetchProfile } = useProfile();
     const [expandedItemId, setExpandedItemId] = useState<null | string>(null);
     const [WinesAddedByCurrent, setWinesAddedByCurrent] = useState([]);
     const { breakpoints } = useTheme();
-    const isSmallScreen = useMediaQuery(breakpoints.down('xs'));
 
     useEffect(() => {
         fetchProfile();
@@ -26,6 +25,7 @@ const MyWines = () => {
             console.log('error: ', error);
         }
     };
+
     const handleExpandItem = (id: string) => {
         setExpandedItemId((prev) => (prev !== id ? id : null));
     };
@@ -33,7 +33,7 @@ const MyWines = () => {
         return profile.favoriteWines.map(({ _id, ...props }) => (
             <WineCard
                 key={_id}
-                image={wineImg}
+                image={props?.avatar ? process.env.REACT_APP_API_URL_DEV+`/${props.avatar}` : wineImg}
                 handleExpandOnClick={() => handleExpandItem(_id)}
                 expanded={expandedItemId === _id}
                 _id={_id}
@@ -55,16 +55,16 @@ const MyWines = () => {
                 {handleGetWines()}
             </Grid>
             <Box boxShadow={5} bgcolor='background.paper' m={2} p={2}>
-                <Typography variant={!isSmallScreen ? 'h6' : 'body2'} className={classes.addedList}>
-                    MY ADDED WINES
-                    {handleGetWinesAddedByCurrent()}
-                </Typography>
+                {/* <TypoWithTranslation variant={!isSmallScreen ? 'h6' : 'body2'} className={classes.addedList}>
+                    {'MY ADDED WINES'}
+                </TypoWithTranslation> */}
+                {handleGetWinesAddedByCurrent()}
             </Box>
         </>
     );
 };
 
-export default MyWines;
+export default Profile;
 const useStyles = makeStyles(({ palette: { primary, defaultSvg }, breakpoints: { down, between }, typography }) => ({
     containerWines: {
         maxWidth: 1720,

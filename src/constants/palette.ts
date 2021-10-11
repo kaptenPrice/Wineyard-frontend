@@ -11,10 +11,11 @@ export const darkPalette: PaletteOptions & CustomPaletteType = {
     },
 
     text: { primary: '#999999', secondary: '#8d1e31' },
+    link: { main: '##CA2C46' },
     defaultSvg: {
         main: '#999999'
     },
-    
+
     type: 'dark'
 };
 
@@ -27,8 +28,8 @@ export const lightPalette: PaletteOptions & CustomPaletteType = {
     secondary: {
         main: '#0B2545'
     },
-    text: { primary: '#424242', secondary: '#AAAAAA',  },
-
+    text: { primary: '#424242', secondary: '#666666' },
+    link: { main: '##CA2C46' },
     defaultSvg: {
         main: '#999999'
     },
@@ -37,4 +38,5 @@ export const lightPalette: PaletteOptions & CustomPaletteType = {
 
 export type CustomPaletteType = {
     defaultSvg: Partial<Palette['primary']>;
+    link: Partial<Palette['primary']>;
 };
