@@ -12,13 +12,14 @@ import TypographyComp from './TypographyComp';
 
 const HomeComponentAuth = () => {
     const { profile } = useProfile();
-    const { t } = useTranslation();
     const classes = useStyles();
     const {
         breakpoints: { down }
     } = useTheme();
     const isSmallScreen = useMediaQuery(down('xs'));
 
+    console.log(profile);
+    
     return (
         <>
             <motion.div className={classes.header} animate={{ y: 30 }}>

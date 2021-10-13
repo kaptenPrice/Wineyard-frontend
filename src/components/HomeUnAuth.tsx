@@ -7,12 +7,13 @@ import { AppRoutes } from '../routes/AppRoutes';
 import LoginSvg from '../svg/LoginSvg';
 
 const HomeComponentUnAuth = () => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const classes = useStyles();
     const {
         breakpoints: { down }
     } = useTheme();
     const isSmallScreen = useMediaQuery(down('xs'));
+
 
     return (
         <div className={classes.mainDiv}>

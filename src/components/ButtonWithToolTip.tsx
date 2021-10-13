@@ -2,13 +2,13 @@ import React from 'react';
 import { IconButton, Tooltip } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
-const AddWineButton = ({ ...props }) => {
+const ButtonWithToolTip = ({ title, children, ...props }) => {
     return (
-        <Tooltip title='Add new wine'>
+        <Tooltip title={title}>
             <IconButton {...props}>
-                <AddIcon fontSize='large' color='action' />
+                {children}
             </IconButton>
         </Tooltip>
     );
 };
-export default AddWineButton;
+export default ButtonWithToolTip;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, makeStyles, Typography } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import wineImg from '../../global/images/wine-image.jpg';
-import { WineCard } from '../wineCard/WineCard';
+import WineCardComponent from '../wineCard/WineCardComponent';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useSocket } from '../../lib/useSocket';
@@ -9,13 +9,14 @@ import { stringToInitials } from '../../lib/utils';
 import { winesHandlers } from './winesHandlers';
 import TypographyComp from '../TypographyComp';
 
-export const WinesList = () => {
+export const WineListComponent = () => {
     const [wineData, setWineData] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [currentSize, setCurrentSize] = useState(10);
     const [actualSize, setActualSize] = useState(0);
     const [expandedItemId, setExpandedItemId] = useState<null | string>(null);
     const showActionButtons: boolean = true;
+    const [showActionButton, setShowActionButton] = useState(true);
 
     const classes = useStyles();
     const { fetchWines } = winesHandlers();
@@ -38,22 +39,29 @@ export const WinesList = () => {
         setWineData((current) => current.filter((wine) => wine._id !== newData._id));
     });
 
-    const handleExpandItem = (id: string) => {
+    const handleExpandOnClick = (id?: string) => {
         setExpandedItemId((prev) => (prev !== id ? id : null));
+    };
+
+    const handleClickOutside = (_id) => {
+        if (expandedItemId === _id) {
+            setExpandedItemId(null);
+        }
     };
 
     const getWines = () => {
         return wineData.map(({ _id, updatedAt, addedByUser, ...props }) => (
-            <WineCard
+            <WineCardComponent
                 key={_id}
                 addedBy={addedByUser && stringToInitials(addedByUser.email, '.')}
-                // image={props?.avatar ? `http://localhost:3001/${props.avatar}` : wineImg}
-                image={props?.avatar ? process.env.REACT_APP_API_URL_DEV+`/${props.avatar}` : wineImg}
+                image={props?.avatar ? process.env.REACT_APP_API_URL_DEV + `/${props.avatar}` : wineImg}
                 date={updatedAt}
                 expanded={expandedItemId === _id}
-                handleExpandOnClick={() => handleExpandItem(_id)}
+                handleExpandOnClick={() => handleExpandOnClick(_id)}
                 _id={_id}
                 showActionButtons={showActionButtons}
+                buttonState={[showActionButton, setShowActionButton]}
+                onClickAway={() => handleClickOutside(_id)}
                 {...props}
             />
         ));

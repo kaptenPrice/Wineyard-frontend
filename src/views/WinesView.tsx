@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
-import { WinesList } from '../components/wines/WinesList';
+import { WineListComponent } from '../components/wines/WineListComponent';
 import Title from '../components/Title';
 import { titleWinesView } from '../content/titles';
 const WinesView = () => {
@@ -9,13 +9,10 @@ const WinesView = () => {
     return (
         <Grid container className={classes.viewRoot}>
             <>
-                <Title
-                    classRoot={classes.titleRoot}
-                    classContainer={classes.titleContainer}
-                >
+                <Title classRoot={classes.titleRoot} classContainer={classes.titleContainer}>
                     {titleWinesView}
                 </Title>
-                <WinesList />
+                <WineListComponent />
             </>
         </Grid>
     );

@@ -28,8 +28,8 @@ export const lightPalette: PaletteOptions & CustomPaletteType = {
     secondary: {
         main: '#0B2545'
     },
-    text: { primary: '#424242', secondary: '#666666' },
-    link: { main: '##CA2C46' },
+    text: { primary: '#5E5E5E', secondary: '#AAAAAA',disabled:"#ff0"  },
+    link: { main: '#CA2C46' },
     defaultSvg: {
         main: '#999999'
     },

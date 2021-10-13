@@ -33,7 +33,7 @@ const Login = () => {
             }
         } catch (error) {
             setServerMessage('Server seems to be tired, visit later please');
-            console.log({ error: error, message: 'error from login' });
+            // console.log({ error: error, message: 'error from login' });
         }
     };
     const handleRegister: LoginComponentPropsType['handleRegister'] = async (e) => {
