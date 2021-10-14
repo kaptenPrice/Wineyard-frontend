@@ -1,42 +1,26 @@
 import { Grid, makeStyles, Paper, Typography } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
 import useFetch from '../../lib/useFetch';
 import { useProfile } from '../../provider/ProfileProvider';
 import { useAppRoutes } from '../../routes/useAppRoutes';
-import LoginComponent, { LoginComponentPropsType } from '../LoginComponent';
+import LoginBox, { LoginPropsType } from './LoginBox';
+import { loginHandlers } from './loginHandlers';
 
-const Login = () => {
+const LoginComponent = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [serverMessage, setServerMessage] = useState('');
-    const { fetchProfile, profile } = useProfile();
     const [isFlipped, setIsFlipped] = useState(false);
-    const { goToHome } = useAppRoutes();
     const classes = useStyles();
+
+    const { login: handleLogin, handleRegister, handleForgottPassword } = loginHandlers();
 
     const handleFlipp = () => {
         setIsFlipped((current) => !current);
     };
-    const handleLogin: LoginComponentPropsType['handleClick'] = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await useFetch('/login', {
-                method: 'POST',
-                body: JSON.stringify({ email, password })
-            });
-            if (response.status === 200) {
-                fetchProfile();
-                goToHome();
-            } else {
-                setServerMessage(response?.data.message);
-            }
-        } catch (error) {
-            setServerMessage('Server seems to be tired, visit later please');
-            // console.log({ error: error, message: 'error from login' });
-        }
-    };
-    const handleRegister: LoginComponentPropsType['handleRegister'] = async (e) => {
+
+    /*   const handleRegister: LoginPropsType['handleRegister'] = async (e) => {
         e.preventDefault();
         try {
             const response = await useFetch('/register', {
@@ -52,8 +36,8 @@ const Login = () => {
         } catch (error) {
             console.log('error', error);
         }
-    };
-    const handleForgottPassword: LoginComponentPropsType['handleRegister'] = async (e) => {
+    }; */
+    /*     const handleForgottPassword: LoginPropsType['handleRegister'] = async (e) => {
         e.preventDefault();
         try {
             const response = await useFetch('/user/forgotpassword', {
@@ -73,20 +57,21 @@ const Login = () => {
         } catch (error) {
             console.log('error', error);
         }
-    };
+    }; */
+
     return (
         <form autoComplete='on'>
             <Grid container justifyContent='center' alignContent='center' className={classes.LoginView}>
                 <Grid className={classes.cardContainer}>
                     <ReactCardFlip isFlipped={isFlipped} flipDirection='horizontal'>
                         <Paper className={classes.loginBox} style={{ opacity: isFlipped ? 0 : 1 }}>
-                            <LoginComponent
+                            <LoginBox
                                 email={email}
                                 setEmail={(input) => setEmail(input.target.value)}
                                 password={password}
                                 setPassword={(input) => setPassword(input.target.value)}
-                                handleClick={handleLogin}
-                                handleRegister={handleRegister}
+                                handleClick={handleLogin(email, password, setServerMessage)}
+                                handleRegister={handleRegister(email, password, setServerMessage)}
                                 serverMessage={serverMessage}
                             />
                             <Typography variant='button' className={classes.link} onClick={handleFlipp}>
@@ -94,11 +79,11 @@ const Login = () => {
                             </Typography>
                         </Paper>
                         <Paper className={classes.loginBox} style={{ opacity: isFlipped ? 1 : 0 }}>
-                            <LoginComponent
+                            <LoginBox
                                 isResetPasswordMode={true}
                                 email={email}
                                 setEmail={(input) => setEmail(input.target.value)}
-                                handleClick={handleForgottPassword}
+                                handleClick={handleForgottPassword(email, setServerMessage, setIsFlipped)}
                                 serverMessage={serverMessage}
                             />
                             <Typography variant='button' onClick={handleFlipp} className={classes.link}>
@@ -112,7 +97,7 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default LoginComponent;
 const useStyles = makeStyles(({ palette: { primary, background }, breakpoints: { down } }) => ({
     LoginView: {
         height: 'calc(100vh - 64px)',

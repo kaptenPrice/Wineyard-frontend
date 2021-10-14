@@ -2,13 +2,13 @@ import React from 'react';
 import { makeStyles, useMediaQuery, useTheme, Link } from '@material-ui/core';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { useProfile } from '../provider/ProfileProvider';
-import { AppRoutes } from '../routes/AppRoutes';
-import CollectionSvg from '../svg/CollectionSvg';
-import ProfileSvg from '../svg/ProfileSvg';
-import SettingsSvg from '../svg/SettingsSvg';
-import Title from './Title';
-import TypographyComp from './TypographyComp';
+import { useProfile } from '../../provider/ProfileProvider';
+import { AppRoutes } from '../../routes/AppRoutes';
+import CollectionSvg from '../../svg/CollectionSvg';
+import ProfileSvg from '../../svg/ProfileSvg';
+import SettingsSvg from '../../svg/SettingsSvg';
+import Title from '../Title';
+import TypographyComp from '../TypographyComp';
 
 const HomeComponentAuth = () => {
     const { profile } = useProfile();
@@ -18,7 +18,6 @@ const HomeComponentAuth = () => {
     } = useTheme();
     const isSmallScreen = useMediaQuery(down('xs'));
 
-    console.log(profile);
     
     return (
         <>

@@ -1,9 +1,8 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction } from 'react';
 import useFetch from '../../lib/useFetch';
 
 export const addWineHandlers = () => {
-
-       const handleAddNewWine =
+    const handleAddNewWine =
         (
             name: string,
             country: string,
@@ -36,7 +35,6 @@ export const addWineHandlers = () => {
         };
 
     return {
-        
         handleAddNewWine
     };
-}
+};

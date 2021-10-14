@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from 'react';
 import { Button, TextField, Typography, Grid } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
-const LoginComponent = ({
+const LoginBox = ({
     isResetPasswordMode,
     email,
     setEmail,
@@ -11,19 +11,13 @@ const LoginComponent = ({
     handleClick,
     handleRegister,
     serverMessage
-}: LoginComponentPropsType) => {
+}: LoginPropsType) => {
     return (
-        <Grid
-            container
-            justifyContent='space-between'
-            alignContent='center'
-            alignItems='center'
-            direction='column'
-        >
+        <Grid container justifyContent='space-between' alignContent='center' alignItems='center' direction='column'>
             <Typography variant='h3' component='div' color='primary'>
                 {isResetPasswordMode ? 'Reset password' : 'Log in'}
             </Typography>
-        
+
             <TextField
                 variant='standard'
                 color='primary'
@@ -53,6 +47,7 @@ const LoginComponent = ({
                     endIcon={<SendIcon />}
                     formAction='login'
                     type='submit'
+                    disabled={!isResetPasswordMode ? Boolean(!password || !email): Boolean(!email)}
                     onClick={handleClick}
                 >
                     {isResetPasswordMode ? 'Reset' : 'Login'}
@@ -64,6 +59,7 @@ const LoginComponent = ({
                         variant='outlined'
                         formAction='signup'
                         type='submit'
+                        disabled={Boolean(!email || !password)}
                         onClick={handleRegister}
                     >
                         Signup
@@ -77,9 +73,9 @@ const LoginComponent = ({
     );
 };
 
-export default LoginComponent;
+export default LoginBox;
 
-export type LoginComponentPropsType = {
+export type LoginPropsType = {
     isResetPasswordMode?: boolean;
     email: string;
     setEmail: (e: any) => void;

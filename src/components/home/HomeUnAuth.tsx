@@ -3,8 +3,8 @@ import { makeStyles, Typography, useMediaQuery, useTheme } from '@material-ui/co
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { AppRoutes } from '../routes/AppRoutes';
-import LoginSvg from '../svg/LoginSvg';
+import { AppRoutes } from '../../routes/AppRoutes';
+import LoginSvg from '../../svg/LoginSvg';
 
 const HomeComponentUnAuth = () => {
     const { t } = useTranslation();

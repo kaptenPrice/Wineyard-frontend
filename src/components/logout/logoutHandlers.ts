@@ -10,7 +10,6 @@ export const logoutHandlers: logoutPropTypes = (setServerMessage) => {
 
     const handleLogout = async () => {
         const response = await useFetch('/logout');
-        console.log('RESPOINSE: ', response);
 
         if (response.status === 200) {
             setServerMessage(response.data?.message);

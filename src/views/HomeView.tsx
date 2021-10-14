@@ -1,8 +1,8 @@
 import React from 'react';
 import { useProfile } from '../provider/ProfileProvider';
 
-import HomeComponentAuth from '../components/HomeAuth';
-import HomeComponentUnAuth from '../components/HomeUnAuth';
+import HomeComponentAuth from '../components/home/HomeAuth';
+import HomeComponentUnAuth from '../components/home/HomeUnAuth';
 
 const Home = () => {
     const { profile } = useProfile();

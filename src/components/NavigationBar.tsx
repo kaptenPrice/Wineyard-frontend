@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import React, { SetStateAction, Dispatch } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles, Typography, MenuItem, AppBar, Drawer } from '@material-ui/core';
