@@ -2,12 +2,13 @@ import React, { SetStateAction, Dispatch } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles, Typography, MenuItem, AppBar, Drawer } from '@material-ui/core';
 import ToolBar from '@material-ui/core/Toolbar';
-import { useProfile } from '../provider/ProfileProvider';
+import { useProfile } from '../../provider/ProfileProvider';
 import { useTranslation } from 'react-i18next';
-import hamMenu from '../lottieFiles/hamburger-menu.json';
-import LottieButton from './LottieButton';
-import { AppRoutes } from '../routes/AppRoutes';
-import { useAppRoutes } from '../routes/useAppRoutes';
+import hamMenu from '../../lottieFiles/hamburger-menu.json';
+import LottieButton from '../LottieButton';
+import { AppRoutes } from '../../routes/AppRoutes';
+import { useAppRoutes } from '../../routes/useAppRoutes';
+import Highlights from './Highlights';
 
 export const NavigationBar = ({ drawerState }: NavigationBarPropsType) => {
     const [isDrawerOpen, setIsDrawerOpen] = drawerState;
@@ -35,6 +36,7 @@ export const NavigationBar = ({ drawerState }: NavigationBarPropsType) => {
                     <Typography onClick={handleRedirectHome} className={classes.title} variant='h6'>
                         WINEYARD
                     </Typography>
+
 
                     <Typography className={classes.email}>{profile?.email}</Typography>
                     <LottieButton

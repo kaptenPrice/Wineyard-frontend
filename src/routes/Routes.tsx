@@ -1,7 +1,7 @@
 import React, { ComponentType, useState } from 'react';
 import { makeStyles, Container } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route, RouteProps } from 'react-router-dom';
-import { NavigationBar } from '../components/NavigationBar';
+import { NavigationBar } from '../components/navbar/NavigationBar';
 import { useProfile } from '../provider/ProfileProvider';
 import Home from '../views/HomeView';
 import LoginView from '../views/LoginView';
