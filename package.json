@@ -12,6 +12,8 @@
         "@testing-library/jest-dom": "^5.14.1",
         "@testing-library/react": "^11.2.7",
         "@testing-library/user-event": "^12.8.3",
+        "@types/autosuggest-highlight": "^3.1.1",
+        "autosuggest-highlight": "^3.1.1",
         "clsx": "^1.1.1",
         "country-flag-icons": "^1.4.5",
         "d": "^1.0.1",

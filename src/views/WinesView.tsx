@@ -9,6 +9,8 @@ const WinesView = () => {
     return (
         <Grid container className={classes.viewRoot}>
             <>
+            {/* <Highlights wineList={wineData} /> */}
+
                 <Title classRoot={classes.titleRoot} classContainer={classes.titleContainer}>
                     {titleWinesView}
                 </Title>
