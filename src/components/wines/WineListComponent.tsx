@@ -8,7 +8,6 @@ import { useSocket } from '../../lib/useSocket';
 import { stringToInitials } from '../../lib/utils';
 import { winesHandlers } from './winesHandlers';
 import TypographyComp from '../TypographyComp';
-import Highlights from '../navbar/Highlights';
 
 export const WineListComponent = () => {
     const [wineData, setWineData] = useState([]);

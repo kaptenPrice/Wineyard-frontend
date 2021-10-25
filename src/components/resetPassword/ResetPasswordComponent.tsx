@@ -3,7 +3,6 @@ import { Button, makeStyles, TextField, Typography } from '@material-ui/core';
 import { Grid, Paper } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import { NavLink, useParams } from 'react-router-dom';
-import { useAppRoutes } from '../../routes/useAppRoutes';
 import { resetPassHandlers } from './resetPassHandlers';
 import { AppRoutes } from '../../routes/AppRoutes';
 
@@ -14,7 +13,6 @@ const ResetPasswordComponent = () => {
     const [serverMessage, setServerMessage] = useState('');
     const [isValid, setIsValid] = useState(false);
     const classes = useStyles();
-    const { goToLogin } = useAppRoutes();
 
     const { handleTokenVerify, changePassword } = resetPassHandlers();
     useEffect(() => {

@@ -6,6 +6,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
 import SocketProvider from './provider/SocketProvider';
 import Snackbar from './components/Snackbar';
+import WineProvider from './provider/WineProvider';
 
 const App = () => {
     return (
@@ -15,7 +16,9 @@ const App = () => {
                     <Snackbar>
                         <ProfileProvider>
                             <SocketProvider>
+                                <WineProvider>
                                 <Routing />
+                                </WineProvider>
                             </SocketProvider>
                         </ProfileProvider>
                     </Snackbar>

@@ -218,8 +218,8 @@ const useStyles = makeStyles(({ transitions, palette: { background, text }, brea
 /* -------------------------------------------------------------------------- */
 
 interface WineProps extends props {
-    handleExpandOnClick: () => void;
-    expanded: boolean;
+    handleExpandOnClick?: () => void;
+    expanded?: boolean;
     name?: string;
     country?: string;
     grapes?: string;
@@ -235,6 +235,7 @@ interface WineProps extends props {
     handleClickAway?: () => void;
     onClickAway?: () => void;
 }
+
 type props = {
     buttonState?: [boolean, Dispatch<SetStateAction<boolean>>];
 };

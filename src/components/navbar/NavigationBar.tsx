@@ -8,7 +8,6 @@ import hamMenu from '../../lottieFiles/hamburger-menu.json';
 import LottieButton from '../LottieButton';
 import { AppRoutes } from '../../routes/AppRoutes';
 import { useAppRoutes } from '../../routes/useAppRoutes';
-import Highlights from './Highlights';
 
 export const NavigationBar = ({ drawerState }: NavigationBarPropsType) => {
     const [isDrawerOpen, setIsDrawerOpen] = drawerState;

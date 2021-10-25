@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, ChangeEventHandler, useEffect, useState } from 'react';
 
-import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Box, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import { useProfile } from '../../provider/ProfileProvider';
 import WineCardComponent from '../wineCard/WineCardComponent';
 import wineImg from '../../global/images/wine-image.jpg';
@@ -10,6 +10,9 @@ import AddWineModal from '../addWineModal/AddWineModal';
 import Title from '../Title';
 import { profileHandlers } from './profileHandlers';
 import { titleProfileView } from '../../content/titles';
+import useFetch from '../../lib/useFetch';
+import FreeSolo from '../navbar/FreeSolo'
+import TypographyComp from '../TypographyComp';
 
 const Profile = () => {
     const classes = useStyles();
@@ -21,11 +24,17 @@ const Profile = () => {
     const [showActionButton, setShowActionButton] = useState(false);
     const { profile, fetchProfile } = useProfile();
     const { fetchWinesAddedByCurrentId } = profileHandlers();
+    const [term, setTerm] = useState<{ term: string }>();
+    const [searchResult, setSearchResult] = useState([]);
 
     useEffect(() => {
         fetchProfile();
         fetchWinesAddedByCurrentId(setWinesAddedByCurrent);
     }, []);
+
+    useEffect(() => {
+        term && fetchAutoComplete();
+    }, [term]);
 
     const handleModal = () => {
         setIsOpen((current) => !current);
@@ -36,6 +45,11 @@ const Profile = () => {
     const handleExpandItem = (id: string) => {
         setExpandedItemId((prev) => (prev !== id ? id : null));
     };
+    const handleClickOutside = (_id) => {
+        if (expandedItemId === _id) {
+            setExpandedItemId(null);
+        }
+    };
     const handleGetWines = () => {
         return profile.favoriteWines.map(({ _id, ...props }) => (
             <WineCardComponent
@@ -45,6 +59,7 @@ const Profile = () => {
                 handleExpandOnClick={() => handleExpandItem(_id)}
                 expanded={expandedItemId === _id}
                 buttonState={[showActionButton, setShowActionButton]}
+                onClickAway={() => handleClickOutside(_id)}
                 {...props}
             />
         ));
@@ -57,11 +72,28 @@ const Profile = () => {
         ));
     };
 
+    const fetchAutoComplete = async () => {
+        try {
+            const { data } = await useFetch(`/wine/search/${term}`);
+            setSearchResult(data);
+        } catch (error) {
+            console.log('Error', error);
+        }
+    };
+
+    const handleSearch = (e) => {
+        //@ts-ignore
+        setTerm(e.target.value);
+    };
+
     return (
         <>
             <Title classRoot={classes.titleRoot} classContainer={classes.titleContainer}>
                 {titleProfileView}
             </Title>
+
+            <FreeSolo list={searchResult} TextFieldProps={{ onChange: handleSearch }} />
+
             <Grid xs={12} item className={classes.subTitleContainer}>
                 <Typography gutterBottom className={classes.subTitle}>
                     <span>-----</span>MY WINES
@@ -70,9 +102,14 @@ const Profile = () => {
             <Grid container xl={12} className={classes.containerWines} id='winesContainer'>
                 {handleGetWines()}
             </Grid>
-            <Box boxShadow={5} bgcolor='background.paper' m={2} p={2}>
-                {handleGetWinesAddedByCurrent()}
-            </Box>
+            <Grid>
+                <Typography gutterBottom className={classes.subTitle}>
+                    <span>-----</span>ADDED BY ME
+                </Typography>
+                <Box boxShadow={5} bgcolor='background.default' m={2} p={2}>
+                    {handleGetWinesAddedByCurrent()}
+                </Box>
+            </Grid>
             <ButtonWithToolTip title={'Add new wine'} onClick={handleModal} className={classes.addIcon}>
                 <AddIcon fontSize='large' color='action' />
             </ButtonWithToolTip>
@@ -179,3 +216,18 @@ const useStyles = makeStyles(
         }
     })
 );
+
+/*   const showsSearchResult = () => {
+        return searchResult?.map(({ _id, ...props }) => (
+            <WineCardComponent
+                key={_id}
+                _id={_id}
+                image={props?.avatar ? process.env.REACT_APP_API_URL_DEV + `/${props.avatar}` : wineImg}
+                handleExpandOnClick={() => handleExpandItem(_id)}
+                expanded={expandedItemId === _id}
+                buttonState={[showActionButton, setShowActionButton]}
+                onClickAway={() => handleClickOutside(_id)}
+                {...props}
+            />
+        ));
+    }; */

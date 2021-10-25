@@ -1,6 +1,6 @@
+import React from 'react';
 import { Paper } from '@material-ui/core';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
-import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 const NoMatchComponent = () => {
